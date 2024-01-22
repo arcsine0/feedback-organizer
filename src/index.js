@@ -12,7 +12,7 @@ root.render(
   <React.StrictMode>
     <div className='flex'>
       <Sidebar />
-      <Landing />
+      <Landing title="LMS"/>
     </div>
   </React.StrictMode>
 );
