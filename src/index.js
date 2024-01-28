@@ -17,7 +17,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
         <div className='flex'>
-          <Sidebar />
+          <Sidebar className='flex-none' />
           <Routes>
             <Route path='/' index element={<Landing title={'LMS'} />} />
             <Route path='/courses' element={<Courses />} />

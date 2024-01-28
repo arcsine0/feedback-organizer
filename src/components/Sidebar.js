@@ -4,7 +4,7 @@ import { BsMailbox2Flag } from "react-icons/bs";
 
 export default function Sidebar() {
     return (
-        <aside id="default-sidebar" class="w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+        <aside id="default-sidebar" class="w-64 min-wid-full h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
             <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
                 <ul class="space-y-2 font-medium">
                     <li>
@@ -21,7 +21,9 @@ export default function Sidebar() {
                                 <FaThLarge />
                                 <Link to={'/courses'}><span className="ms-3 shrink whitespace-nowrap">Courses</span></Link>
                             </div>
-                            <FaChevronDown className='order-last' />
+                            <button id='courses_dropdown_button' data-dropdown-toggle='courses_dropdown' >
+                                <FaChevronDown className='order-last' />
+                            </button>
                         </a>
                     </li>
                     <li>
@@ -45,6 +47,11 @@ export default function Sidebar() {
                             </div>
                         </a>
                     </li>
+                </ul>
+            </div>
+            <div id='courses_dropdown' className='hidden'>
+                <ul>
+                    <li>All Courses</li>
                 </ul>
             </div>
             <Outlet />
