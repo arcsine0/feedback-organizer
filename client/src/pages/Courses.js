@@ -1,4 +1,4 @@
-import Course from "../components/Course"
+import CourseCard from "../components/CourseCard"
 
 import { IoIosAddCircleOutline } from "react-icons/io";
 
@@ -16,8 +16,8 @@ export default function Courses() {
                 </div>
                 <p></p>
                 <div className="flex flex-row flex-wrap space-x-4">
-                    <Course title="Course 1" />
-                    <Course title="Course 2" />
+                    <CourseCard title={'Course 1'} />
+                    <CourseCard title={'Course 2'} />
                 </div>
             </div> 
         </div>

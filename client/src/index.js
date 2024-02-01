@@ -9,6 +9,7 @@ import Sidebar from './components/Sidebar';
 import Courses from './pages/Courses';
 import Inbox from './pages/Inbox';
 import SignIn from './pages/SignIn';
+import CoursePage from './pages/CoursePage';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -23,6 +24,7 @@ root.render(
             <Route path='/courses' element={<Courses />} />
             <Route path='/inbox' element={<Inbox />} />
             <Route path='/signin' element={<SignIn />} />
+            <Route path='/course' element={<CoursePage title={'Course 1'} />} />
           </Routes>
         </div>
       </BrowserRouter>
