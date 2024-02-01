@@ -20,7 +20,7 @@ export default function LessonCard({ count, title }) {
                         <h1 className="order-first text-lg text-gray font-semibold ml-5 mr-5">{count}</h1>
                         <h1 className="text-lg font-semibold mx-5">{title}</h1>
                         <h1 className="grow text-center"></h1>
-                        <div className="order-last mx-10 rotate-90 transorm">
+                        <div className="order-last mx-10 rotate-90 transform">
                             <FaChevronDown className={open ? '-rotate-90 transform' : ''} />
                         </div>  
                     </Disclosure.Button>
