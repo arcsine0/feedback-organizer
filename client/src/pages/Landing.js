@@ -2,7 +2,7 @@ import GradesTable from "../components/GradesTable"
 
 export default function Landing({title}) {
     return (
-        <div className="flex flex-col p-10 space-y-10">
+        <div className="flex flex-col w-full h-full p-10 space-y-10">
             <div className="flex flex-col space-y-1">
                 <h1 className="text-3xl font-bold">Welcome to {title}.ai</h1>
                 <p>This will serve as the base project file for my Quiz / Reviewer Generator using Vicuna 13-B LLM</p>

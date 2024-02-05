@@ -4,11 +4,14 @@ import { Menu } from '@headlessui/react';
 import { FaChevronDown, FaThLarge, FaChartPie, FaSignInAlt } from 'react-icons/fa';
 import { BsMailbox2Flag } from 'react-icons/bs';
 
-export default function Sidebar() {
+export default function Sidebar({uname}) {
     return (
         <aside id='default-sidebar' className='w-64 min-wid-full h-screen transition-transform -translate-x-full sm:translate-x-0' aria-label='Sidebar'>
             <div className='h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
                 <ul className='space-y-2 font-medium'>
+                    <li>
+                        <h1>Welcome, {uname}!</h1>
+                    </li>
                     <li>
                         <a className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
                             <div className='flex order-first items-center'>

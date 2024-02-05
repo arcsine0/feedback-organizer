@@ -17,8 +17,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-        <div className='flex'>
-          <Sidebar className='flex-none' />
+        <div className='flex w-full h-full z-0'>
+          <Sidebar className='flex-none' uname={'Guest'} />
           <Routes>
             <Route path='/' index element={<Landing title={'LMS'} />} />
             <Route path='/courses' element={<Courses />} />
