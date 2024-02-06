@@ -1,8 +1,5 @@
 
 DocViewer
-Page
-of 5
-Pages
 Cybersecurity Professionals and Their Tasks
 Introduction to Risks, Threats, and Vulnerabilities
 Information Systems Security
@@ -13,12 +10,12 @@ A successful cybersecurity approach has multiple layers of protection spread acr
 programs, or data that one intends to keep safe. In an organization, the people, processes, and technology
 must all complement one another to create an effective defense from cyber attacks.
 These are the following tasks of cybersecurity professionals:
- Utilizing every type of medium to stay on top of technology and security threats
- Being aware through analyzing and evaluating threats
- Going through all the systems to check for any potential issue
- Putting proper security measures in place and establishing a protocol
- Creating reports for shareholders
- Spreading the word about security and its importance throughout the company.
+Utilizing every type of medium to stay on top of technology and security threats
+Being aware through analyzing and evaluating threats
+Going through all the systems to check for any potential issue
+ Putting proper security measures in place and establishing a protocol
+ Creating reports for shareholders
+ Spreading the word about security and its importance throughout the company.
 Four (4) Cybersecurity Career Paths
 1. Security Architect – This individual is responsible for maintaining the security of a company’s computer
 system. They must think like a hacker would because they must anticipate all of the moves and tactics
@@ -102,33 +99,33 @@ and officers, but recent history has seen an expanding personal risk raising the
 continue to expand their focus and set a strong tone across the company, not only for actions taken
 after a cyber-incident but also for proactive preparation and planning.
 Cybersecurity Threats and Vulnerabilities
- Ransomware is a type of malicious software designed to extort money by blocking access to files or
+ Ransomware is a type of malicious software designed to extort money by blocking access to files or
 the computer system until the ransom is paid. Paying the ransom, however, does not guarantee that
 the files of the system will be recovered or restored.
- Malware is a type of software designed to gain unauthorized access or cause damage to a computer.
- Social engineering is a tactic that adversaries use to trick a user into revealing sensitive information.
+ Malware is a type of software designed to gain unauthorized access or cause damage to a computer.
+ Social engineering is a tactic that adversaries use to trick a user into revealing sensitive information.
 They can solicit a monetary payment or gain access to confidential data. Social engineering can be
 combined with any of the threats to make the user click on links, download malware, or trust a
 malicious source.
- Phishing is the practice of sending fraudulent e-mails that resemble e-mails from reputable sources.
+ Phishing is the practice of sending fraudulent e-mails that resemble e-mails from reputable sources.
 It aims to steal sensitive data like credit card numbers and login information. It is the most common
 type of cyberattack.
- Crypting services are used for encrypting malware to obscure and make the data difficult to detect.
- Crimeware is the buying and selling of malware on the “Dark Web,” a black market for cyber criminals.
+ Crypting services are used for encrypting malware to obscure and make the data difficult to detect.
+ Crimeware is the buying and selling of malware on the “Dark Web,” a black market for cyber criminals.
 It is a software designed to enable other people (typically those with minimal technical skills) to
 become cyber criminals.
- Remote administration tools are a type of malware that, once activated, grants hackers control over
+ Remote administration tools are a type of malware that, once activated, grants hackers control over
 the infected computer. The attacker can then proceed with stealing data from the machine, rendering
 it inoperable, and using the camera.
- Keyloggers are malware that tracks keystrokes, enabling the attacker to eavesdrop on confidential
+ Keyloggers are malware that tracks keystrokes, enabling the attacker to eavesdrop on confidential
 conversations and steal login credentials.
- Exploit kits work by targeting users who think they are visiting a trusted site but then get redirected
+ Exploit kits work by targeting users who think they are visiting a trusted site but then get redirected
 to a malicious site.
- Leaked data are data stolen from a user’s machine that can easily be sold on the Dark Web. Examples
+ Leaked data are data stolen from a user’s machine that can easily be sold on the Dark Web. Examples
 include credit card numbers, social security numbers, and corporate login credentials.
- Card skimmers are implanted in places like Point-of-Sale (POS) machines, bank teller machines, and
+ Card skimmers are implanted in places like Point-of-Sale (POS) machines, bank teller machines, and
 gas pumps to steal identity and credit card account data.
- Unpatched systems – A great proportion of cybersecurity vulnerabilities can be resolved through the
+ Unpatched systems – A great proportion of cybersecurity vulnerabilities can be resolved through the
 application of software patches. However, for reasons related to IT operations, and in some cases to
 aging software, a lot of systems may lack security patches. These outdated systems are vulnerable to
 attack.
@@ -152,21 +149,21 @@ unreachable data due to malicious actions like distributed denial-of-service (DD
 Data Classification Standards
 This standard aims to establish a framework for classifying data based on its level of sensitivity, value, and
 criticalness. Classification of data will aid in determining baseline security controls for the protection of data.
- Understanding – The cycle of managing data begins with understanding what the data is, how it has
+ Understanding – The cycle of managing data begins with understanding what the data is, how it has
 been classified, and where it will be located. The information management life cycle is iterative and
 will keep looping back in understanding data. For example, as data changes and becomes aggregated,
 it may need to be reclassified.
- Creating – This includes, but is not limited to, collecting data, experimenting, observing, and
+ Creating – This includes, but is not limited to, collecting data, experimenting, observing, and
 measuring and simulation.
- Storing – This includes, but is not limited to, designing research, locating existing data, and capturing
+ Storing – This includes, but is not limited to, designing research, locating existing data, and capturing
 and creating metadata.
- Using – This includes, but is not limited to, entering data, digitizing, transcribing and translating,
+ Using – This includes, but is not limited to, entering data, digitizing, transcribing and translating,
 checking, validating, filtering and cleaning data, anonymizing data where necessary, describing,
 managing, interpreting, and deriving data, and statistical analysis.
- Sharing – This includes, but is not limited to, distributing, sharing, promoting data, controlling access,
+ Sharing – This includes, but is not limited to, distributing, sharing, promoting data, controlling access,
 establishing copyright, producing research outputs and author publications, preparing data for
 preservation, and using the data classification definitions to help the user through this process.
- Archiving – This includes, but is not limited to, migrating data to the best format and suitable medium,
+ Archiving – This includes, but is not limited to, migrating data to the best format and suitable medium,
 backing up and storing data, creating metadata and documentation, and archiving data.
- Destroying – This includes, but is not limited to, disposing of data, destroying paper records and
+ Destroying – This includes, but is not limited to, disposing of data, destroying paper records and
 electronic media, and electronic shredding.
