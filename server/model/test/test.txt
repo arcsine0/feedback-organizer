@@ -1,5 +1,3 @@
-
-DocViewer
 Cybersecurity Professionals and Their Tasks
 Introduction to Risks, Threats, and Vulnerabilities
 Information Systems Security
