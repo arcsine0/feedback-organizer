@@ -9,7 +9,8 @@ app = FastAPI()
 
 class Feedback(BaseModel):
     content: str
-    date: str | None = None
+    date: str
+    tags: list
 
 class Result:
     content: str
@@ -25,12 +26,12 @@ def read_root():
 async def process_feedback(fd: Feedback):
     
     emotion = emotion_model(fd.content)
-    tag = topic_model(fd.content)
+    tag = topic_model(fd.content, fd.tags, multi_label=False)
 
     res = {
         'content': fd.content,
-        'emotion': await emotion[0]['label'],
-        'tag': await tag['labels'][0],
+        'emotion': emotion[0]['label'],
+        'tag': tag['labels'][0],
         'date': fd.date
     }    
         
