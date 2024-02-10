@@ -2,20 +2,20 @@ import { useState } from "react"
 import AuthModal from "../components/AuthModal";
 
 export default function SignIn() {
-    const [uname, setUname] = useState('');
-    const [pass, setPass] = useState('');
+    const [uname, setUname] = useState("");
+    const [pass, setPass] = useState("");
 
     const [showAuth, setShowAuth] = useState(false);
 
     const creds = {
-        'accounts': [
+        "accounts": [
             {
-                'uname': 'john',
-                'pass': '123456'
+                "uname": "john",
+                "pass": "123456"
             },
             {
-                'uname': 'mary',
-                'pass': '456'
+                "uname": "mary",
+                "pass": "456"
             }
         ]
     }

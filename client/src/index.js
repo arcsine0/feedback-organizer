@@ -1,30 +1,30 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
-import './index.css';
+import "./index.css";
 
-import Landing from './pages/Landing'
-import Sidebar from './components/Sidebar';
-import Courses from './pages/Courses';
-import Inbox from './pages/Inbox';
-import SignIn from './pages/SignIn';
-import CoursePage from './pages/CoursePage';
+import Landing from "./pages/Landing"
+import Sidebar from "./components/Sidebar";
+import Sources from "./pages/Sources";
+import Inbox from "./pages/Inbox";
+import SignIn from "./pages/SignIn";
+import SourcePage from "./pages/SourcePage";
 
-import reportWebVitals from './reportWebVitals';
+import reportWebVitals from "./reportWebVitals";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-        <div className='flex w-full h-full z-0'>
-          <Sidebar className='flex-none' uname={'Guest'} />
+        <div className="flex w-full h-full z-0">
+          <Sidebar className="flex-none" uname={"Guest"} />
           <Routes>
-            <Route path='/' index element={<Landing title={'LMS'} />} />
-            <Route path='/courses' element={<Courses />} />
-            <Route path='/inbox' element={<Inbox />} />
-            <Route path='/signin' element={<SignIn />} />
-            <Route path='/course' element={<CoursePage title={'Course 1'} />} />
+            <Route path="/" index element={<Landing />} />
+            <Route path="/sources" element={<Sources />} />
+            <Route path="/inbox" element={<Inbox />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/course" element={<SourcePage title={"Source 1"} />} />
           </Routes>
         </div>
       </BrowserRouter>

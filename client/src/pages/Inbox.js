@@ -1,4 +1,4 @@
-import CourseCard from "../components/CourseCard";
+import CourseCard from "../components/SourceCard";
 
 import { IoIosAddCircleOutline } from "react-icons/io";
 

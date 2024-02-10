@@ -25,14 +25,14 @@ export default function Sidebar({uname}) {
                             <Menu as="div" className="flex flex-col space-y-2 w-full h-full">
                                 <Menu.Button className='flex p-2 items-center dark:text-white text-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group'>
                                     <FaThLarge className='order-first' />
-                                    <span className='ms-3'>Courses</span>
+                                    <span className='ms-3'>Sources</span>
                                     <div className='grow'></div>
                                     <FaChevronDown className='order-last' />
                                 </Menu.Button>
                                 <Menu.Items className="flex flex-col">
                                     <Menu.Item>
                                         <a className='p-1 dark:text-white text-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group'>
-                                            <Link to={'/courses'}><span className='ms-3'>Course</span></Link>
+                                            <Link to={'/sources'}><span className='ms-3'>Course</span></Link>
                                         </a>
                                     </Menu.Item>
                                     <Menu.Item>
