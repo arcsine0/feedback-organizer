@@ -6,6 +6,7 @@ import "./index.css";
 
 import Landing from "./pages/Landing"
 import Sidebar from "./components/Sidebar";
+import Playground from "./pages/Playground";
 import Sources from "./pages/Sources";
 import Inbox from "./pages/Inbox";
 import SignIn from "./pages/SignIn";
@@ -21,6 +22,7 @@ root.render(
           <Sidebar className="flex-none" uname={"Guest"} />
           <Routes>
             <Route path="/" index element={<Landing />} />
+            <Route path="/playground" element={<Playground />} />
             <Route path="/sources" element={<Sources />} />
             <Route path="/inbox" element={<Inbox />} />
             <Route path="/signin" element={<SignIn />} />

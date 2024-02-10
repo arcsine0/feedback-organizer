@@ -3,6 +3,7 @@ import { Menu } from '@headlessui/react';
 
 import { FaChevronDown, FaThLarge, FaChartPie, FaSignInAlt } from 'react-icons/fa';
 import { BsMailbox2Flag } from 'react-icons/bs';
+import { GrTest } from "react-icons/gr";
 
 export default function Sidebar({uname}) {
     return (
@@ -17,6 +18,14 @@ export default function Sidebar({uname}) {
                             <div className='flex order-first items-center'>
                                 <FaChartPie className='order-first' />
                                 <Link to={'/'}><span className='ms-3'>Dashboard</span></Link>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
+                            <div className='flex order-first items-center'>
+                                <GrTest className='order-first' />
+                                <Link to={'/playground'}><span className='ms-3'>Playground</span></Link>
                             </div>
                         </a>
                     </li>

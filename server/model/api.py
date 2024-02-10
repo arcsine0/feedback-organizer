@@ -1,5 +1,6 @@
 from transformers import pipeline
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 emotion_model = pipeline("text-classification", model="SamLowe/roberta-base-go_emotions")
@@ -17,6 +18,19 @@ class Result:
     emotion: str
     tag: str
     date: str
+
+origins = [
+    'http://localhost:3000'
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get('/')
 def read_root():
