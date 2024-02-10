@@ -32,12 +32,12 @@ export default function Sidebar({uname}) {
                                 <Menu.Items className="flex flex-col">
                                     <Menu.Item>
                                         <a className='p-1 dark:text-white text-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group'>
-                                            <Link to={'/sources'}><span className='ms-3'>Course</span></Link>
+                                            <Link to={'/sources'}><span className='ms-3'>All Sources</span></Link>
                                         </a>
                                     </Menu.Item>
                                     <Menu.Item>
                                         <a className='p-1 dark:text-white text-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group'>
-                                            <Link to={'/course'}><span className='ms-3'>Lessons</span></Link>
+                                            <Link to={'/course'}><span className='ms-3'>Temp Source Page</span></Link>
                                         </a>
                                     </Menu.Item>
                                 </Menu.Items>
