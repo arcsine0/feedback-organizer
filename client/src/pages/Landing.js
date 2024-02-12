@@ -12,10 +12,10 @@ export default function Landing() {
             <div className="flex flex-col space-y-1">
                 <h1 className="text-3xl font-bold">Usage</h1>
             </div>
-            <div className="flex flex-col space-y-1">
+            {/* <div className="flex flex-col space-y-1">
                 <h1 className="text-3xl font-bold">Grade Calculator</h1>
                 <GradesTable />
-            </div>
+            </div> */}
         </div>
     )
 }
