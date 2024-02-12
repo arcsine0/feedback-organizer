@@ -1,4 +1,4 @@
-import GradesTable from "../components/GradesTable"
+// import GradesTable from "../components/GradesTable"
 
 export default function Landing() {
     return (

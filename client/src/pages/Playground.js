@@ -18,7 +18,7 @@ export default function Playground() {
             body: JSON.stringify({
                 content: feedback,
                 date: toString(Date.now),
-                tags: ["Bug Report", "Server Outtage", "Customer Service", "Billing Error"]
+                tags: ["Bug Report", "Server Outtage", "Customer Service", "Billing Error", "Suggestion", "Spam", "Other"]
             })
         }
 
