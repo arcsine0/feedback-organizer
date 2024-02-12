@@ -15,7 +15,7 @@ to run the React front-end.
 
 # Server
 The server side, specifically the REST api is handled with **FastAPI Python**. To set the api up, head to the **server** directory, under **model**, do
-> `pip install requirements.txt`
+> `pip install -r requirements.txt`
 
 Once all the packages are installed, do a 
 > `uvicorn api:app --reload`
