@@ -22,7 +22,8 @@ export default function Playground() {
             })
         }
 
-        fetch("http://127.0.0.1:8000/process/", reqOptions)
+        if (feedback !== "") {
+            fetch("http://127.0.0.1:8000/process/", reqOptions)
             .then(res => res.json())
             .then(data => {
                 setEmotion(data.response.emotion);
@@ -31,6 +32,10 @@ export default function Playground() {
                 setBtnDisable(false);
                 setBtnLabel("Process");
             })
+        } else {
+            setBtnDisable(false);
+            setBtnLabel("Process");
+        }
     }
 
     return (
@@ -57,7 +62,6 @@ export default function Playground() {
                     <h1 className="text-lg font-semibold">Tag:</h1>
                     <div className="py-1 px-3 text-sm font-bold text-black bg-slate-200 rounded-lg">{tag}</div>
                 </div>
-
             </div>
         </div>
     )
