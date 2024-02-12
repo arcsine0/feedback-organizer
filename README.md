@@ -9,7 +9,7 @@ The client side is handled by **React**, to set this up, head to the **client** 
 > `npm install`
 
 Once all the dependencies are installed, do a
-> `npm start`
+> `npm start` \
 to run the React front-end.
 
 # Server
@@ -17,5 +17,5 @@ The server side, specifically the REST api is handled with **FastAPI Python**. T
 > `pip install requirements.txt`
 
 Once all the packages are installed, do a 
-> `uvicorn api:app --reload`
+> `uvicorn api:app --reload` \
 to run the api server.
