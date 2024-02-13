@@ -21,7 +21,7 @@ FROM python:3.10 AS server
 WORKDIR /usr/src/server
 
 # Copy the Python API files
-COPY server/requirements.txt ./
+COPY server/model/requirements.txt ./
 COPY server/ ./
 
 # Install Python dependencies
