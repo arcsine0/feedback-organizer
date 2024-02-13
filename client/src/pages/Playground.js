@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { Listbox } from "@headlessui/react";
+
+import { FaChevronDown } from 'react-icons/fa';
 
 import Label from "../components/Label";
 
@@ -6,6 +9,11 @@ export default function Playground() {
     const [feedback, setFeedback] = useState("");
     const [label, setLabel] = useState("");
     const [labels, setLabels] = useState(["Bug Report", "Server Outtage", "Customer Service", "Billing Error", "Suggestion", "Spam", "Other"]);
+
+    const [selectedLabel, setSelectedLabel] = useState(labels[0]);
+    const [currentSubLabels, setCurrentSubLabels] = useState(["Default"]);
+    const [subLabel, setSubLabel] = useState("")
+    const [subLabels, setSubLabels] = useState([]);
 
     const [emotion, setEmotion] = useState("");
     const [tag, setTag] = useState("");
@@ -15,6 +23,14 @@ export default function Playground() {
     const [btnDisable, setBtnDisable] = useState(false);
 
     const [labelError, setLabelError] = useState("");
+
+    let reference = []
+
+    const updateReference = () => {
+        labels.forEach((la) => {
+            reference[la] = []
+        });
+    }
 
     const addLabel = () => {
         if (!labels.includes(label) && label !== "") {
@@ -29,6 +45,10 @@ export default function Playground() {
         } else {
             setLabelError("There should at least be 1 tag");
         }
+    }
+
+    const addSubLabel = () => {
+
     }
 
     const processFeedback = () => {
@@ -89,6 +109,42 @@ export default function Playground() {
                             onChange={(e) => setLabel(e.target.value)}
                         />
                         <button onClick={addLabel} className="flex h-5 shrink p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Set</button>
+                    </div>
+                    <h1 className="text-2xl font-bold">Set Sub-Tags</h1>
+                    <Listbox as="div" className="p-2 bg-slate-200 w-1/4 rounded-lg" value={selectedLabel} onChange={setSelectedLabel}>
+                        <Listbox.Button className="flex flex-row w-full items-center">
+                            <span className="font-bold order-first">{selectedLabel}</span>
+                            <span className="grow"></span>
+                            <span className="order-last"><FaChevronDown /></span>
+                        </Listbox.Button>
+                        <Listbox.Options className="space-y-1">
+                            {labels.map((la, ind) => (
+                                <Listbox.Option
+                                    key={ind}
+                                    value={la}
+                                    className="p-2 font-semibold hover:bg-slate-100 rounded-lg select-none cursor-pointer"
+                                >
+                                    {la}
+                                </Listbox.Option>
+                            ))}
+                        </Listbox.Options>
+                    </Listbox>
+                    <div className="flex flex-col space-y-1">
+                        <div className="p-2 w-full h-2/3 flex flex-row flex-wrap space-x-2 border-2 border-dashed border-slate-600 rounded-lg">
+                            {labels.map((la, ind) => (
+                                <Label name={la} remove={removeLabel} />
+                            ))}
+                        </div>
+                        <p className="font-semibold text-red-400">{labelError}</p>
+                    </div>
+                    <div className="flex flex-row space-x-4 item-center">
+                        <input
+                            type="text"
+                            className="p-2 grow h-2/3 border-2 rounded-lg text-pretty"
+                            value={subLabel}
+                            onChange={(e) => setSubLabel(e.target.value)}
+                        />
+                        <button onClick={addSubLabel} className="flex h-5 shrink p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Set</button>
                     </div>
                     <div className={btnDisable ? "opacity-50" : "opacity-100"}>
                         <button onClick={processFeedback} disabled={btnDisable} className="flex h-5 w-48 p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">{btnLabel}</button>
