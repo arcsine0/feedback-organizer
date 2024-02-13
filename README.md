@@ -21,3 +21,7 @@ Once all the packages are installed, do a
 > `uvicorn api:app --reload`
 
 to run the api server.
+
+# Testing
+Until I implement the sorting logic, you can test the models in the **Playground**. Just select it on the sidebar or navigate to `/playground`.
+Make sure that the api is up and running before doing this though.
