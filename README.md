@@ -28,7 +28,7 @@ Make sure that the api is up and running before doing this though.
 
 # Planned features
 So the way I'm thinking this could work is that the user could define a **Source** (i.e, directly on the app, from google forms, etc...) and then we just process the feedbacks and display it on the app. 
-Then the sorting can be configured by the user depending on the predicted emotion, tag, date, or based on **Importance**. The **Importance** sorting would be a combination of emotion + topic depending on the use case also selected by the user, which we are to define ourselves. \
+Then the sorting can be configured by the user depending on the predicted emotion, tag, date, or based on **Importance**. The **Importance** sorting would be a combination of emotion + topic depending on the use case also selected by the user, which we are to define ourselves.
 
 Tags will also have **Sub-tags** to further categorize the feedbacks. This could serve as the actual main topic of the feedbacks. For example, a feedback categorized as a `Bug Report` could be further specified to either `UI/UX` or `Loading Time`.
 
