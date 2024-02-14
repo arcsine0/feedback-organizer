@@ -34,8 +34,44 @@ export default function Playground() {
         const mainTags = reference.use_cases[0]
             .tags.map(mT => mT.mainTag);
 
+        const subTags = reference.use_cases[0]
+            .tags.find(ta => ta.mainTag === "Bug Report")
+            .subTag;
+
+        setSelectedSource(reference.use_cases[0].use_case);
         setLabels(mainTags);
+        setSelectedLabel(reference.use_cases[0].tags[0].mainTag);
+        setSubLabels(subTags);
     }, []);
+
+    const updateReference = (action) => {
+        const updatedReference = { ...reference };
+
+        const selectedUseCaseIndex = updatedReference.use_cases.findIndex(uc => uc.use_case === selectedSource);
+
+        if (selectedUseCaseIndex !== -1) {
+            switch(action) {
+                case "add_tag":
+                    updatedReference.use_cases[selectedUseCaseIndex].tags = labels.map(mT => ({
+                        mainTag: mT,
+                        subTag: selectedLabel === mT ? subLabels : []
+                    }));
+                    break;
+                case "add_subTag":
+                    updatedReference.use_cases[selectedUseCaseIndex]
+                        .tags.find(ta => ta.mainTag === selectedLabel)
+                        .subTag = subLabels;
+                        break;
+                case "remove_tag":
+                case "remove_subTag":
+                default:
+            }
+        }
+
+        console.log(updatedReference)
+
+        setReference(updatedReference);
+    };
 
     const handleSourceChange = (source) => {
         setSelectedSource(source);
@@ -60,6 +96,7 @@ export default function Playground() {
         if (!labels.includes(label) && label !== "") {
             setLabels(labels => [...labels, label]);
             setLabelError("");
+            updateReference("add_tag");
         }
     }
 
@@ -75,6 +112,7 @@ export default function Playground() {
         if (!subLabels.includes(subLabel) && subLabel !== "") {
             setSubLabels(subLabels => [...subLabels, subLabel]);
             setSubLabelError("");
+            updateReference("add_subTag");
         }
     }
 
