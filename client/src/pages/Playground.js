@@ -22,7 +22,7 @@ export default function Playground() {
 
     const [emotion, setEmotion] = useState("");
     const [tag, setTag] = useState("");
-    const [subTags, setSubTags] = useState([]);
+    const [subTag, setSubTag] = useState("");
 
     const [btnLabel, setBtnLabel] = useState("Process");
     const [btnDisable, setBtnDisable] = useState(false);
@@ -139,13 +139,16 @@ export default function Playground() {
         setBtnDisable(true);
         setBtnLabel("Processing...");
 
+        let selectedSourceIndex = reference.use_cases.findIndex(uc => uc.use_case === selectedSource);
+        let finalReference = reference.use_cases[selectedSourceIndex];
+
         const reqOptions = {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 content: feedback,
                 date: toString(Date.now),
-                tags: labels
+                tags: finalReference
             })
         }
 
@@ -155,6 +158,7 @@ export default function Playground() {
                 .then(data => {
                     setEmotion(data.response.emotion);
                     setTag(data.response.tag);
+                    setSubTag(data.response.subTag);
 
                     setBtnDisable(false);
                     setBtnLabel("Process");
@@ -268,6 +272,10 @@ export default function Playground() {
                     <div className="flex flex-row space-x-2 items-center">
                         <h1 className="text-lg font-semibold">Tag:</h1>
                         <div className="py-1 px-3 text-sm font-bold text-black bg-slate-200 rounded-lg">{tag}</div>
+                    </div>
+                    <div className="flex flex-row space-x-2 items-center">
+                        <h1 className="text-lg font-semibold">Sub-Tag:</h1>
+                        <div className="py-1 px-3 text-sm font-bold text-black bg-slate-200 rounded-lg">{subTag}</div>
                     </div>
                 </div>
             </div>

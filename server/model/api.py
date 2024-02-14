@@ -11,12 +11,13 @@ app = FastAPI()
 class Feedback(BaseModel):
     content: str
     date: str
-    tags: list
+    tags: dict
 
 class Result:
     content: str
     emotion: str
     tag: str
+    subTag: str
     date: str
 
 origins = [
@@ -38,14 +39,21 @@ def read_root():
 
 @app.post('/process/')
 async def process_feedback(fd: Feedback):
-    
+    main_tags = [tag["mainTag"] for tag in fd.tags["tags"]]
+
     emotion = emotion_model(fd.content)
-    tag = topic_model(fd.content, fd.tags, multi_label=False)
+    mainTag = topic_model(fd.content, main_tags, multi_label=False)
+
+    sub_tags = [tag["subTag"] for tag in fd.tags["tags"] if tag["mainTag"] == mainTag['labels'][0]]
+    subTag = topic_model(fd.content, sub_tags[0], multi_label=False)
+
+    print(sub_tags)
 
     res = {
         'content': fd.content,
         'emotion': emotion[0]['label'],
-        'tag': tag['labels'][0],
+        'tag': mainTag['labels'][0],
+        'subTag': subTag['labels'][0],
         'date': fd.date
     }    
         
