@@ -44,27 +44,24 @@ export default function Playground() {
         setSubLabels(subTags);
     }, []);
 
-    const updateReference = (action) => {
+    const updateReference = (action, data) => {
         const updatedReference = { ...reference };
 
         const selectedUseCaseIndex = updatedReference.use_cases.findIndex(uc => uc.use_case === selectedSource);
 
         if (selectedUseCaseIndex !== -1) {
-            switch(action) {
-                case "add_tag":
-                    updatedReference.use_cases[selectedUseCaseIndex].tags = labels.map(mT => ({
-                        mainTag: mT,
-                        subTag: selectedLabel === mT ? subLabels : []
-                    }));
-                    break;
-                case "add_subTag":
-                    updatedReference.use_cases[selectedUseCaseIndex]
-                        .tags.find(ta => ta.mainTag === selectedLabel)
-                        .subTag = subLabels;
-                        break;
-                case "remove_tag":
-                case "remove_subTag":
-                default:
+            let currentUseCase = updatedReference.use_cases[selectedUseCaseIndex];
+            if (action === "main") {
+                currentUseCase.tags = data.map((mT, i) => ({
+                    mainTag: mT,
+                    subTag: selectedLabel === mT 
+                    ? subLabels
+                    : currentUseCase.tags[i]?.subTag || []
+                }));
+            } else {
+                updatedReference.use_cases[selectedUseCaseIndex]
+                    .tags.find(ta => ta.mainTag === selectedLabel)
+                    .subTag = data;
             }
         }
 
@@ -80,6 +77,10 @@ export default function Playground() {
             .tags.map(mT => mT.mainTag);
 
         setLabels(mainTags);
+        
+        let selectedSourceIndex = reference.use_cases.findIndex(uc => uc.use_case === source);
+        setSelectedLabel(reference.use_cases[selectedSourceIndex].tags[0].mainTag);
+        setSubLabels(reference.use_cases[selectedSourceIndex].tags[0].subTag);
     }
 
     const handleLabelChange = (lab) => {
@@ -94,15 +95,20 @@ export default function Playground() {
 
     const addLabel = () => {
         if (!labels.includes(label) && label !== "") {
-            setLabels(labels => [...labels, label]);
+            let newLabels = [...labels, label]
+            setLabels(newLabels);
             setLabelError("");
-            updateReference("add_tag");
+            updateReference("main", newLabels);
         }
     }
 
     const removeLabel = (name) => {
         if (labels.length > 1) {
-            setLabels(labels.filter(la => la !== name));
+            let newLabels = labels.filter(la => la !== name)
+            setLabels(newLabels);
+            updateReference("main", newLabels);
+
+            setLabelError("");
         } else {
             setLabelError("There should at least be 1 tag");
         }
@@ -110,15 +116,20 @@ export default function Playground() {
 
     const addSubLabel = () => {
         if (!subLabels.includes(subLabel) && subLabel !== "") {
-            setSubLabels(subLabels => [...subLabels, subLabel]);
+            let newSubLabels = [...subLabels, subLabel]
+            setSubLabels(newSubLabels);
             setSubLabelError("");
-            updateReference("add_subTag");
+            updateReference("sub", newSubLabels);
         }
     }
 
     const removeSubLabel = (name) => {
         if (subLabels.length > 1) {
-            setSubLabels(subLabels.filter(la => la !== name));
+            let newSubLabels = subLabels.filter(la => la !== name)
+            setSubLabels(newSubLabels);
+            updateReference("sub", newSubLabels);
+
+            setSubLabelError("");
         } else {
             setSubLabelError("There should at least be 1 tag");
         }
