@@ -1,17 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Listbox } from "@headlessui/react";
 
 import { FaChevronDown } from 'react-icons/fa';
 
 import Label from "../components/Label";
 
+import useCases from '../defaults/UseCases.json';
+
 export default function Playground() {
     const [feedback, setFeedback] = useState("");
+
+    const [reference, setReference] = useState(useCases);
+    const [selectedSource, setSelectedSource] = useState(reference.use_cases[0].use_case);
+
     const [label, setLabel] = useState("");
-    const [labels, setLabels] = useState(["Bug Report", "Server Outtage", "Customer Service", "Billing Error", "Suggestion", "Spam", "Other"]);
+    const [labels, setLabels] = useState([]);
 
     const [selectedLabel, setSelectedLabel] = useState(labels[0]);
-    const [currentSubLabels, setCurrentSubLabels] = useState(["Default"]);
     const [subLabel, setSubLabel] = useState("")
     const [subLabels, setSubLabels] = useState([]);
 
@@ -23,13 +28,32 @@ export default function Playground() {
     const [btnDisable, setBtnDisable] = useState(false);
 
     const [labelError, setLabelError] = useState("");
+    const [subLabelError, setSubLabelError] = useState("");
 
-    let reference = []
+    useEffect(() => {
+        const mainTags = reference.use_cases[0]
+            .tags.map(mT => mT.mainTag);
 
-    const updateReference = () => {
-        labels.forEach((la) => {
-            reference[la] = []
-        });
+        setLabels(mainTags);
+    }, []);
+
+    const handleSourceChange = (source) => {
+        setSelectedSource(source);
+        const mainTags = reference.use_cases
+            .find(uc => uc.use_case === source)
+            .tags.map(mT => mT.mainTag);
+
+        setLabels(mainTags);
+    }
+
+    const handleLabelChange = (lab) => {
+        setSelectedLabel(lab);
+        const subTags = reference.use_cases
+            .find(uc => uc.use_case === selectedSource)
+            .tags.find(ta => ta.mainTag === lab)
+            .subTag;
+
+        setSubLabels(subTags);
     }
 
     const addLabel = () => {
@@ -48,7 +72,18 @@ export default function Playground() {
     }
 
     const addSubLabel = () => {
+        if (!subLabels.includes(subLabel) && subLabel !== "") {
+            setSubLabels(subLabels => [...subLabels, subLabel]);
+            setSubLabelError("");
+        }
+    }
 
+    const removeSubLabel = (name) => {
+        if (subLabels.length > 1) {
+            setSubLabels(subLabels.filter(la => la !== name));
+        } else {
+            setSubLabelError("There should at least be 1 tag");
+        }
     }
 
     const processFeedback = () => {
@@ -92,6 +127,28 @@ export default function Playground() {
                         value={feedback}
                         onChange={(e) => setFeedback(e.target.value)}
                     />
+                    <h1 className="text-2xl font-bold">Set Source Type</h1>
+                    <Listbox as="div" className="p-2 bg-slate-200 w-1/4 rounded-lg" 
+                        value={selectedSource} 
+                        onChange={(newSource) => handleSourceChange(newSource)}
+                    >
+                        <Listbox.Button className="flex flex-row w-full items-center">
+                            <span className="font-bold order-first">{selectedSource}</span>
+                            <span className="grow"></span>
+                            <span className="order-last"><FaChevronDown /></span>
+                        </Listbox.Button>
+                        <Listbox.Options className="space-y-1">
+                            {reference.use_cases.map((ref, ind) => (
+                                <Listbox.Option
+                                    key={ind}
+                                    value={ref.use_case}
+                                    className="p-2 font-semibold hover:bg-slate-100 rounded-lg select-none cursor-pointer"
+                                >
+                                    {ref.use_case}
+                                </Listbox.Option>
+                            ))}
+                        </Listbox.Options>
+                    </Listbox>
                     <h1 className="text-2xl font-bold">Set Tags</h1>
                     <div className="flex flex-col space-y-1">
                         <div className="p-2 w-full h-2/3 flex flex-row flex-wrap space-x-2 border-2 border-dashed border-slate-600 rounded-lg">
@@ -111,7 +168,10 @@ export default function Playground() {
                         <button onClick={addLabel} className="flex h-5 shrink p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Set</button>
                     </div>
                     <h1 className="text-2xl font-bold">Set Sub-Tags</h1>
-                    <Listbox as="div" className="p-2 bg-slate-200 w-1/4 rounded-lg" value={selectedLabel} onChange={setSelectedLabel}>
+                    <Listbox as="div" className="p-2 bg-slate-200 w-1/4 rounded-lg" 
+                        value={selectedLabel} 
+                        onChange={(newLabel) => handleLabelChange(newLabel)}
+                    >
                         <Listbox.Button className="flex flex-row w-full items-center">
                             <span className="font-bold order-first">{selectedLabel}</span>
                             <span className="grow"></span>
@@ -131,11 +191,11 @@ export default function Playground() {
                     </Listbox>
                     <div className="flex flex-col space-y-1">
                         <div className="p-2 w-full h-2/3 flex flex-row flex-wrap space-x-2 border-2 border-dashed border-slate-600 rounded-lg">
-                            {labels.map((la, ind) => (
-                                <Label name={la} remove={removeLabel} />
+                            {subLabels.map((la, ind) => (
+                                <Label name={la} remove={removeSubLabel} />
                             ))}
                         </div>
-                        <p className="font-semibold text-red-400">{labelError}</p>
+                        <p className="font-semibold text-red-400">{subLabelError}</p>
                     </div>
                     <div className="flex flex-row space-x-4 item-center">
                         <input

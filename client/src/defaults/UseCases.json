@@ -1,0 +1,168 @@
+{
+    "use_cases": [
+        {
+            "id": 0,
+            "use_case": "Application",
+            "tags": [
+                {
+                    "mainTag": "Bug Report",
+                    "subTag": [
+                        "Missing Images",
+                        "Slow Response",
+                        "UI Glitches"
+                    ]
+                },
+                {
+                    "mainTag": "Server Outage",
+                    "subTag": [
+                        "Connection Issues",
+                        "Downtime"
+                    ]
+                },
+                {
+                    "mainTag": "Customer Service",
+                    "subTag": [
+                        "Support Request",
+                        "Feedback"
+                    ]
+                },
+                {
+                    "mainTag": "Billing Error",
+                    "subTag": [
+                        "Overcharge",
+                        "Payment Issues"
+                    ]
+                },
+                {
+                    "mainTag": "Suggestion",
+                    "subTag": [
+                        "Feature Request",
+                        "Improvement"
+                    ]
+                },
+                {
+                    "mainTag": "Spam",
+                    "subTag": [
+                        "Unwanted Emails",
+                        "Suspicious Activity"
+                    ]
+                },
+                {
+                    "mainTag": "Inquiry",
+                    "subTag": [
+                        "General Inquiry",
+                        "Product Information"
+                    ]
+                },
+                {
+                    "mainTag": "Other",
+                    "subTag": [
+                        "Miscellaneous"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "use_case": "Website",
+            "tags": [
+                {
+                    "mainTag": "Technical Issue",
+                    "subTag": [
+                        "Broken Links",
+                        "Page Not Loading"
+                    ]
+                },
+                {
+                    "mainTag": "Content Feedback",
+                    "subTag": [
+                        "Typos",
+                        "Content Suggestions"
+                    ]
+                },
+                {
+                    "mainTag": "User Account",
+                    "subTag": [
+                        "Login Problems",
+                        "Password Reset"
+                    ]
+                },
+                {
+                    "mainTag": "Design",
+                    "subTag": [
+                        "Layout Issues",
+                        "Color Scheme"
+                    ]
+                },
+                {
+                    "mainTag": "Security",
+                    "subTag": [
+                        "Vulnerability Report",
+                        "Phishing Concerns"
+                    ]
+                },
+                {
+                    "mainTag": "Other",
+                    "subTag": [
+                        "Miscellaneous"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "use_case": "E-commerce",
+            "tags": [
+                {
+                    "mainTag": "Order Issues",
+                    "subTag": [
+                        "Delivery Delay",
+                        "Wrong Item Shipped",
+                        "Refund Request"
+                    ]
+                },
+                {
+                    "mainTag": "Product Inquiry",
+                    "subTag": [
+                        "Product Availability",
+                        "Specifications"
+                    ]
+                },
+                {
+                    "mainTag": "Customer Feedback",
+                    "subTag": [
+                        "Positive Feedback",
+                        "Negative Feedback"
+                    ]
+                },
+                {
+                    "mainTag": "Technical Support",
+                    "subTag": [
+                        "Website Navigation",
+                        "Checkout Problems"
+                    ]
+                },
+                {
+                    "mainTag": "Promotions",
+                    "subTag": [
+                        "Discount Codes",
+                        "Promotional Offers"
+                    ]
+                },
+                {
+                    "mainTag": "Security",
+                    "subTag": [
+                        "Account Security",
+                        "Fraud Concerns"
+                    ]
+                },
+                {
+                    "mainTag": "Other",
+                    "subTag": [
+                        "Miscellaneous"
+                    ]
+                }
+            ]
+        }
+    ]
+}
