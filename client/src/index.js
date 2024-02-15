@@ -18,7 +18,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-        <div className="flex w-full h-full z-0">
+        <div className="flex w-screen h-screen z-0">
           <Sidebar className="flex-none" uname={"Guest"} />
           <Routes>
             <Route path="/" index element={<Landing />} />
@@ -26,7 +26,7 @@ root.render(
             <Route path="/sources" element={<Sources />} />
             <Route path="/inbox" element={<Inbox />} />
             <Route path="/signin" element={<SignIn />} />
-            <Route path="/course" element={<SourcePage title={"Source 1"} />} />
+            <Route path="/source" element={<SourcePage title={"Source 1"} />} />
           </Routes>
         </div>
       </BrowserRouter>

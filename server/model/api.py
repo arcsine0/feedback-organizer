@@ -38,6 +38,17 @@ app.add_middleware(
 def read_root():
     return {'Hello': 'World'}
 
+@app.get('/feedbacks/')
+async def get_feedbacks():
+    file_path = "./data/Feedbacks.JSON"
+    try:
+        with open(file_path, 'r') as json_file:
+            cached_feedbacks = json.load(json_file)
+    except FileNotFoundError:
+        cached_feedbacks = {'feedbacks': []}
+
+    return {"response": cached_feedbacks}
+
 @app.post('/process/')
 async def process_feedback(fd: Feedback):
     main_tags = [tag["mainTag"] for tag in fd.tags["tags"]]

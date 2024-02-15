@@ -46,7 +46,7 @@ export default function Sidebar({uname}) {
                                     </Menu.Item>
                                     <Menu.Item>
                                         <a className='p-1 dark:text-white text-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group'>
-                                            <Link to={'/course'}><span className='ms-3'>Temp Source Page</span></Link>
+                                            <Link to={'/source'}><span className='ms-3'>Temp Source Page</span></Link>
                                         </a>
                                     </Menu.Item>
                                 </Menu.Items>
