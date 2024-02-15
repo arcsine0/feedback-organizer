@@ -6,12 +6,15 @@ import { FaChevronDown } from 'react-icons/fa';
 import Label from "../components/Label";
 
 import useCases from '../defaults/UseCases.json';
+import sampleFeedbacks from '../defaults/Feedbacks.json';
 
 export default function Playground() {
     const [feedback, setFeedback] = useState("");
 
     const [reference, setReference] = useState(useCases);
     const [selectedSource, setSelectedSource] = useState(reference.use_cases[0].use_case);
+
+    const [feedbacks, setFeedbacks] = useState([]);
 
     const [label, setLabel] = useState("");
     const [labels, setLabels] = useState([]);
@@ -29,6 +32,8 @@ export default function Playground() {
 
     const [labelError, setLabelError] = useState("");
     const [subLabelError, setSubLabelError] = useState("");
+
+    const [feedbackCollection, setFeedbackCollection] = useState([]);
 
     useEffect(() => {
         const mainTags = reference.use_cases[0]
@@ -93,6 +98,32 @@ export default function Playground() {
         setSubLabels(subTags);
     }
 
+    const preProcessFeedback = (fd) => {
+        let processedString = fd.replace(/"/g, "'");
+
+        if (processedString.startsWith('"')) {
+            processedString = fd.slice(1);
+        }
+
+        if (processedString.endsWith('"')) {
+            processedString = fd.slice(0, -1);
+        }
+
+        return processedString;
+    }
+
+    const addFeedback = () => {
+        if (!feedbacks.includes(feedback) && feedback !== "") {
+            let newFeedbacks = [...feedbacks, feedback]
+            setFeedbacks(newFeedbacks);
+
+            console.log("Feedback added:");
+            console.log(feedback);
+
+            setFeedback("");
+        }
+    }
+
     const addLabel = () => {
         if (!labels.includes(label) && label !== "") {
             let newLabels = [...labels, label]
@@ -142,44 +173,63 @@ export default function Playground() {
         let selectedSourceIndex = reference.use_cases.findIndex(uc => uc.use_case === selectedSource);
         let finalReference = reference.use_cases[selectedSourceIndex];
 
-        const reqOptions = {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                content: feedback,
-                date: toString(Date.now),
-                tags: finalReference
-            })
-        }
-
-        if (feedback !== "") {
-            fetch("http://127.0.0.1:8000/process/", reqOptions)
-                .then(res => res.json())
-                .then(data => {
-                    setEmotion(data.response.emotion);
-                    setTag(data.response.tag);
-                    setSubTag(data.response.subTag);
-
-                    setBtnDisable(false);
-                    setBtnLabel("Process");
+        feedbacks.forEach((fd, i) => {
+            const reqOptions = {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    content: fd,
+                    date: toString(Date.now),
+                    tags: finalReference
                 })
-        } else {
-            setBtnDisable(false);
-            setBtnLabel("Process");
-        }
+            }
+    
+            if (feedback !== "") {
+                fetch("http://127.0.0.1:8000/process/", reqOptions)
+                    .then(res => res.json())
+                    .then(d => {
+                        let data = d.response;
+                        setEmotion(data.emotion);
+                        setTag(data.tag);
+                        setSubTag(data.subTag);
+
+                        let newSet = {
+                            "content": data.content,
+                            "date": data.date,
+                            "emotion": data.emotion,
+                            "tag": data.tag,
+                            "subTag": data.subTag
+                        }
+
+                        setFeedbackCollection(feedbackCollection => [...feedbackCollection, newSet]);
+    
+                        setBtnDisable(false);
+                        setBtnLabel("Process");
+
+                        console.log(`Processing Done for Feedback #${i}`);
+                        console.log(feedbackCollection);
+                    })
+            } else {
+                setBtnDisable(false);
+                setBtnLabel("Process");
+            }
+        })
     }
 
     return (
         <div className="flex flex-col w-full h-full p-10 space-y-10">
             <div className="flex flex-col w-2/3 h-full space-y-10">
                 <div className="flex flex-col w-full space-y-4">
-                    <h1 className="text-3xl font-bold">Send Feedback</h1>
-                    <input
-                        type="textarea"
-                        className="p-2 w-full h-2/3 border-2 border-black rounded-lg text-pretty"
-                        value={feedback}
-                        onChange={(e) => setFeedback(e.target.value)}
-                    />
+                    <h1 className="text-3xl font-bold">Send Feedbacks</h1>
+                    <div className="flex flex-row space-x-4 item-center">
+                        <input
+                            type="textarea"
+                            className="p-2 grow h-2/3 border-2 border-black rounded-lg text-pretty"
+                            value={feedback}
+                            onChange={(e) => setFeedback(e.target.value)}
+                        />
+                        <button onClick={addFeedback} className="flex h-5 shrink p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Add</button>
+                    </div>
                     <h1 className="text-2xl font-bold">Set Source Type</h1>
                     <Listbox as="div" className="p-2 bg-slate-200 w-1/4 rounded-lg" 
                         value={selectedSource} 

@@ -3,7 +3,7 @@ import { Disclosure } from "@headlessui/react"
 import { FaChevronDown } from "react-icons/fa";
 import { IoAddOutline } from "react-icons/io5";
 
-export default function FeedbackCard({ count, title, content, emotion, tag }) {
+export default function FeedbackCard({ count, title, content, emotion, date, tag, subTag }) {
     return (
         <Disclosure>
             {({ open }) => (
@@ -22,12 +22,20 @@ export default function FeedbackCard({ count, title, content, emotion, tag }) {
                             <p>{content}</p>
                         </div>
                         <div className="flex flex-row space-x-2 items-center">
+                            <h1 className="text-lg font-semibold">Date:</h1>
+                            <p>{date}</p>
+                        </div>
+                        <div className="flex flex-row space-x-2 items-center">
                             <h1 className="text-lg font-semibold">Emotion:</h1>
                             <div className="py-1 px-3 text-sm font-bold text-white bg-red-400 rounded-lg">{emotion}</div>
                         </div>
                         <div className="flex flex-row space-x-2 items-center">
                             <h1 className="text-lg font-semibold">Tag:</h1>
                             <div className="py-1 px-3 text-sm font-bold text-black bg-slate-200 rounded-lg">{tag}</div>
+                        </div>
+                        <div className="flex flex-row space-x-2 items-center">
+                            <h1 className="text-lg font-semibold">Sub-Tag:</h1>
+                            <div className="py-1 px-3 text-sm font-bold text-black bg-slate-200 rounded-lg">{subTag}</div>
                         </div>
                     </Disclosure.Panel>
                 </>

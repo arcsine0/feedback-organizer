@@ -1,0 +1,144 @@
+{
+  "feedbacks": [
+    {
+      "content": "I am absolutely furious about the persistent bug in your app! It's disrupting my workflow, and attempts to get this resolved have been painfully slow. This is unacceptable, and I demand immediate action to fix this issue and prevent further inconvenience.",
+      "emotion": "anger",
+      "tag": "Other",
+      "subTag": "Miscellaneous",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "The ongoing issues with your website's slow performance are beyond frustrating. It's hindering my ability to navigate and complete tasks efficiently. I expect a swift resolution to this matter. Improve the website speed promptly, or risk losing frustrated users like myself.",
+      "emotion": "annoyance",
+      "tag": "Other",
+      "subTag": "Miscellaneous",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "I am highly dissatisfied with the product/service, and I demand a refund. The quality did not meet my expectations, and your company needs to take responsibility for this. Refund my purchase immediately, or I will escalate this matter further.",
+      "emotion": "annoyance",
+      "tag": "Customer Service",
+      "subTag": "Feedback",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "This is outrageous! I received a faulty product, and it's completely unacceptable. I demand a replacement or a full refund immediately. Your company needs to take responsibility for shipping subpar products. This is an absolute disgrace!",
+      "emotion": "disapproval",
+      "tag": "Other",
+      "subTag": "Miscellaneous",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "Your software is a disaster! Glitches are everywhere, making it nearly impossible to use. I'm fed up with this incompetence. Fix these issues urgently, or you'll lose customers like me who expect a functioning product, not a constant headache!",
+      "emotion": "annoyance",
+      "tag": "Other",
+      "subTag": "Miscellaneous",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "I am annoyed at the lack of response from your technical support. I submitted a request days ago, and the silence is infuriating. Address my technical issues promptly, or you'll lose a customer who values timely and efficient service.",
+      "emotion": "annoyance",
+      "tag": "Customer Service",
+      "subTag": "Support Request",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "I am losing my patience with your excruciatingly slow customer support. Urgent matters are being ignored, and it's infuriating. Improve your support response times immediately, or I will take my concerns to social media. This is absolutely intolerable!",
+      "emotion": "anger",
+      "tag": "Customer Service",
+      "subTag": "Support Request",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "I am beyond angry about the broken feature in your app! It's a fundamental part of the functionality, and its malfunction is sabotaging my work. I expect an immediate resolution. This level of incompetence is unacceptable, and I demand a fix now!",
+      "emotion": "anger",
+      "tag": "Other",
+      "subTag": "Miscellaneous",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "I am beyond irritated with the incomplete order I received. This is a major inconvenience, and I expect you to rectify it immediately. Send the missing items or refund my purchase. Your company's lack of attention to detail is infuriating!",
+      "emotion": "annoyance",
+      "tag": "Inquiry",
+      "subTag": "Product Information",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "I am highly displeased with the billing error in my statement. I've been charged incorrectly, and it's causing me significant frustration. Rectify this immediately, or I will dispute the charges with my bank. Your lack of attention to detail is outrageous!",
+      "emotion": "annoyance",
+      "tag": "Billing Error",
+      "subTag": "Payment Issues",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "I'm feeling a bit unsettled about the incomplete order I received. It's an inconvenience, and I hope we can work together to address this. Please guide me through the necessary steps to resolve the issue and ensure a complete order.",
+      "emotion": "optimism",
+      "tag": "Other",
+      "subTag": "Miscellaneous",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "I'm feeling quite disheartened by the persistent bug in your app. It's been affecting my user experience and productivity. I hope you can address this matter soon to restore my confidence in the reliability of your product.",
+      "emotion": "optimism",
+      "tag": "Other",
+      "subTag": "Miscellaneous",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "I'm writing to express my disappointment upon receiving a faulty product. I understand issues can arise, and I hope we can work together to find a solution \u2013 be it a replacement or refund. I value your commitment to customer satisfaction.",
+      "emotion": "optimism",
+      "tag": "Bug Report",
+      "subTag": "Slow Response",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "I'm reaching out with disappointment regarding my recent purchase. It didn't meet my expectations, and I believe a refund is in order. I hope we can resolve this amicably to maintain a positive customer relationship.",
+      "emotion": "disappointment",
+      "tag": "Inquiry",
+      "subTag": "Product Information",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "I find myself inconvenienced by an error in my billing statement. I've been charged incorrectly, and it's causing some frustration. I hope we can quickly correct this oversight to avoid any further inconvenience.",
+      "emotion": "optimism",
+      "tag": "Billing Error",
+      "subTag": "Payment Issues",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "I'm a bit annoyed by the broken feature in your app, as it's impacting my workflow. I believe addressing this issue will greatly enhance the overall usability. I appreciate your attention to this matter and look forward to improvements.",
+      "emotion": "admiration",
+      "tag": "Other",
+      "subTag": "Miscellaneous",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "I'm expressing my concern regarding the slow performance of your website. It's causing some frustration, and I worry it might deter others from engaging with your platform. Please prioritize improvements to ensure a smoother user experience.",
+      "emotion": "caring",
+      "tag": "Server Outage",
+      "subTag": "Downtime",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "I've submitted a technical support request and am patiently awaiting a response. I understand these matters take time, but a timely resolution would be appreciated. Thank you for your attention to this matter.",
+      "emotion": "gratitude",
+      "tag": "Other",
+      "subTag": "Miscellaneous",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "I've been experiencing delays in customer support responses, and it's causing some anxiety. Timely assistance is crucial to resolving my concerns. I trust you'll take steps to improve response times for the benefit of all users.",
+      "emotion": "caring",
+      "tag": "Customer Service",
+      "subTag": "Support Request",
+      "date": "[object Undefined]"
+    },
+    {
+      "content": "I've been facing some frustrating glitches in your software, impacting my work. However, I'm hopeful that your team can address these issues promptly. A smoother experience would greatly improve user satisfaction.",
+      "emotion": "optimism",
+      "tag": "Other",
+      "subTag": "Miscellaneous",
+      "date": "[object Undefined]"
+    }
+  ]
+}

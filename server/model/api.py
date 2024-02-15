@@ -2,6 +2,7 @@ from transformers import pipeline
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+import json
 
 emotion_model = pipeline("text-classification", model="SamLowe/roberta-base-go_emotions")
 topic_model = pipeline("zero-shot-classification", model="MoritzLaurer/mDeBERTa-v3-base-mnli-xnli")
@@ -47,8 +48,6 @@ async def process_feedback(fd: Feedback):
     sub_tags = [tag["subTag"] for tag in fd.tags["tags"] if tag["mainTag"] == mainTag['labels'][0]]
     subTag = topic_model(fd.content, sub_tags[0], multi_label=False)
 
-    print(sub_tags)
-
     res = {
         'content': fd.content,
         'emotion': emotion[0]['label'],
@@ -56,6 +55,18 @@ async def process_feedback(fd: Feedback):
         'subTag': subTag['labels'][0],
         'date': fd.date
     }    
+
+    file_path = "./data/Feedbacks.JSON"
+    try:
+        with open(file_path, 'r') as json_file:
+            cached_feedbacks = json.load(json_file)
+    except FileNotFoundError:
+        cached_feedbacks = {'feedbacks': []}
+
+    cached_feedbacks['feedbacks'].append(res)
+
+    with open(file_path, 'w') as json_file:
+        json.dump(cached_feedbacks, json_file, indent=2) 
         
     return {'response': res}
     
