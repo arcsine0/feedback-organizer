@@ -113,12 +113,14 @@ export default function Playground() {
     }
 
     const addFeedback = () => {
-        if (!feedbacks.includes(feedback) && feedback !== "") {
-            let newFeedbacks = [...feedbacks, feedback]
+        let processedFeedback = preProcessFeedback(feedback);
+
+        if (!feedbacks.includes(processedFeedback) && processedFeedback !== "") {
+            let newFeedbacks = [...feedbacks, processedFeedback]
             setFeedbacks(newFeedbacks);
 
             console.log("Feedback added:");
-            console.log(feedback);
+            console.log(processedFeedback);
 
             setFeedback("");
         }
