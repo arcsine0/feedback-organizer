@@ -99,15 +99,15 @@ export default function Playground() {
     }
 
     const preProcessFeedback = (fd) => {
+        if (fd.startsWith('"')) {
+            fd = fd.slice(1);
+        }
+
+        if (fd.endsWith('"')) {
+            fd = fd.slice(0, -1);
+        }
+
         let processedString = fd.replace(/"/g, "'");
-
-        if (processedString.startsWith('"')) {
-            processedString = fd.slice(1);
-        }
-
-        if (processedString.endsWith('"')) {
-            processedString = fd.slice(0, -1);
-        }
 
         return processedString;
     }
