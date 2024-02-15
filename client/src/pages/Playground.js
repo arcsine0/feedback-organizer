@@ -175,47 +175,51 @@ export default function Playground() {
         let selectedSourceIndex = reference.use_cases.findIndex(uc => uc.use_case === selectedSource);
         let finalReference = reference.use_cases[selectedSourceIndex];
 
-        feedbacks.forEach((fd, i) => {
-            const reqOptions = {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    content: fd,
-                    date: toString(Date.now),
-                    tags: finalReference
-                })
-            }
-    
-            if (feedback !== "") {
-                fetch("http://127.0.0.1:8000/process/", reqOptions)
-                    .then(res => res.json())
-                    .then(d => {
-                        let data = d.response;
-                        setEmotion(data.emotion);
-                        setTag(data.tag);
-                        setSubTag(data.subTag);
-
-                        let newSet = {
-                            "content": data.content,
-                            "date": data.date,
-                            "emotion": data.emotion,
-                            "tag": data.tag,
-                            "subTag": data.subTag
-                        }
-
-                        setFeedbackCollection(feedbackCollection => [...feedbackCollection, newSet]);
-    
-                        setBtnDisable(false);
-                        setBtnLabel("Process");
-
-                        console.log(`Processing Done for Feedback #${i}`);
-                        console.log(feedbackCollection);
+        if (feedbacks.length > 1) {
+            feedbacks.forEach((fd, i) => {
+                const date = new Date().toJSON();
+                const reqOptions = {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        content: fd,
+                        date: date,
+                        tags: finalReference
                     })
-            } else {
-                setBtnDisable(false);
-                setBtnLabel("Process");
-            }
-        })
+                }
+        
+                if (fd !== "") {
+                    fetch("http://127.0.0.1:8000/process/", reqOptions)
+                        .then(res => res.json())
+                        .then(d => {
+                            let data = d.response;
+                            setEmotion(data.emotion);
+                            setTag(data.tag);
+                            setSubTag(data.subTag);
+    
+                            let newSet = {
+                                "content": data.content,
+                                "date": data.date,
+                                "emotion": data.emotion,
+                                "tag": data.tag,
+                                "subTag": data.subTag
+                            }
+    
+                            setFeedbackCollection(feedbackCollection => [...feedbackCollection, newSet]);
+        
+                            setBtnDisable(false);
+                            setBtnLabel("Process");
+    
+                            console.log(`Processing Done for Feedback #${i}`);
+                            console.log(feedbackCollection);
+                        })
+                } else {
+                    setBtnDisable(false);
+                    setBtnLabel("Process");
+                }
+            })
+            setFeedbacks([]);
+        }
     }
 
     return (

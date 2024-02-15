@@ -53,12 +53,6 @@
                         "General Inquiry",
                         "Product Information"
                     ]
-                },
-                {
-                    "mainTag": "Other",
-                    "subTag": [
-                        "Miscellaneous"
-                    ]
                 }
             ]
         },
@@ -99,12 +93,6 @@
                     "subTag": [
                         "Vulnerability Report",
                         "Phishing Concerns"
-                    ]
-                },
-                {
-                    "mainTag": "Other",
-                    "subTag": [
-                        "Miscellaneous"
                     ]
                 }
             ]
@@ -154,12 +142,6 @@
                     "subTag": [
                         "Account Security",
                         "Fraud Concerns"
-                    ]
-                },
-                {
-                    "mainTag": "Other",
-                    "subTag": [
-                        "Miscellaneous"
                     ]
                 }
             ]
