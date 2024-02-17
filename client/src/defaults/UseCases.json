@@ -2,146 +2,192 @@
     "use_cases": [
         {
             "id": 0,
-            "use_case": "Application",
+            "use_case": "Content Comments",
             "tags": [
                 {
-                    "mainTag": "Bug Report",
+                    "mainTag": "Content Quality",
                     "subTag": [
-                        "Missing Images",
-                        "Slow Response",
-                        "UI Glitches"
+                        "Grammar Issues",
+                        "Spelling Errors",
+                        "Punctuation",
+                        "Writing Clarity"
                     ]
                 },
                 {
-                    "mainTag": "Server Outage",
+                    "mainTag": "Engagement",
                     "subTag": [
-                        "Connection Issues",
-                        "Downtime"
+                        "Likes",
+                        "Shares",
+                        "Comments",
+                        "Discussion Quality"
                     ]
                 },
                 {
-                    "mainTag": "Customer Service",
+                    "mainTag": "User Experience",
                     "subTag": [
-                        "Support Request",
-                        "Feedback"
-                    ]
-                },
-                {
-                    "mainTag": "Billing Error",
-                    "subTag": [
-                        "Overcharge",
-                        "Payment Issues"
-                    ]
-                },
-                {
-                    "mainTag": "Suggestion",
-                    "subTag": [
-                        "Feature Request",
-                        "Improvement"
-                    ]
-                },
-                {
-                    "mainTag": "Spam",
-                    "subTag": [
-                        "Unwanted Emails",
-                        "Suspicious Activity"
-                    ]
-                },
-                {
-                    "mainTag": "Inquiry",
-                    "subTag": [
-                        "General Inquiry",
-                        "Product Information"
+                        "Navigation",
+                        "Accessibility",
+                        "Load Time",
+                        "Mobile Responsiveness"
                     ]
                 }
             ]
         },
         {
             "id": 1,
-            "use_case": "Website",
-            "tags": [
-                {
-                    "mainTag": "Technical Issue",
-                    "subTag": [
-                        "Broken Links",
-                        "Page Not Loading"
-                    ]
-                },
-                {
-                    "mainTag": "Content Feedback",
-                    "subTag": [
-                        "Typos",
-                        "Content Suggestions"
-                    ]
-                },
-                {
-                    "mainTag": "User Account",
-                    "subTag": [
-                        "Login Problems",
-                        "Password Reset"
-                    ]
-                },
-                {
-                    "mainTag": "Design",
-                    "subTag": [
-                        "Layout Issues",
-                        "Color Scheme"
-                    ]
-                },
-                {
-                    "mainTag": "Security",
-                    "subTag": [
-                        "Vulnerability Report",
-                        "Phishing Concerns"
-                    ]
-                }
-            ]
-        },
-        {
-            "id": 2,
             "use_case": "E-commerce",
             "tags": [
                 {
-                    "mainTag": "Order Issues",
+                    "mainTag": "Order Management",
                     "subTag": [
-                        "Delivery Delay",
-                        "Wrong Item Shipped",
-                        "Refund Request"
+                        "Order Placement",
+                        "Shipping",
+                        "Returns",
+                        "Tracking Issues"
                     ]
                 },
                 {
                     "mainTag": "Product Inquiry",
                     "subTag": [
-                        "Product Availability",
-                        "Specifications"
+                        "Availability",
+                        "Specifications",
+                        "Reviews",
+                        "Product Suggestions"
                     ]
                 },
                 {
                     "mainTag": "Customer Feedback",
                     "subTag": [
-                        "Positive Feedback",
-                        "Negative Feedback"
+                        "Satisfaction",
+                        "Complaints",
+                        "Suggestions",
+                        "Customer Service"
                     ]
                 },
                 {
                     "mainTag": "Technical Support",
                     "subTag": [
                         "Website Navigation",
-                        "Checkout Problems"
+                        "Checkout Problems",
+                        "Product Support",
+                        "Technical Documentation"
                     ]
                 },
                 {
                     "mainTag": "Promotions",
                     "subTag": [
                         "Discount Codes",
-                        "Promotional Offers"
+                        "Special Offers",
+                        "Promotional Events",
+                        "Marketing Effectiveness"
                     ]
                 },
                 {
                     "mainTag": "Security",
                     "subTag": [
                         "Account Security",
-                        "Fraud Concerns"
+                        "Fraud Concerns",
+                        "Privacy Issues",
+                        "Data Protection"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "use_case": "HR",
+            "tags": [
+                {
+                    "mainTag": "Recruitment",
+                    "subTag": [
+                        "Job Applications",
+                        "Interviews",
+                        "Candidate Experience",
+                        "Recruitment Process"
+                    ]
+                },
+                {
+                    "mainTag": "Employee Engagement",
+                    "subTag": [
+                        "Surveys",
+                        "Feedback",
+                        "Team Building",
+                        "Employee Recognition"
+                    ]
+                },
+                {
+                    "mainTag": "Performance Evaluation",
+                    "subTag": [
+                        "Appraisals",
+                        "Goals",
+                        "Feedback",
+                        "Professional Development"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "use_case": "Mobile App",
+            "tags": [
+                {
+                    "mainTag": "UI/UX Design",
+                    "subTag": [
+                        "Layout",
+                        "Color Scheme",
+                        "Font Size",
+                        "Interactive Elements"
+                    ]
+                },
+                {
+                    "mainTag": "Functionality",
+                    "subTag": [
+                        "Features",
+                        "Performance",
+                        "Bugs",
+                        "User Onboarding"
+                    ]
+                },
+                {
+                    "mainTag": "User Feedback",
+                    "subTag": [
+                        "Ratings",
+                        "Reviews",
+                        "Suggestions",
+                        "User Surveys"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "use_case": "Web App",
+            "tags": [
+                {
+                    "mainTag": "UI/UX Design",
+                    "subTag": [
+                        "Layout",
+                        "Color Scheme",
+                        "Font Size",
+                        "Interactive Elements"
+                    ]
+                },
+                {
+                    "mainTag": "Functionality",
+                    "subTag": [
+                        "Features",
+                        "Performance",
+                        "Bugs",
+                        "User Onboarding"
+                    ]
+                },
+                {
+                    "mainTag": "User Feedback",
+                    "subTag": [
+                        "Ratings",
+                        "Reviews",
+                        "Suggestions",
+                        "User Surveys"
                     ]
                 }
             ]
