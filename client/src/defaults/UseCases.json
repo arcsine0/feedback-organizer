@@ -2,6 +2,80 @@
     "use_cases": [
         {
             "id": 0,
+            "use_case": "Mobile App",
+            "tags": [
+                {
+                    "mainTag": "UI/UX Design",
+                    "subTag": [
+                        "Layout Issues",
+                        "Color Scheme Consistency",
+                        "Font Size Readability",
+                        "Interactive Element Responsiveness",
+                        "Visual Hierarchy"
+                    ]
+                },
+                {
+                    "mainTag": "Functionality",
+                    "subTag": [
+                        "Feature Availability",
+                        "User Interaction Responsiveness",
+                        "Performance Optimization",
+                        "Bugs and Errors",
+                        "User Onboarding Experience",
+                        "Data Synchronization"
+                    ]
+                },
+                {
+                    "mainTag": "User Feedback",
+                    "subTag": [
+                        "Ratings",
+                        "Reviews",
+                        "Feature Suggestions",
+                        "User Surveys",
+                        "User Engagement"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "use_case": "Web App",
+            "tags": [
+                {
+                    "mainTag": "UI/UX Design",
+                    "subTag": [
+                        "Layout Issues",
+                        "Color Scheme Consistency",
+                        "Font Size Readability",
+                        "Interactive Element Responsiveness",
+                        "Visual Hierarchy"
+                    ]
+                },
+                {
+                    "mainTag": "Functionality",
+                    "subTag": [
+                        "Feature Availability",
+                        "User Interaction Responsiveness",
+                        "Performance Optimization",
+                        "Bugs and Errors",
+                        "User Onboarding Experience",
+                        "Data Synchronization"
+                    ]
+                },
+                {
+                    "mainTag": "User Feedback",
+                    "subTag": [
+                        "Ratings",
+                        "Reviews",
+                        "Feature Suggestions",
+                        "User Surveys",
+                        "User Engagement"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 2,
             "use_case": "Content Comments",
             "tags": [
                 {
@@ -34,7 +108,7 @@
             ]
         },
         {
-            "id": 1,
+            "id": 3,
             "use_case": "E-commerce",
             "tags": [
                 {
@@ -94,7 +168,7 @@
             ]
         },
         {
-            "id": 2,
+            "id": 4,
             "use_case": "HR",
             "tags": [
                 {
@@ -122,72 +196,6 @@
                         "Goals",
                         "Feedback",
                         "Professional Development"
-                    ]
-                }
-            ]
-        },
-        {
-            "id": 3,
-            "use_case": "Mobile App",
-            "tags": [
-                {
-                    "mainTag": "UI/UX Design",
-                    "subTag": [
-                        "Layout",
-                        "Color Scheme",
-                        "Font Size",
-                        "Interactive Elements"
-                    ]
-                },
-                {
-                    "mainTag": "Functionality",
-                    "subTag": [
-                        "Features",
-                        "Performance",
-                        "Bugs",
-                        "User Onboarding"
-                    ]
-                },
-                {
-                    "mainTag": "User Feedback",
-                    "subTag": [
-                        "Ratings",
-                        "Reviews",
-                        "Suggestions",
-                        "User Surveys"
-                    ]
-                }
-            ]
-        },
-        {
-            "id": 4,
-            "use_case": "Web App",
-            "tags": [
-                {
-                    "mainTag": "UI/UX Design",
-                    "subTag": [
-                        "Layout",
-                        "Color Scheme",
-                        "Font Size",
-                        "Interactive Elements"
-                    ]
-                },
-                {
-                    "mainTag": "Functionality",
-                    "subTag": [
-                        "Features",
-                        "Performance",
-                        "Bugs",
-                        "User Onboarding"
-                    ]
-                },
-                {
-                    "mainTag": "User Feedback",
-                    "subTag": [
-                        "Ratings",
-                        "Reviews",
-                        "Suggestions",
-                        "User Surveys"
                     ]
                 }
             ]
