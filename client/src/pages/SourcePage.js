@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { getDocs, collection } from "firebase/firestore";
-import { db } from "../firebase/firebase";
+import { db } from "../firebase/config";
 
 import FeedbackCard from "../components/FeedbackCard";
 
@@ -27,7 +27,7 @@ export default function SourcePage({ title }) {
                 let results = []
                 
                 snapshot.docs.forEach((doc) => {
-                    console.log(doc)
+                    console.log(doc.data())
                 })
             })
     }, []);
