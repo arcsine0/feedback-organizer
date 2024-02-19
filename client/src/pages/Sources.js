@@ -1,10 +1,33 @@
 import { Outlet, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase/config"; 
 
 import SourceCard from "../components/SourceCard";
 
 import { IoIosAddCircleOutline } from "react-icons/io";
 
 export default function Sources() {
+    const [sources, setSources] = useState([]);
+
+    useEffect(() => {
+        const ref = getDocs(collection(db, "ClientSources"))
+            .then((snapshot) => {
+                let result = [];
+
+                snapshot.docs.forEach((doc) => {
+                    const src = {
+                        title: doc.data().title,
+                        useCase: doc.data().useCase
+                    };
+                    result.push(src);
+                });
+
+                setSources(result);
+            })
+    }, []);
+
     return (
         <div className="flex flex-col w-full h-full p-10 space-y-10">
             <div className="flex flex-col space-y-1">
@@ -18,6 +41,9 @@ export default function Sources() {
                 </div>
                 <p></p>
                 <div className="flex flex-row flex-wrap space-x-4">
+                    {sources.map((src) => (
+                        <SourceCard title={src.title} />
+                    ))}
                     {/* <SourceCard title={"Source 1"} />
                     <SourceCard title={"Source 2"} /> */}
                 </div>
