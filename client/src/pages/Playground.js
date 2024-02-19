@@ -6,7 +6,6 @@ import { FaChevronDown } from 'react-icons/fa';
 import Label from "../components/Label";
 
 import useCases from '../defaults/UseCases.json';
-import sampleFeedbacks from '../defaults/Feedbacks.json';
 
 export default function Playground() {
     const [feedback, setFeedback] = useState("");
