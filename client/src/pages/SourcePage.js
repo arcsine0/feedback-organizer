@@ -1,21 +1,34 @@
 import { useState, useEffect } from "react";
 
+import { getDocs, collection } from "firebase/firestore";
+import { db } from "../firebase/firebase";
+
 import FeedbackCard from "../components/FeedbackCard";
 
 export default function SourcePage({ title }) {
     const [feedbacks, setFeedbacks] = useState([]);
 
     useEffect(() => {
-        const reqOptions = {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-        }
+        // const reqOptions = {
+        //     method: "GET",
+        //     headers: { "Content-Type": "application/json" },
+        // }
 
-        fetch("http://127.0.0.1:8000/feedbacks/", reqOptions)
-            .then(res => res.json())
-            .then(d => {
-                let data = d.response;
-                setFeedbacks(data.feedbacks);
+        // fetch("http://127.0.0.1:8000/feedbacks/", reqOptions)
+        //     .then(res => res.json())
+        //     .then(d => {
+        //         let data = d.response;
+        //         setFeedbacks(data.feedbacks);
+        //     })
+
+        const ref = collection(db, "test");
+        getDocs(ref)
+            .then((snapshot) => {
+                let results = []
+                
+                snapshot.docs.forEach((doc) => {
+                    console.log(doc)
+                })
             })
     }, []);
 
@@ -28,7 +41,7 @@ export default function SourcePage({ title }) {
             <div className="grow flex flex-col space-y-1">
                 <h1 className="shrink text-3xl font-bold">Recent Feedbacks</h1>
                 <div className="grow flex flex-col space-y-2">
-                    <FeedbackCard count={1} title={"Feedback 1"} content={"I am absolutely furious about the persistent bug in your app! It's disrupting my workflow, and attempts to get this resolved have been painfully slow. This is unacceptable, and I demand immediate action to fix this issue and prevent further inconvenience."} emotion={"Angry"} tag={"Bug Report"} />
+                    {/* <FeedbackCard count={1} title={"Feedback 1"} content={"I am absolutely furious about the persistent bug in your app! It's disrupting my workflow, and attempts to get this resolved have been painfully slow. This is unacceptable, and I demand immediate action to fix this issue and prevent further inconvenience."} emotion={"Angry"} tag={"Bug Report"} /> */}
                 </div>
             </div>
             <div className="grow flex flex-col space-y-1">
