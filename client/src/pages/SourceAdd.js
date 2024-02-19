@@ -142,21 +142,25 @@ export default function SourceAdd() {
         setBtnDisable(true);
         setBtnLabel("Saving...");
 
-        const ref = await addDoc(collection(db, "ClientSources"), {
+        const sourceRef = await addDoc(collection(db, "ClientSources"), {
             title: sourceName,
             useCase: finalReference.use_case
         });
 
         finalReference.tags.forEach(async (t) => {
-            await addDoc(collection(db, `ClientSources/${ref.id}/Tags`), {
+            await addDoc(collection(db, `ClientSources/${sourceRef.id}/Tags`), {
                 mainTag: t.mainTag,
                 subTag: t.subTag
             });
         });
 
-        setSourceID(ref.id);
+        const feedbackRef = await addDoc(collection(db, "ClientFeedbacks"), {
+            sourceID: sourceRef.id
+        });
 
-        if(ref.id) {
+        setSourceID(sourceRef.id);
+
+        if(sourceRef.id && feedbackRef.id) {
             setBtnDisable(false);
             setBtnLabel("Save");
         }

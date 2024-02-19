@@ -28,7 +28,7 @@ root.render(
             <Route path="/signin" element={<SignIn />} />
             <Route path="/sources" element={<Sources />} />
             <Route path="/sources/add" element={<SourceAdd />} />
-            <Route path="/source" element={<SourcePage title={"Source 1"} />} />
+            <Route path="/source/:sourceID" element={<SourcePage />} />
           </Routes>
         </div>
       </BrowserRouter>

@@ -18,6 +18,7 @@ export default function Sources() {
 
                 snapshot.docs.forEach((doc) => {
                     const src = {
+                        id: doc.id,
                         title: doc.data().title,
                         useCase: doc.data().useCase
                     };
@@ -42,10 +43,10 @@ export default function Sources() {
                 <p></p>
                 <div className="flex flex-row flex-wrap space-x-4">
                     {sources.map((src) => (
-                        <SourceCard title={src.title} />
+                        <Link to={`/source/${src.id}`}>
+                             <SourceCard title={src.title} />
+                        </Link>
                     ))}
-                    {/* <SourceCard title={"Source 1"} />
-                    <SourceCard title={"Source 2"} /> */}
                 </div>
             </div> 
             <Outlet />
