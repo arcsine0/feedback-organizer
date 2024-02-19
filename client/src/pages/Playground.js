@@ -175,7 +175,7 @@ export default function Playground() {
         let selectedSourceIndex = reference.use_cases.findIndex(uc => uc.use_case === selectedSource);
         let finalReference = reference.use_cases[selectedSourceIndex];
 
-        if (feedbacks.length > 1) {
+        if (feedbacks.length >= 1) {
             feedbacks.forEach((fd, i) => {
                 const date = new Date().toJSON();
                 const reqOptions = {

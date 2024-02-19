@@ -279,6 +279,41 @@
       "tag": "Customer Service",
       "subTag": "Support Request",
       "date": "2024-02-15T10:12:25.232Z"
+    },
+    {
+      "content": "I'm feeling quite disheartened by the persistent bug in your app. It's been affecting my user experience and productivity. I hope you can address this matter soon to restore my confidence in the reliability of your product.",
+      "emotion": "optimism",
+      "tag": "User Feedback",
+      "subTag": "User Engagement",
+      "date": "2024-02-19T03:46:47.451Z"
+    },
+    {
+      "content": "I'm a bit annoyed by the broken feature in your app, as it's impacting my workflow. I believe addressing this issue will greatly enhance the overall usability. I appreciate your attention to this matter and look forward to improvements.",
+      "emotion": "admiration",
+      "tag": "Functionality",
+      "subTag": "Bugs and Errors",
+      "date": "2024-02-19T03:47:42.228Z"
+    },
+    {
+      "content": "I've submitted a technical support request and am patiently awaiting a response. I understand these matters take time, but a timely resolution would be appreciated. Thank you for your attention to this matter.",
+      "emotion": "gratitude",
+      "tag": "User Feedback",
+      "subTag": "User Engagement",
+      "date": "2024-02-19T03:48:25.932Z"
+    },
+    {
+      "content": "I've been experiencing delays in customer support responses, and it's causing some anxiety. Timely assistance is crucial to resolving my concerns. I trust you'll take steps to improve response times for the benefit of all users.",
+      "emotion": "caring",
+      "tag": "User Feedback",
+      "subTag": "User Engagement",
+      "date": "2024-02-19T03:49:07.365Z"
+    },
+    {
+      "content": "I'm writing to express my disappointment upon receiving a faulty product. I understand issues can arise, and I hope we can work together to find a solution \u2013 be it a replacement or refund. I value your commitment to customer satisfaction.",
+      "emotion": "optimism",
+      "tag": "User Feedback",
+      "subTag": "Reviews",
+      "date": "2024-02-19T03:49:21.813Z"
     }
   ]
 }
