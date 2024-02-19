@@ -40,7 +40,7 @@ export default function Playground() {
             .tags.map(mT => mT.mainTag);
 
         const subTags = reference.use_cases[0]
-            .tags.find(ta => ta.mainTag === "Bug Report")
+            .tags.find(ta => ta.mainTag === "Functionality")
             .subTag;
 
         setSelectedSource(reference.use_cases[0].use_case);
@@ -230,7 +230,7 @@ export default function Playground() {
                     <div className="flex flex-row space-x-4 item-center">
                         <input
                             type="textarea"
-                            className="p-2 grow h-2/3 border-2 border-black rounded-lg text-pretty"
+                            className="p-2 grow h-full border-2 border-black rounded-lg text-pretty"
                             value={feedback}
                             onChange={(e) => setFeedback(e.target.value)}
                         />
@@ -260,8 +260,8 @@ export default function Playground() {
                     </Listbox>
                     <h1 className="text-2xl font-bold">Set Tags</h1>
                     <div className="flex flex-col space-y-1">
-                        <div className="p-2 w-full h-2/3 flex flex-row flex-wrap space-x-2 border-2 border-dashed border-slate-600 rounded-lg">
-                            {labels.map((la, ind) => (
+                        <div className="p-2 w-full h-full flex flex-row flex-wrap space-x-2 border-2 border-dashed border-slate-600 rounded-lg">
+                            {labels.map((la) => (
                                 <Label name={la} remove={removeLabel} />
                             ))}
                         </div>
@@ -270,7 +270,7 @@ export default function Playground() {
                     <div className="flex flex-row space-x-4 item-center">
                         <input
                             type="text"
-                            className="p-2 grow h-2/3 border-2 rounded-lg text-pretty"
+                            className="p-2 grow h-full border-2 rounded-lg text-pretty"
                             value={label}
                             onChange={(e) => setLabel(e.target.value)}
                         />
@@ -299,7 +299,7 @@ export default function Playground() {
                         </Listbox.Options>
                     </Listbox>
                     <div className="flex flex-col space-y-1">
-                        <div className="p-2 w-full h-2/3 flex flex-row flex-wrap space-x-2 border-2 border-dashed border-slate-600 rounded-lg">
+                        <div className="p-2 w-full h-full flex flex-row flex-wrap space-x-2 border-2 border-dashed border-slate-600 rounded-lg">
                             {subLabels.map((la, ind) => (
                                 <Label name={la} remove={removeSubLabel} />
                             ))}
@@ -309,7 +309,7 @@ export default function Playground() {
                     <div className="flex flex-row space-x-4 item-center">
                         <input
                             type="text"
-                            className="p-2 grow h-2/3 border-2 rounded-lg text-pretty"
+                            className="p-2 grow h-full border-2 rounded-lg text-pretty"
                             value={subLabel}
                             onChange={(e) => setSubLabel(e.target.value)}
                         />
