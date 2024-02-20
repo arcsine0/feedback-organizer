@@ -44,11 +44,11 @@ export default function Sidebar({uname}) {
                                             <Link to={'/sources'}><span className='ms-3'>All Sources</span></Link>
                                         </a>
                                     </Menu.Item>
-                                    <Menu.Item>
+                                    {/* <Menu.Item>
                                         <a className='p-1 dark:text-white text-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group'>
                                             <Link to={'/source'}><span className='ms-3'>Temp Source Page</span></Link>
                                         </a>
-                                    </Menu.Item>
+                                    </Menu.Item> */}
                                 </Menu.Items>
                             </Menu>
 
