@@ -7,19 +7,19 @@ import { db } from "../firebase/config";
 import FeedbackCard from "../components/FeedbackCard";
 
 export default function InstancePage() {
-    const [sourceName, setSourceName] = useState("Title");
+    const [instanceName, setInstanceName] = useState("Title");
 
     const [feedbackID, setFeedbackID] = useState("")
     const [feedbacks, setFeedbacks] = useState([]);
 
-    const { sourceID } = useParams();
+    const { instanceID } = useParams();
 
     useEffect(() => {
         let fdID = "";
         const feedbackRef = getDocs(collection(db, "ClientFeedbacks"))
             .then((snapshot) => {
                 snapshot.docs.forEach((doc) => {
-                    if (doc.data().sourceID === sourceID) {
+                    if (doc.data().sourceID === instanceID) {
                         setFeedbackID(doc.id);
                         fdID = doc.id;
 
@@ -47,8 +47,8 @@ export default function InstancePage() {
         const sourceRef = getDocs(collection(db, "ClientSources"))
             .then((snapshot) => {
                 snapshot.docs.forEach((doc) => {
-                    if (doc.id === sourceID) {
-                        setSourceName(doc.data().title);
+                    if (doc.id === instanceID) {
+                        setInstanceName(doc.data().title);
                     }
                 })
             });
@@ -58,10 +58,10 @@ export default function InstancePage() {
     return (
         <div className="flex flex-col w-full h-full p-10 space-y-10">
             <div className="shrink flex flex-col space-y-1">
-                <h1 className="text-3xl font-bold">{sourceName}</h1>
+                <h1 className="text-3xl font-bold">{instanceName}</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sem arcu, pellentesque id sapien id, ullamcorper sollicitudin mi. Maecenas in elit iaculis, placerat ex id, molestie neque. Praesent lobortis nunc at rhoncus lacinia. Nam maximus tincidunt nibh, quis commodo libero sagittis in.</p>
             </div>
-            <Link to={`/instance/config/${sourceID}`} >
+            <Link to={`/instance/config/${instanceID}`} >
                 <button className="flex h-5 shrink p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Edit Config</button>
             </Link>
             <div className="grow flex flex-col space-y-1">

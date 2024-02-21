@@ -30,8 +30,8 @@ root.render(
             <Route path="/signin" element={<SignIn />} />
             <Route path="/instances" element={<Instances />} />
             <Route path="/instance/add" element={<InstanceAdd />} />
-            <Route path="/instance/:sourceID" element={<InstancePage />} />
-            <Route path="/instance/config/:sourceID" element={<InstanceConfig />} />
+            <Route path="/instance/:instanceID" element={<InstancePage />} />
+            <Route path="/instance/config/:instanceID" element={<InstanceConfig />} />
           </Routes>
         </div>
       </BrowserRouter>

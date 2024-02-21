@@ -14,7 +14,6 @@ export default function InstanceConfig() {
 
     const [originalReference, setOriginalReference] = useState({});
     const [reference, setReference] = useState({});
-    const [selectedSource, setSelectedSource] = useState("");
 
     const [label, setLabel] = useState("");
     const [labels, setLabels] = useState([]);
@@ -30,10 +29,10 @@ export default function InstanceConfig() {
     const [subLabelError, setSubLabelError] = useState("");
 
     const navigate = useNavigate();
-    const { sourceID } = useParams();
+    const { instanceID } = useParams();
 
     useEffect(() => {
-        const sourceRef = getDocs(collection(db, "ClientSources", sourceID, "Tags"))
+        const sourceRef = getDocs(collection(db, "ClientSources", instanceID, "Tags"))
             .then((snapshot) => {
                 let ref = [];
                 snapshot.docs.forEach((doc) => {
@@ -56,7 +55,6 @@ export default function InstanceConfig() {
                 const subTags = ref.find(r => r.mainTag === mainTags[0])
                     .subTag;
 
-                setSelectedSource(ref[0]);
                 setLabels(mainTags);
                 setSelectedLabel(ref[0].mainTag);
                 setSubLabels(subTags);
@@ -166,11 +164,11 @@ export default function InstanceConfig() {
             if (withChanges.includes(i)) {
                 console.log(r);
                 if (r.id !== "") {
-                    await updateDoc(doc(db, "ClientSources", sourceID, "Tags", r.id), {
+                    await updateDoc(doc(db, "ClientSources", instanceID, "Tags", r.id), {
                         subTag: r.subTag
                     });
                 } else {
-                    await addDoc(collection(db, "ClientSources", sourceID, "Tags"), {
+                    await addDoc(collection(db, "ClientSources", instanceID, "Tags"), {
                         mainTag: r.mainTag,
                         subTag: r.subTag
                     });
@@ -181,7 +179,7 @@ export default function InstanceConfig() {
         setBtnDisable(false);
         setBtnLabel("Save");
 
-        navigate(`/source/${sourceID}`)
+        navigate(`/instance/${instanceID}`)
     }
 
     return (

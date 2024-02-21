@@ -11,10 +11,10 @@ import Label from "../components/Label";
 import useCases from '../defaults/UseCases.json';
 
 export default function InstanceAdd() {
-    const [sourceName, setSourceName] = useState("");
+    const [instanceName, setInstanceName] = useState("");
 
     const [reference, setReference] = useState(useCases);
-    const [selectedSource, setSelectedSource] = useState(reference.use_cases[0].use_case);
+    const [selectedInstance, setSelectedInstance] = useState(reference.use_cases[0].use_case);
 
     const [label, setLabel] = useState("");
     const [labels, setLabels] = useState([]);
@@ -39,7 +39,7 @@ export default function InstanceAdd() {
             .tags.find(ta => ta.mainTag === "Functionality")
             .subTag;
 
-        setSelectedSource(reference.use_cases[0].use_case);
+        setSelectedInstance(reference.use_cases[0].use_case);
         setLabels(mainTags);
         setSelectedLabel(reference.use_cases[0].tags[0].mainTag);
         setSubLabels(subTags);
@@ -48,7 +48,7 @@ export default function InstanceAdd() {
     const updateReference = (action, data) => {
         const updatedReference = { ...reference };
 
-        const selectedUseCaseIndex = updatedReference.use_cases.findIndex(uc => uc.use_case === selectedSource);
+        const selectedUseCaseIndex = updatedReference.use_cases.findIndex(uc => uc.use_case === selectedInstance);
 
         if (selectedUseCaseIndex !== -1) {
             let currentUseCase = updatedReference.use_cases[selectedUseCaseIndex];
@@ -72,7 +72,7 @@ export default function InstanceAdd() {
     };
 
     const handleSourceChange = (source) => {
-        setSelectedSource(source);
+        setSelectedInstance(source);
         const mainTags = reference.use_cases
             .find(uc => uc.use_case === source)
             .tags.map(mT => mT.mainTag);
@@ -87,7 +87,7 @@ export default function InstanceAdd() {
     const handleLabelChange = (lab) => {
         setSelectedLabel(lab);
         const subTags = reference.use_cases
-            .find(uc => uc.use_case === selectedSource)
+            .find(uc => uc.use_case === selectedInstance)
             .tags.find(ta => ta.mainTag === lab)
             .subTag;
 
@@ -137,14 +137,14 @@ export default function InstanceAdd() {
     }
 
     const addSource = async () => {
-        let selectedSourceIndex = reference.use_cases.findIndex(uc => uc.use_case === selectedSource);
+        let selectedSourceIndex = reference.use_cases.findIndex(uc => uc.use_case === selectedInstance);
         let finalReference = reference.use_cases[selectedSourceIndex];
 
         setBtnDisable(true);
         setBtnLabel("Saving...");
 
         const sourceRef = await addDoc(collection(db, "ClientSources"), {
-            title: sourceName,
+            title: instanceName,
             useCase: finalReference.use_case
         });
 
@@ -163,7 +163,7 @@ export default function InstanceAdd() {
             setBtnDisable(false);
             setBtnLabel("Save");
 
-            navigate(`/source/${sourceRef.id}`)
+            navigate(`/instance/${sourceRef.id}`)
         }
     }
 
@@ -177,8 +177,8 @@ export default function InstanceAdd() {
                     <input
                         type="text"
                         className="border-b-2 border-t-0 border-r-0 border-l-0 border-black text-2xl"
-                        value={sourceName}
-                        onChange={(e) => setSourceName(e.target.value)}
+                        value={instanceName}
+                        onChange={(e) => setInstanceName(e.target.value)}
                     />
                     <FaPencilAlt />
                 </div>
@@ -199,11 +199,11 @@ export default function InstanceAdd() {
                         <Tab.Panel as={"div"} className="flex flex-col w-full space-y-4">
                             <h1 className="text-2xl font-bold">Set Source Type</h1>
                             <Listbox as="div" className="p-2 bg-slate-200 w-1/4 rounded-lg"
-                                value={selectedSource}
+                                value={selectedInstance}
                                 onChange={(newSource) => handleSourceChange(newSource)}
                             >
                                 <Listbox.Button className="flex flex-row w-full items-center">
-                                    <span className="font-bold order-first">{selectedSource}</span>
+                                    <span className="font-bold order-first">{selectedInstance}</span>
                                     <span className="grow"></span>
                                     <span className="order-last"><FaChevronDown /></span>
                                 </Listbox.Button>
