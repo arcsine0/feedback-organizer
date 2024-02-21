@@ -9,7 +9,7 @@ import { db } from "../firebase/config";
 
 import Label from "../components/Label";
 
-export default function SourceConfig() {
+export default function InstanceConfig() {
     const [sourceName, setSourceName] = useState("");
 
     const [originalReference, setOriginalReference] = useState({});

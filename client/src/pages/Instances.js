@@ -8,7 +8,7 @@ import SourceCard from "../components/SourceCard";
 
 import { IoIosAddCircleOutline } from "react-icons/io";
 
-export default function Sources() {
+export default function Instances() {
     const [sources, setSources] = useState([]);
 
     useEffect(() => {
@@ -38,12 +38,12 @@ export default function Sources() {
             <div className="flex flex-col space-y-1">
                 <div className="flex flex-row space-x-3 items-center">
                     <h1 className="text-3xl font-bold">All Sources</h1>
-                    <Link to={'/source/config/'}><IoIosAddCircleOutline size={25} /></Link>
+                    <Link to={'/instance/config/'}><IoIosAddCircleOutline size={25} /></Link>
                 </div>
                 <p></p>
                 <div className="flex flex-row flex-wrap space-x-4">
                     {sources.map((src) => (
-                        <Link to={`/source/${src.id}`}>
+                        <Link to={`/instance/${src.id}`}>
                              <SourceCard title={src.title} />
                         </Link>
                     ))}

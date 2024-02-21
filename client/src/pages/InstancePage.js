@@ -6,7 +6,7 @@ import { db } from "../firebase/config";
 
 import FeedbackCard from "../components/FeedbackCard";
 
-export default function SourcePage() {
+export default function InstancePage() {
     const [sourceName, setSourceName] = useState("Title");
 
     const [feedbackID, setFeedbackID] = useState("")
@@ -61,7 +61,7 @@ export default function SourcePage() {
                 <h1 className="text-3xl font-bold">{sourceName}</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sem arcu, pellentesque id sapien id, ullamcorper sollicitudin mi. Maecenas in elit iaculis, placerat ex id, molestie neque. Praesent lobortis nunc at rhoncus lacinia. Nam maximus tincidunt nibh, quis commodo libero sagittis in.</p>
             </div>
-            <Link to={`/source/config/${sourceID}`} >
+            <Link to={`/instance/config/${sourceID}`} >
                 <button className="flex h-5 shrink p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Edit Config</button>
             </Link>
             <div className="grow flex flex-col space-y-1">

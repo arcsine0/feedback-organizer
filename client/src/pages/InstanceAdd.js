@@ -10,7 +10,7 @@ import { db } from "../firebase/config";
 import Label from "../components/Label";
 import useCases from '../defaults/UseCases.json';
 
-export default function SourceAdd() {
+export default function InstanceAdd() {
     const [sourceName, setSourceName] = useState("");
 
     const [reference, setReference] = useState(useCases);
