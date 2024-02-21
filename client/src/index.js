@@ -6,11 +6,14 @@ import "./index.css";
 
 import Landing from "./pages/Landing"
 import Sidebar from "./components/Sidebar";
+
 import Playground from "./pages/Playground";
-import Instances from "./pages/Instances";
+import Sources from "./pages/Sources";
+
 import Inbox from "./pages/Inbox";
 import SignIn from "./pages/SignIn";
 
+import Instances from "./pages/Instances";
 import InstancePage from "./pages/InstancePage";
 import InstanceAdd from "./pages/InstanceAdd";
 import InstanceConfig from "./pages/InstanceConfig";
@@ -26,12 +29,15 @@ root.render(
           <Routes>
             <Route path="/" index element={<Landing />} />
             <Route path="/playground" element={<Playground />} />
-            <Route path="/inbox" element={<Inbox />} />
-            <Route path="/signin" element={<SignIn />} />
+            <Route path="/sources" element={<Sources />} />
+
             <Route path="/instances" element={<Instances />} />
             <Route path="/instance/add" element={<InstanceAdd />} />
             <Route path="/instance/:instanceID" element={<InstancePage />} />
             <Route path="/instance/config/:instanceID" element={<InstanceConfig />} />
+
+            <Route path="/inbox" element={<Inbox />} />
+            <Route path="/signin" element={<SignIn />} />
           </Routes>
         </div>
       </BrowserRouter>

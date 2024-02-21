@@ -1,4 +1,4 @@
-export default function Inputs() {
+export default function Sources() {
     return (
         <div className="flex flex-col w-full h-full p-10 space-y-10">
             <div className="flex flex-col space-y-5">
