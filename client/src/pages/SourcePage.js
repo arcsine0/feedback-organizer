@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { Outlet, Link, useParams } from 'react-router-dom'
 
-import { getDocs, getDoc, collection, addDoc } from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 import FeedbackCard from "../components/FeedbackCard";
 
 export default function SourcePage() {
-    const [sourceName, setSourceName] = useState("");
+    const [sourceName, setSourceName] = useState("Title");
 
     const [feedbackID, setFeedbackID] = useState("")
     const [feedbacks, setFeedbacks] = useState([]);
@@ -23,7 +23,7 @@ export default function SourcePage() {
                         setFeedbackID(doc.id);
                         fdID = doc.id;
 
-                        const feedbacksRef = getDocs(collection(db, "ClientFeedbacks", doc.id, "Feedbacks"))
+                        getDocs(collection(db, "ClientFeedbacks", doc.id, "Feedbacks"))
                             .then((ss) => {
                                 let result = [];
                                 ss.docs.forEach((d) => {
@@ -52,7 +52,7 @@ export default function SourcePage() {
                     }
                 })
             });
-            
+
     }, []);
 
     return (

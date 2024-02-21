@@ -145,10 +145,7 @@ export default function SourceConfig() {
 
         updStrings.forEach((updStr, i) => {
             try {
-                // console.log(ogStrings[i]);
-                // console.log(updStr);
                 if (updStr !== ogStrings[i]) {
-
                     withChanges.push(i);
                 }
             } catch (e) {
@@ -160,8 +157,8 @@ export default function SourceConfig() {
     }
 
     const saveConfig = async () => {
-        // setBtnDisable(true);
-        // setBtnLabel("Saving...");
+        setBtnDisable(true);
+        setBtnLabel("Saving...");
 
         const withChanges = compareRef(originalReference, reference);
 
@@ -181,12 +178,10 @@ export default function SourceConfig() {
             }
         })
 
-        // if (sourceRef.id && feedbackRef.id) {
-        //     setBtnDisable(false);
-        //     setBtnLabel("Save");
+        setBtnDisable(false);
+        setBtnLabel("Save");
 
-        //     navigate(`/source/${sourceRef.id}`)
-        // }
+        navigate(`/source/${sourceID}`)
     }
 
     return (
