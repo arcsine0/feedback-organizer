@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Tab, Listbox } from "@headlessui/react";
 import { FaPencilAlt, FaChevronDown } from "react-icons/fa";
 
-import { collection, updateDoc, getDocs } from "firebase/firestore";
+import { collection, updateDoc, getDocs, addDoc, doc } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 import Label from "../components/Label";
@@ -45,8 +45,11 @@ export default function SourceConfig() {
 
                     ref.push(tags);
                 });
+
+                setOriginalReference(JSON.parse(JSON.stringify(ref)));
                 setReference(ref);
-                setOriginalReference(ref);
+
+                console.log(ref);
 
                 const mainTags = ref.map(r => r.mainTag);
 
@@ -75,8 +78,6 @@ export default function SourceConfig() {
             updatedReference.find(ref => ref.mainTag === selectedLabel)
                 .subTag = data;
         }
-
-        console.log(updatedReference)
 
         setReference(updatedReference);
     };
@@ -136,43 +137,49 @@ export default function SourceConfig() {
             JSON.stringify(t)
         ));
 
-        let updStrings = upd.map((t) => {
+        let updStrings = upd.map((t) => (
             JSON.stringify(t)
-        });
-
-        console.log(upd)
-        console.log(updStrings)
+        ));
 
         let withChanges = [];
 
         updStrings.forEach((updStr, i) => {
             try {
+                // console.log(ogStrings[i]);
+                // console.log(updStr);
                 if (updStr !== ogStrings[i]) {
-                    // console.log(ogStrings[i]);
-                    // console.log(updStr);
+
                     withChanges.push(i);
                 }
-            } catch(e) {
+            } catch (e) {
                 console.log(e);
             }
         });
 
-        
+        return withChanges;
     }
 
     const saveConfig = async () => {
         // setBtnDisable(true);
         // setBtnLabel("Saving...");
 
-        compareRef(originalReference, reference);
+        const withChanges = compareRef(originalReference, reference);
 
-        // referece.forEach(async (r) => {
-        //     if (r !== "") {
-        //         const sourceRef = await updateDoc(collection(db, "ClientSources", sourceID, "Tags", r), {
-                    
-        //         });
-        //     }
-        // })
+        reference.forEach(async (r, i) => {
+            if (withChanges.includes(i)) {
+                console.log(r);
+                if (r.id !== "") {
+                    await updateDoc(doc(db, "ClientSources", sourceID, "Tags", r.id), {
+                        subTag: r.subTag
+                    });
+                } else {
+                    await addDoc(collection(db, "ClientSources", sourceID, "Tags"), {
+                        mainTag: r.mainTag,
+                        subTag: r.subTag
+                    });
+                }
+            }
+        })
 
         // if (sourceRef.id && feedbackRef.id) {
         //     setBtnDisable(false);
