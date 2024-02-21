@@ -1,18 +1,17 @@
-import { Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom'
 
 import { Tab, Listbox } from "@headlessui/react";
 import { FaPencilAlt, FaChevronDown } from "react-icons/fa";
 
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db } from "../firebase/config"; 
 
 import Label from "../components/Label";
 import useCases from '../defaults/UseCases.json';
 
-export default function SourceAdd() {
+export default function SourceConfig() {
     const [sourceName, setSourceName] = useState("");
-    const [sourceID, setSourceID] = useState("");
 
     const [reference, setReference] = useState(useCases);
     const [selectedSource, setSelectedSource] = useState(reference.use_cases[0].use_case);
@@ -30,18 +29,22 @@ export default function SourceAdd() {
     const [labelError, setLabelError] = useState("");
     const [subLabelError, setSubLabelError] = useState("");
 
+    const navigate = useNavigate();
+
     useEffect(() => {
-        const mainTags = reference.use_cases[0]
-            .tags.map(mT => mT.mainTag);
+        // const mainTags = reference.use_cases[0]
+        //     .tags.map(mT => mT.mainTag);
 
-        const subTags = reference.use_cases[0]
-            .tags.find(ta => ta.mainTag === "Functionality")
-            .subTag;
+        // const subTags = reference.use_cases[0]
+        //     .tags.find(ta => ta.mainTag === "Functionality")
+        //     .subTag;
 
-        setSelectedSource(reference.use_cases[0].use_case);
-        setLabels(mainTags);
-        setSelectedLabel(reference.use_cases[0].tags[0].mainTag);
-        setSubLabels(subTags);
+        // setSelectedSource(reference.use_cases[0].use_case);
+        // setLabels(mainTags);
+        // setSelectedLabel(reference.use_cases[0].tags[0].mainTag);
+        // setSubLabels(subTags);
+
+        
     }, []);
 
     const updateReference = (action, data) => {
@@ -158,11 +161,11 @@ export default function SourceAdd() {
             sourceID: sourceRef.id
         });
 
-        setSourceID(sourceRef.id);
-
         if(sourceRef.id && feedbackRef.id) {
             setBtnDisable(false);
             setBtnLabel("Save");
+
+            navigate(`/source/${sourceRef.id}`)
         }
     }
 

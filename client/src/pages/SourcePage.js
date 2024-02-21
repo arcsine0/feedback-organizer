@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-
-import { useParams } from "react-router-dom";
+import { Outlet, Link, useParams } from 'react-router-dom'
 
 import { getDocs, getDoc, collection, addDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
@@ -62,12 +61,9 @@ export default function SourcePage() {
                 <h1 className="text-3xl font-bold">{sourceName}</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sem arcu, pellentesque id sapien id, ullamcorper sollicitudin mi. Maecenas in elit iaculis, placerat ex id, molestie neque. Praesent lobortis nunc at rhoncus lacinia. Nam maximus tincidunt nibh, quis commodo libero sagittis in.</p>
             </div>
-            {/* <div className="grow flex flex-col space-y-1">
-                <h1 className="shrink text-3xl font-bold">Recent Feedbacks</h1>
-                <div className="grow flex flex-col space-y-2">
-                    <FeedbackCard count={1} title={"Feedback 1"} content={"I am absolutely furious about the persistent bug in your app! It's disrupting my workflow, and attempts to get this resolved have been painfully slow. This is unacceptable, and I demand immediate action to fix this issue and prevent further inconvenience."} emotion={"Angry"} tag={"Bug Report"} />
-                </div>
-            </div> */}
+            <Link to={`/source/config/${sourceID}`} >
+                <button className="flex h-5 shrink p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Edit Config</button>
+            </Link>
             <div className="grow flex flex-col space-y-1">
                 <h1 className="shrink text-3xl font-bold">All Feedbacks</h1>
                 <div className="grow flex flex-col space-y-2 overflow-y-auto">
@@ -76,6 +72,7 @@ export default function SourcePage() {
                     ))}
                 </div>
             </div>
+            <Outlet />
         </div>
     )
 }

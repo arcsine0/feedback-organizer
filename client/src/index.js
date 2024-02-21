@@ -10,8 +10,10 @@ import Playground from "./pages/Playground";
 import Sources from "./pages/Sources";
 import Inbox from "./pages/Inbox";
 import SignIn from "./pages/SignIn";
+
 import SourcePage from "./pages/SourcePage";
 import SourceAdd from "./pages/SourceAdd";
+import SourceConfig from "./pages/SourceConfig";
 
 import reportWebVitals from "./reportWebVitals";
 
@@ -27,8 +29,9 @@ root.render(
             <Route path="/inbox" element={<Inbox />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/sources" element={<Sources />} />
-            <Route path="/sources/add" element={<SourceAdd />} />
+            <Route path="/source/add" element={<SourceAdd />} />
             <Route path="/source/:sourceID" element={<SourcePage />} />
+            <Route path="/source/config/:sourceID" element={<SourceConfig />} />
           </Routes>
         </div>
       </BrowserRouter>

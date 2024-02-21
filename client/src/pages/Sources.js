@@ -38,7 +38,7 @@ export default function Sources() {
             <div className="flex flex-col space-y-1">
                 <div className="flex flex-row space-x-3 items-center">
                     <h1 className="text-3xl font-bold">All Sources</h1>
-                    <Link to={'/sources/add'}><IoIosAddCircleOutline size={25} /></Link>
+                    <Link to={'/source/config/'}><IoIosAddCircleOutline size={25} /></Link>
                 </div>
                 <p></p>
                 <div className="flex flex-row flex-wrap space-x-4">
