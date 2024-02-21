@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { Tab, Listbox } from "@headlessui/react";
 import { FaPencilAlt, FaChevronDown } from "react-icons/fa";
 
-import { collection, addDoc, getDocs } from "firebase/firestore";
-import { db } from "../firebase/config"; 
+import { collection, updateDoc, getDocs } from "firebase/firestore";
+import { db } from "../firebase/config";
 
 import Label from "../components/Label";
-import useCases from '../defaults/UseCases.json';
 
 export default function SourceConfig() {
     const [sourceName, setSourceName] = useState("");
 
-    const [reference, setReference] = useState(useCases);
-    const [selectedSource, setSelectedSource] = useState(reference.use_cases[0].use_case);
+    const [originalReference, setOriginalReference] = useState({});
+    const [reference, setReference] = useState({});
+    const [selectedSource, setSelectedSource] = useState("");
 
     const [label, setLabel] = useState("");
     const [labels, setLabels] = useState([]);
@@ -30,42 +30,50 @@ export default function SourceConfig() {
     const [subLabelError, setSubLabelError] = useState("");
 
     const navigate = useNavigate();
+    const { sourceID } = useParams();
 
     useEffect(() => {
-        // const mainTags = reference.use_cases[0]
-        //     .tags.map(mT => mT.mainTag);
+        const sourceRef = getDocs(collection(db, "ClientSources", sourceID, "Tags"))
+            .then((snapshot) => {
+                let ref = [];
+                snapshot.docs.forEach((doc) => {
+                    let tags = {
+                        id: doc.id,
+                        mainTag: doc.data().mainTag,
+                        subTag: [...doc.data().subTag]
+                    }
 
-        // const subTags = reference.use_cases[0]
-        //     .tags.find(ta => ta.mainTag === "Functionality")
-        //     .subTag;
+                    ref.push(tags);
+                });
+                setReference(ref);
+                setOriginalReference(ref);
 
-        // setSelectedSource(reference.use_cases[0].use_case);
-        // setLabels(mainTags);
-        // setSelectedLabel(reference.use_cases[0].tags[0].mainTag);
-        // setSubLabels(subTags);
+                const mainTags = ref.map(r => r.mainTag);
 
-        
+                const subTags = ref.find(r => r.mainTag === mainTags[0])
+                    .subTag;
+
+                setSelectedSource(ref[0]);
+                setLabels(mainTags);
+                setSelectedLabel(ref[0].mainTag);
+                setSubLabels(subTags);
+            });
     }, []);
 
     const updateReference = (action, data) => {
-        const updatedReference = { ...reference };
+        let updatedReference = [...reference];
 
-        const selectedUseCaseIndex = updatedReference.use_cases.findIndex(uc => uc.use_case === selectedSource);
-
-        if (selectedUseCaseIndex !== -1) {
-            let currentUseCase = updatedReference.use_cases[selectedUseCaseIndex];
-            if (action === "main") {
-                currentUseCase.tags = data.map((mT, i) => ({
-                    mainTag: mT,
-                    subTag: selectedLabel === mT
-                        ? subLabels
-                        : currentUseCase.tags[i]?.subTag || []
-                }));
-            } else {
-                updatedReference.use_cases[selectedUseCaseIndex]
-                    .tags.find(ta => ta.mainTag === selectedLabel)
-                    .subTag = data;
-            }
+        if (action === "main") {
+            updatedReference = data.map((mT, i) => ({
+                id: updatedReference[i]?.id || "",
+                mainTag: mT,
+                subTag: selectedLabel === mT
+                    ? subLabels
+                    : updatedReference[i]?.subTag || []
+            }));
+        } else {
+            updatedReference.find(ref => ref.mainTag === selectedLabel)
+                .subTag = data;
         }
 
         console.log(updatedReference)
@@ -73,24 +81,9 @@ export default function SourceConfig() {
         setReference(updatedReference);
     };
 
-    const handleSourceChange = (source) => {
-        setSelectedSource(source);
-        const mainTags = reference.use_cases
-            .find(uc => uc.use_case === source)
-            .tags.map(mT => mT.mainTag);
-
-        setLabels(mainTags);
-
-        let selectedSourceIndex = reference.use_cases.findIndex(uc => uc.use_case === source);
-        setSelectedLabel(reference.use_cases[selectedSourceIndex].tags[0].mainTag);
-        setSubLabels(reference.use_cases[selectedSourceIndex].tags[0].subTag);
-    }
-
     const handleLabelChange = (lab) => {
         setSelectedLabel(lab);
-        const subTags = reference.use_cases
-            .find(uc => uc.use_case === selectedSource)
-            .tags.find(ta => ta.mainTag === lab)
+        const subTags = reference.find(ref => ref.mainTag === lab)
             .subTag;
 
         setSubLabels(subTags);
@@ -138,35 +131,55 @@ export default function SourceConfig() {
         }
     }
 
-    const addSource = async () => {
-        let selectedSourceIndex = reference.use_cases.findIndex(uc => uc.use_case === selectedSource);
-        let finalReference = reference.use_cases[selectedSourceIndex];
+    const compareRef = (og, upd) => {
+        let ogStrings = og.map((t) => (
+            JSON.stringify(t)
+        ));
 
-        setBtnDisable(true);
-        setBtnLabel("Saving...");
-
-        const sourceRef = await addDoc(collection(db, "ClientSources"), {
-            title: sourceName,
-            useCase: finalReference.use_case
+        let updStrings = upd.map((t) => {
+            JSON.stringify(t)
         });
 
-        finalReference.tags.forEach(async (t) => {
-            await addDoc(collection(db, `ClientSources/${sourceRef.id}/Tags`), {
-                mainTag: t.mainTag,
-                subTag: t.subTag
-            });
+        console.log(upd)
+        console.log(updStrings)
+
+        let withChanges = [];
+
+        updStrings.forEach((updStr, i) => {
+            try {
+                if (updStr !== ogStrings[i]) {
+                    // console.log(ogStrings[i]);
+                    // console.log(updStr);
+                    withChanges.push(i);
+                }
+            } catch(e) {
+                console.log(e);
+            }
         });
 
-        const feedbackRef = await addDoc(collection(db, "ClientFeedbacks"), {
-            sourceID: sourceRef.id
-        });
+        
+    }
 
-        if(sourceRef.id && feedbackRef.id) {
-            setBtnDisable(false);
-            setBtnLabel("Save");
+    const saveConfig = async () => {
+        // setBtnDisable(true);
+        // setBtnLabel("Saving...");
 
-            navigate(`/source/${sourceRef.id}`)
-        }
+        compareRef(originalReference, reference);
+
+        // referece.forEach(async (r) => {
+        //     if (r !== "") {
+        //         const sourceRef = await updateDoc(collection(db, "ClientSources", sourceID, "Tags", r), {
+                    
+        //         });
+        //     }
+        // })
+
+        // if (sourceRef.id && feedbackRef.id) {
+        //     setBtnDisable(false);
+        //     setBtnLabel("Save");
+
+        //     navigate(`/source/${sourceRef.id}`)
+        // }
     }
 
     return (
@@ -199,28 +212,6 @@ export default function SourceConfig() {
                     </Tab.List>
                     <Tab.Panels className="mt-6">
                         <Tab.Panel as={"div"} className="flex flex-col w-full space-y-4">
-                            <h1 className="text-2xl font-bold">Set Source Type</h1>
-                            <Listbox as="div" className="p-2 bg-slate-200 w-1/4 rounded-lg"
-                                value={selectedSource}
-                                onChange={(newSource) => handleSourceChange(newSource)}
-                            >
-                                <Listbox.Button className="flex flex-row w-full items-center">
-                                    <span className="font-bold order-first">{selectedSource}</span>
-                                    <span className="grow"></span>
-                                    <span className="order-last"><FaChevronDown /></span>
-                                </Listbox.Button>
-                                <Listbox.Options className="space-y-1">
-                                    {reference.use_cases.map((ref, ind) => (
-                                        <Listbox.Option
-                                            key={ind}
-                                            value={ref.use_case}
-                                            className="p-2 font-semibold hover:bg-slate-100 rounded-lg select-none cursor-pointer"
-                                        >
-                                            {ref.use_case}
-                                        </Listbox.Option>
-                                    ))}
-                                </Listbox.Options>
-                            </Listbox>
                             <h1 className="text-2xl font-bold">Set Tags</h1>
                             <div className="flex flex-col space-y-1">
                                 <div className="p-2 w-full h-full flex flex-row flex-wrap space-x-2 border-2 border-dashed border-slate-600 rounded-lg">
@@ -279,7 +270,7 @@ export default function SourceConfig() {
                                 <button onClick={addSubLabel} className="flex h-5 shrink p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Set</button>
                             </div>
                             <div className={btnDisable ? "opacity-50" : "opacity-100"}>
-                                <button onClick={addSource} disabled={btnDisable} className="flex h-5 w-48 p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">{btnLabel}</button>
+                                <button onClick={saveConfig} disabled={btnDisable} className="flex h-5 w-48 p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">{btnLabel}</button>
                             </div>
                         </Tab.Panel>
                     </Tab.Panels>
