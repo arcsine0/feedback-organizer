@@ -143,20 +143,20 @@ export default function InstanceAdd() {
         setBtnDisable(true);
         setBtnLabel("Saving...");
 
-        const sourceRef = await addDoc(collection(db, "ClientSources"), {
+        const sourceRef = await addDoc(collection(db, "ClientInstances"), {
             title: instanceName,
             useCase: finalReference.use_case
         });
 
         finalReference.tags.forEach(async (t) => {
-            await addDoc(collection(db, `ClientSources/${sourceRef.id}/Tags`), {
+            await addDoc(collection(db, `ClientInstances/${sourceRef.id}/Tags`), {
                 mainTag: t.mainTag,
                 subTag: t.subTag
             });
         });
 
         const feedbackRef = await addDoc(collection(db, "ClientFeedbacks"), {
-            sourceID: sourceRef.id
+            instanceID: sourceRef.id
         });
 
         if(sourceRef.id && feedbackRef.id) {
@@ -170,7 +170,7 @@ export default function InstanceAdd() {
     return (
         <div className="flex flex-col w-full h-full p-10 space-y-10">
             <div className="flex flex-col space-y-5">
-                <h1 className="text-3xl font-bold">Name your Source</h1>
+                <h1 className="text-3xl font-bold">Name your Instance</h1>
                 <div className="flex flex-row w-full h-full space-x-2 items-center">
                     <h1 className="text-2xl font-semibold py-2 px-4 bg-slate-200 rounded-lg">Guest</h1>
                     <h1 className="text-3xl">/</h1>
@@ -184,7 +184,7 @@ export default function InstanceAdd() {
                 </div>
             </div>
             <div className="flex flex-col w-2/3 h-full space-y-2">
-                <h1 className="text-3xl font-bold">Source Config</h1>
+                <h1 className="text-3xl font-bold">Instance Config</h1>
                 <Tab.Group>
                     <Tab.List className="flex w-1/3 space-x-10 p-2 items-center">
                         <Tab className="flex justify-center items-center px-5 py-2 hover:border-b-2 border-black">
@@ -197,7 +197,7 @@ export default function InstanceAdd() {
                     </Tab.List>
                     <Tab.Panels className="mt-6">
                         <Tab.Panel as={"div"} className="flex flex-col w-full space-y-4">
-                            <h1 className="text-2xl font-bold">Set Source Type</h1>
+                            <h1 className="text-2xl font-bold">Set Instance Type</h1>
                             <Listbox as="div" className="p-2 bg-slate-200 w-1/4 rounded-lg"
                                 value={selectedInstance}
                                 onChange={(newSource) => handleSourceChange(newSource)}

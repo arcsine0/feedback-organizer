@@ -32,7 +32,7 @@ export default function InstanceConfig() {
     const { instanceID } = useParams();
 
     useEffect(() => {
-        const sourceRef = getDocs(collection(db, "ClientSources", instanceID, "Tags"))
+        const sourceRef = getDocs(collection(db, "ClientInstances", instanceID, "Tags"))
             .then((snapshot) => {
                 let ref = [];
                 snapshot.docs.forEach((doc) => {
@@ -164,11 +164,11 @@ export default function InstanceConfig() {
             if (withChanges.includes(i)) {
                 console.log(r);
                 if (r.id !== "") {
-                    await updateDoc(doc(db, "ClientSources", instanceID, "Tags", r.id), {
+                    await updateDoc(doc(db, "ClientInstances", instanceID, "Tags", r.id), {
                         subTag: r.subTag
                     });
                 } else {
-                    await addDoc(collection(db, "ClientSources", instanceID, "Tags"), {
+                    await addDoc(collection(db, "ClientInstances", instanceID, "Tags"), {
                         mainTag: r.mainTag,
                         subTag: r.subTag
                     });
@@ -185,7 +185,7 @@ export default function InstanceConfig() {
     return (
         <div className="flex flex-col w-full h-full p-10 space-y-10">
             <div className="flex flex-col space-y-5">
-                <h1 className="text-3xl font-bold">Name your Source</h1>
+                <h1 className="text-3xl font-bold">Name your Instance</h1>
                 <div className="flex flex-row w-full h-full space-x-2 items-center">
                     <h1 className="text-2xl font-semibold py-2 px-4 bg-slate-200 rounded-lg">Guest</h1>
                     <h1 className="text-3xl">/</h1>
@@ -199,7 +199,7 @@ export default function InstanceConfig() {
                 </div>
             </div>
             <div className="flex flex-col w-2/3 h-full space-y-2">
-                <h1 className="text-3xl font-bold">Source Config</h1>
+                <h1 className="text-3xl font-bold">Instance Config</h1>
                 <Tab.Group>
                     <Tab.List className="flex w-1/3 space-x-10 p-2 items-center">
                         <Tab className="flex justify-center items-center px-5 py-2 hover:border-b-2 border-black">

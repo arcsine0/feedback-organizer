@@ -19,7 +19,7 @@ export default function InstancePage() {
         const feedbackRef = getDocs(collection(db, "ClientFeedbacks"))
             .then((snapshot) => {
                 snapshot.docs.forEach((doc) => {
-                    if (doc.data().sourceID === instanceID) {
+                    if (doc.data().instanceID === instanceID) {
                         setFeedbackID(doc.id);
                         fdID = doc.id;
 
@@ -44,7 +44,7 @@ export default function InstancePage() {
                 })
             });
 
-        const sourceRef = getDocs(collection(db, "ClientSources"))
+        const sourceRef = getDocs(collection(db, "ClientInstances"))
             .then((snapshot) => {
                 snapshot.docs.forEach((doc) => {
                     if (doc.id === instanceID) {

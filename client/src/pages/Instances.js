@@ -12,7 +12,7 @@ export default function Instances() {
     const [instances, setInstances] = useState([]);
 
     useEffect(() => {
-        const ref = getDocs(collection(db, "ClientSources"))
+        const ref = getDocs(collection(db, "ClientInstances"))
             .then((snapshot) => {
                 let result = [];
 
