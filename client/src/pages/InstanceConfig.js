@@ -4,13 +4,13 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Tab, Listbox } from "@headlessui/react";
 import { FaPencilAlt, FaChevronDown } from "react-icons/fa";
 
-import { collection, updateDoc, getDocs, addDoc, doc } from "firebase/firestore";
+import { collection, updateDoc, getDocs, getDoc,addDoc, doc } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 import Label from "../components/Label";
 
 export default function InstanceConfig() {
-    const [sourceName, setSourceName] = useState("");
+    const [instanceName, setInstanceName] = useState("");
 
     const [originalReference, setOriginalReference] = useState({});
     const [reference, setReference] = useState({});
@@ -32,26 +32,26 @@ export default function InstanceConfig() {
     const { instanceID } = useParams();
 
     useEffect(() => {
-        const sourceRef = getDocs(collection(db, "ClientInstances", instanceID, "Tags"))
+        getDocs(collection(db, "ClientInstances", instanceID, "Tags"))
             .then((snapshot) => {
                 let ref = [];
-                snapshot.docs.forEach((doc) => {
+                snapshot.docs.forEach(async (dc) => {
                     let tags = {
-                        id: doc.id,
-                        mainTag: doc.data().mainTag,
-                        subTag: [...doc.data().subTag]
+                        id: dc.id,
+                        mainTag: dc.data().mainTag,
+                        subTag: [...dc.data().subTag]
                     }
 
                     ref.push(tags);
+
+                    const instance = await getDoc(doc(db, "ClientInstances", instanceID));
+                    setInstanceName(instance.data().title);
                 });
 
                 setOriginalReference(JSON.parse(JSON.stringify(ref)));
                 setReference(ref);
 
-                console.log(ref);
-
                 const mainTags = ref.map(r => r.mainTag);
-
                 const subTags = ref.find(r => r.mainTag === mainTags[0])
                     .subTag;
 
@@ -176,10 +176,14 @@ export default function InstanceConfig() {
             }
         })
 
-        setBtnDisable(false);
-        setBtnLabel("Save");
+        const nameRef = await updateDoc(doc(db, "ClientInstances", instanceID), {
+            title: instanceName
+        }).then(() => {
+            setBtnDisable(false);
+            setBtnLabel("Save");
 
-        navigate(`/instance/${instanceID}`)
+            navigate(`/instance/${instanceID}`)
+        });
     }
 
     return (
@@ -192,8 +196,8 @@ export default function InstanceConfig() {
                     <input
                         type="text"
                         className="border-b-2 border-t-0 border-r-0 border-l-0 border-black text-2xl"
-                        value={sourceName}
-                        onChange={(e) => setSourceName(e.target.value)}
+                        value={instanceName}
+                        onChange={(e) => setInstanceName(e.target.value)}
                     />
                     <FaPencilAlt />
                 </div>
