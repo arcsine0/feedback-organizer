@@ -90,7 +90,11 @@ export default function Sources() {
         let processedFeedback = preProcessFeedback(feedback);
 
         if (!feedbacks.includes(processedFeedback) && processedFeedback !== "") {
-            let newFeedbacks = [...feedbacks, processedFeedback]
+            let newFeedback = {
+                content: processedFeedback,
+                date: new Date().toJSON()
+            }
+            let newFeedbacks = [...feedbacks, newFeedback]
             setFeedbacks(newFeedbacks);
             setFeedback("");
         }
@@ -98,10 +102,8 @@ export default function Sources() {
 
     const removeFeedback = (name) => {
         if (feedbacks.length > 1) {
-            let newFeedbacks = feedbacks.filter(fd => fd !== name)
+            let newFeedbacks = feedbacks.filter(fd => fd.content !== name)
             setFeedbacks(newFeedbacks);
-
-
             setFeedbackError("");
         } else {
             setFeedbackError("There should at least be 1 tag");
@@ -115,43 +117,50 @@ export default function Sources() {
         if (feedbacks.length >= 1) {
             const feedbackChunks = chunkArray(feedbacks, 5);
 
+            const tagsList = instances.find(ins => ins.id === selectedInstance).tags
+
             feedbackChunks.forEach((fd, i) => {
-                const date = new Date().toJSON();
                 const reqOptions = {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         content: fd,
-                        date: date,
-                        tags: ""
+                        tags: tagsList
                     })
                 }
 
                 if (fd) {
-                    fetch("http://127.0.0.1:8000/process/", reqOptions)
+                    try {
+                        fetch("http://127.0.0.1:8000/process/batch", reqOptions)
                         .then(res => res.json())
                         .then(d => {
-                            let data = d.response;
+                            // let data = d.response;
 
-                            let newSet = {
-                                "content": data.content,
-                                "date": data.date,
-                                "emotion": data.emotion,
-                                "tag": data.tag,
-                                "subTag": data.subTag
-                            }
+                            // let newSet = {
+                            //     "content": data.content,
+                            //     "date": data.date,
+                            //     "emotion": data.emotion,
+                            //     "tag": data.tag,
+                            //     "subTag": data.subTag
+                            // }
 
                             setBtnDisable(false);
-                            setBtnLabel("Process");
+                            setBtnLabel("Send");
 
                             console.log(`Processing Done for Feedback #${i}`);
                         })
+                    } catch(error) {
+                        setBtnDisable(false);
+                        setBtnLabel("Send");
+
+                        console.log(error);
+                    }
                 } else {
                     setBtnDisable(false);
-                    setBtnLabel("Process");
+                    setBtnLabel("Send");
                 }
             })
-            setFeedbacks([]);
+            // setFeedbacks([]);
         }
     }
 
@@ -214,7 +223,7 @@ export default function Sources() {
                                 </div>
                                 <div className="flex flex-col flex-wrap p-3 overflow-y-scroll space-y-3 border-2 border-dashed border-black rounded-md">
                                     {feedbacks.map((fd) => (
-                                        <Label name={fd} remove={removeFeedback} isBold={false} />
+                                        <Label name={fd.content} remove={removeFeedback} isBold={false} />
                                     ))}
                                 </div>
                                 <div className={btnDisable ? "opacity-50" : "opacity-100"}>

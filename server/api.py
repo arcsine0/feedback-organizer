@@ -14,6 +14,10 @@ class Feedback(BaseModel):
     date: str
     tags: dict
 
+class FeedbackBatch(BaseModel):
+    content: list
+    tags: list
+
 class Result:
     content: str
     emotion: str
@@ -80,4 +84,29 @@ async def process_feedback(fd: Feedback):
         json.dump(cached_feedbacks, json_file, indent=2) 
         
     return {'response': res}
+
+@app.post('/process/batch')
+async def process_feedback(fdb: FeedbackBatch):
+    main_tags = [tag["mainTag"] for tag in fdb.tags]
+
+    print(main_tags)
+    for fd in fdb.content:
+        print(fd)
+
+    # emotion = emotion_model(fd.content)
+    # mainTag = topic_model(fd.content, main_tags, multi_label=False)
+
+    # sub_tags = [tag["subTag"] for tag in fdb.tags if tag["mainTag"] == mainTag['labels'][0]]
+    # subTag = topic_model(fd.content, sub_tags[0], multi_label=False)
+
+    # res = {
+    #     'content': fd.content,
+    #     'emotion': emotion[0]['label'],
+    #     'tag': mainTag['labels'][0],
+    #     'subTag': subTag['labels'][0],
+    #     'date': fd.date
+    # }    
+
+        
+    return {'response': 'test'}
     
