@@ -30,7 +30,7 @@ export default function InstancePage() {
                                     let fd = {
                                         content: d.data().content,
                                         date: d.data().date,
-                                        emotion: d.data().emotion,
+                                        sentiment: d.data().sentiment,
                                         mainTag: d.data().mainTag,
                                         subTag: d.data().subTag
                                     }

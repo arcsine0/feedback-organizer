@@ -1,7 +1,7 @@
 import { pipeline } from '@xenova/transformers';
 
 import { collection, getDocs, getDoc, addDoc, doc } from "firebase/firestore";
-import { db } from "../firebase/config";
+import { db } from "./firebase/config.js";
 
 import cors from 'cors';
 import http from 'http';
@@ -50,7 +50,11 @@ app.post('/process/batch', async (req, res) => {
         preds.push(compiled);
     }));
 
-    res.send(preds);
+    preds.forEach((pred) => {
+        addDoc(collection(db, "ClientInstances", req.body.id, "Feedbacks"), pred);
+    });
+
+    res.send('Processing Completed');
 });
 
 server.listen(8000, () => {

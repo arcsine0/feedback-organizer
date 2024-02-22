@@ -14,8 +14,6 @@ export default function Sources() {
     const [selectedInstance, setSelectedInstance] = useState("Select instance");
     const [selectedInstanceName, setSelectedInstanceName] = useState("None");
 
-    const [instanceTagConfig, setInstanceTagConfig] = useState({});
-
     const [feedback, setFeedback] = useState("");
     const [feedbacks, setFeedbacks] = useState([]);
 
@@ -124,6 +122,7 @@ export default function Sources() {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
+                        id: selectedInstance,
                         content: fd,
                         tags: tagsList
                     })
@@ -132,23 +131,14 @@ export default function Sources() {
                 if (fd) {
                     try {
                         fetch("http://127.0.0.1:8000/process/batch", reqOptions)
-                        .then(res => res.json())
-                        .then(d => {
-                            // let data = d.response;
-
-                            // let newSet = {
-                            //     "content": data.content,
-                            //     "date": data.date,
-                            //     "emotion": data.emotion,
-                            //     "tag": data.tag,
-                            //     "subTag": data.subTag
-                            // }
-
-                            setBtnDisable(false);
-                            setBtnLabel("Send");
-
-                            console.log(`Processing Done for Feedback #${i}`);
-                        })
+                        .then(res => {
+                            if (res) {
+                                setBtnDisable(false);
+                                setBtnLabel("Send");
+    
+                                console.log(`Processing Done for Feedback #${i}`);
+                            }
+                        });
                     } catch(error) {
                         setBtnDisable(false);
                         setBtnLabel("Send");
