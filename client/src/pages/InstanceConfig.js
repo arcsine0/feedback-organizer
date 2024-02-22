@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Tab, Listbox } from "@headlessui/react";
 import { FaPencilAlt, FaChevronDown } from "react-icons/fa";
 
-import { collection, updateDoc, getDocs, getDoc,addDoc, doc } from "firebase/firestore";
+import { collection, updateDoc, getDocs, getDoc, addDoc, doc } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 import Label from "../components/Label";
