@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Outlet, Link, useParams } from 'react-router-dom'
 
-import { getDocs, collection } from "firebase/firestore";
+import { getDoc, getDocs, doc, collection } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 import FeedbackCard from "../components/FeedbackCard";
@@ -16,32 +16,23 @@ export default function InstancePage() {
 
     useEffect(() => {
         let fdID = "";
-        const feedbackRef = getDocs(collection(db, "ClientFeedbacks"))
+        getDocs(collection(db, "ClientInstances", instanceID, "Feedbacks"))
             .then((snapshot) => {
+                let result = [];
                 snapshot.docs.forEach((doc) => {
-                    if (doc.data().instanceID === instanceID) {
-                        setFeedbackID(doc.id);
-                        fdID = doc.id;
-
-                        getDocs(collection(db, "ClientFeedbacks", doc.id, "Feedbacks"))
-                            .then((ss) => {
-                                let result = [];
-                                ss.docs.forEach((d) => {
-                                    let fd = {
-                                        content: d.data().content,
-                                        date: d.data().date,
-                                        sentiment: d.data().sentiment,
-                                        mainTag: d.data().mainTag,
-                                        subTag: d.data().subTag
-                                    }
-
-                                    result.push(fd);
-                                })
-
-                                setFeedbacks(result);
-                            });
+                    console.log(doc.data())
+                    let fd = {
+                        content: doc.data().content,
+                        date: doc.data().date,
+                        sentiment: doc.data().sentiment,
+                        mainTag: doc.data().mainTag,
+                        subTag: doc.data().subTag
                     }
+
+                    result.push(fd);
                 })
+
+                setFeedbacks(result);
             });
 
         const sourceRef = getDocs(collection(db, "ClientInstances"))
@@ -52,6 +43,7 @@ export default function InstancePage() {
                     }
                 })
             });
+        // console.log(getDoc(doc(db, "ClientInstance", instanceID)).data())
 
     }, []);
 
@@ -68,7 +60,7 @@ export default function InstancePage() {
                 <h1 className="shrink text-3xl font-bold">All Feedbacks</h1>
                 <div className="grow flex flex-col space-y-2 overflow-y-auto">
                     {feedbacks.map((fd, i) => (
-                        <FeedbackCard count={i + 1} title={`Feedback ${i + 1}`} content={fd.content} date={fd.date} emotion={fd.emotion} tag={fd.tag} subTag={fd.subTag} />
+                        <FeedbackCard count={i + 1} title={`Feedback ${i + 1}`} content={fd.content} date={fd.date} sentiment={fd.sentiment} tag={fd.mainTag} subTag={fd.subTag} />
                     ))}
                 </div>
             </div>
