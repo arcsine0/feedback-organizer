@@ -111,8 +111,8 @@ export default function Sources() {
     }
 
     const sendFeedback = () => {
-        setBtnDisable(true);
-        setBtnLabel("Processing...");
+        // setBtnDisable(true);
+        // setBtnLabel("Processing...");
 
         if (feedbacks.length >= 1) {
             const feedbackChunks = chunkArray(feedbacks, 5);
