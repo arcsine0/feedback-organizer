@@ -261,7 +261,7 @@ export default function Playground() {
                     <div className="flex flex-col space-y-1">
                         <div className="p-2 w-full h-full flex flex-row flex-wrap space-x-2 border-2 border-dashed border-slate-600 rounded-lg">
                             {labels.map((la) => (
-                                <Label name={la} remove={removeLabel} />
+                                <Label name={la} remove={removeLabel} isBold={true} />
                             ))}
                         </div>
                         <p className="font-semibold text-red-400">{labelError}</p>
@@ -300,7 +300,7 @@ export default function Playground() {
                     <div className="flex flex-col space-y-1">
                         <div className="p-2 w-full h-full flex flex-row flex-wrap space-x-2 border-2 border-dashed border-slate-600 rounded-lg">
                             {subLabels.map((la, ind) => (
-                                <Label name={la} remove={removeSubLabel} />
+                                <Label name={la} remove={removeSubLabel} isBold={true} />
                             ))}
                         </div>
                         <p className="font-semibold text-red-400">{subLabelError}</p>

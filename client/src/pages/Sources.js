@@ -19,6 +19,9 @@ export default function Sources() {
 
     const [feedbackError, setFeedbackError] = useState("");
 
+    const [btnLabel, setBtnLabel] = useState("Send");
+    const [btnDisable, setBtnDisable] = useState(false);
+
     useEffect(() => {
         getDocs(collection(db, "ClientInstances"))
             .then((snapshot) => {
@@ -61,6 +64,13 @@ export default function Sources() {
         return processedString;
     }
 
+    const chunkArray = (array, chunkSize) => {
+        return Array.from(
+          { length: Math.ceil(array.length / chunkSize) },
+          (_, index) => array.slice(index * chunkSize, (index + 1) * chunkSize)   
+        );
+      }
+
     const addFeedback = () => {
         let processedFeedback = preProcessFeedback(feedback);
 
@@ -80,6 +90,53 @@ export default function Sources() {
             setFeedbackError("");
         } else {
             setFeedbackError("There should at least be 1 tag");
+        }
+    }
+
+    const sendFeedback = () => {
+        setBtnDisable(true);
+        setBtnLabel("Processing...");
+
+        if (feedbacks.length >= 1) {
+            const feedbackChunks = chunkArray(feedbacks, 5);
+
+            feedbackChunks.forEach((fd, i) => {
+                const date = new Date().toJSON();
+                const reqOptions = {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        content: fd,
+                        date: date,
+                        tags: ""
+                    })
+                }
+
+                if (fd) {
+                    fetch("http://127.0.0.1:8000/process/", reqOptions)
+                        .then(res => res.json())
+                        .then(d => {
+                            let data = d.response;
+
+                            let newSet = {
+                                "content": data.content,
+                                "date": data.date,
+                                "emotion": data.emotion,
+                                "tag": data.tag,
+                                "subTag": data.subTag
+                            }
+
+                            setBtnDisable(false);
+                            setBtnLabel("Process");
+
+                            console.log(`Processing Done for Feedback #${i}`);
+                        })
+                } else {
+                    setBtnDisable(false);
+                    setBtnLabel("Process");
+                }
+            })
+            setFeedbacks([]);
         }
     }
 
@@ -140,10 +197,13 @@ export default function Sources() {
                                         <button onClick={addFeedback} className="flex h-5 shrink p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Add</button>
                                     </div>
                                 </div>
-                                <div className="flex flex-row flex-wrap p-2 space-x-2 border-2 border-dashed border-black rounded-md">
+                                <div className="flex flex-col flex-wrap p-3 overflow-y-scroll space-y-3 border-2 border-dashed border-black rounded-md">
                                     {feedbacks.map((fd) => (
                                         <Label name={fd} remove={removeFeedback} isBold={false} />
                                     ))}
+                                </div>
+                                <div className={btnDisable ? "opacity-50" : "opacity-100"}>
+                                    <button onClick={sendFeedback} disabled={btnDisable} className="flex h-5 w-48 p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">{btnLabel}</button>
                                 </div>
                             </Tab.Panel>
                         </Tab.Panels>
