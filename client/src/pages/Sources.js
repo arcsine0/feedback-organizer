@@ -14,6 +14,8 @@ export default function Sources() {
     const [selectedInstance, setSelectedInstance] = useState("Select instance");
     const [selectedInstanceName, setSelectedInstanceName] = useState("None");
 
+    const [instanceTagConfig, setInstanceTagConfig] = useState({});
+
     const [feedback, setFeedback] = useState("");
     const [feedbacks, setFeedbacks] = useState([]);
 
@@ -28,8 +30,21 @@ export default function Sources() {
                 snapshot.docs.forEach((doc) => {
                     let result = {
                         id: doc.id,
-                        title: doc.data().title
+                        title: doc.data().title,
+                        tags: []
                     }
+
+                    getDocs(collection(db, "ClientInstances", doc.id, "Tags"))
+                        .then((sn) => {
+                            sn.docs.forEach((tags) => {
+                                let res = {
+                                    mainTag: tags.data().mainTag,
+                                    subTag: tags.data().subTag
+                                }
+
+                                result.tags.push(res);
+                            })
+                        })
 
                     if (!instances.find(ins => ins.id === result.id)) {
                         let newInstance = [...instances, result];
