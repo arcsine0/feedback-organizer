@@ -306,24 +306,31 @@ export default function InstanceAdd() {
                         </Tab.Panel>
                         <Tab.Panel as={"div"} className="flex flex-col w-2/3 space-y-4">
                             <h1 className="text-2xl font-bold">Set Instance Weights</h1>
-                            <div className="flex flex-row gap-3">
-                                <div className="flex flex-col w-1/2 gap-2">
-                                    <h1 className="text-2xl font-bold">Positive</h1>
-                                    <div className="flex flex-col gap-2 p-2 overflow-y-scroll border-2 border-dashed border-black">
-                                        {currentReference.tags.map((tag) => (
-                                            <TagGroup mainTag={tag.mainTag} subTag={tag.subTag} addToList={addToAllSubLabels} />
-                                        ))}
-                                    </div>
-                                </div>
-                                <div className="flex flex-col w-1/2 gap-2">
-                                    <h1 className="text-2xl font-bold">Negative</h1>
-                                    <div className="flex flex-col gap-2 p-2 overflow-y-scroll border-2 border-dashed border-black">
-                                        {currentReference.tags.map((tag) => (
-                                            <TagGroup mainTag={tag.mainTag} subTag={tag.subTag} addToList={addToAllSubLabels} />
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
+                            <Tab.Group>
+                                <Tab.List className="flex w-1/3 space-x-10 p-2 items-center">
+                                    <Tab className="flex justify-center items-center px-5 py-2 hover:border-b-2 border-black">
+                                        <h1 className="font-semibold">Positive</h1>
+                                    </Tab>
+                                    <h1>|</h1>
+                                    <Tab className="flex justify-center items-center px-5 py-2 hover:border-b-2 border-black">
+                                        <h1 className="font-semibold">Negative</h1>
+                                    </Tab>
+                                </Tab.List>
+                                <Tab.Panels className="mt-6">
+                                    <Tab.Panel as={"div"} className="flex flex-col w-full space-y-4">
+                                        <div className="flex flex-row gap-3">
+                                            <div className="flex flex-col w-full gap-2">
+                                                <h1 className="text-2xl font-bold">Positive</h1>
+                                                <div className="flex flex-col gap-2 p-2 overflow-y-scroll border-2 border-dashed border-black">
+                                                    {currentReference.tags.map((tag) => (
+                                                        <TagGroup mainTag={tag.mainTag} subTag={tag.subTag} addToList={addToAllSubLabels} />
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Tab.Panel>
+                                </Tab.Panels>
+                            </Tab.Group>
                         </Tab.Panel>
                     </Tab.Panels>
                 </Tab.Group>
