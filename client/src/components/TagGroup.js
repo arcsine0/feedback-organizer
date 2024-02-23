@@ -34,7 +34,7 @@ export default function TagGroup({ mainTag, subTag, addToList }) {
                             type="range"
                             name={sT}
                             min="0"
-                            max="5"
+                            max="10"
                             onChange={handleSliderChange}
                             step="0.5"
                             className="w-2/3 h-full bg-slate-600 rounded-lg cursor-pointer"
