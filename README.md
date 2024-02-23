@@ -1,6 +1,9 @@
 # Welcome to my **Feedback Organizer**
 This project is a feedback organizer integrated with Emotion-detection and Zero-class classification models.
 
+# Requirements
+- latest **Node.js** version
+
 # Setup
 After cloning this project, you will be presented with 2 directories representing the entire stack.
 
