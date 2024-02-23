@@ -5,7 +5,7 @@ This project is a feedback organizer integrated with Emotion-detection and Zero-
 After cloning this project, you will be presented with 2 directories representing the entire stack.
 
 # Client 
-The client side is handled by **React**, to set this up, head to the **client** directory and do:
+The client side is handled by **React**, to set this up, head to the `client` directory and do:
 > `npm install`
 
 Once all the dependencies are installed, do a
