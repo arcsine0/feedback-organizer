@@ -5,15 +5,19 @@ import { Tab, Listbox } from "@headlessui/react";
 import { FaPencilAlt, FaChevronDown } from "react-icons/fa";
 
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "../firebase/config"; 
+import { db } from "../firebase/config";
 
 import Label from "../components/Label";
+import TagGroup from "../components/TagGroup";
+
 import useCases from '../defaults/UseCases.json';
 
 export default function InstanceAdd() {
     const [instanceName, setInstanceName] = useState("");
 
     const [reference, setReference] = useState(useCases);
+    const [currentReference, setCurrentReference] = useState({});
+
     const [selectedInstance, setSelectedInstance] = useState(reference.use_cases[0].use_case);
 
     const [label, setLabel] = useState("");
@@ -29,6 +33,8 @@ export default function InstanceAdd() {
     const [labelError, setLabelError] = useState("");
     const [subLabelError, setSubLabelError] = useState("");
 
+    const [allSubLabels, setAllSubLabels] = useState([]);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -39,11 +45,23 @@ export default function InstanceAdd() {
             .tags.find(ta => ta.mainTag === "Functionality")
             .subTag;
 
+        let selectedInstanceIndex = reference.use_cases.findIndex(uc => uc.use_case === selectedInstance);
+        let currentRef = reference.use_cases[selectedInstanceIndex];
+
         setSelectedInstance(reference.use_cases[0].use_case);
         setLabels(mainTags);
         setSelectedLabel(reference.use_cases[0].tags[0].mainTag);
         setSubLabels(subTags);
+
+        setCurrentReference(currentRef);
     }, []);
+
+    useEffect(() => {
+        let selectedInstanceIndex = reference.use_cases.findIndex(uc => uc.use_case === selectedInstance);
+        let currentRef = reference.use_cases[selectedInstanceIndex];
+
+        setCurrentReference(currentRef);
+    }, [selectedInstance, reference])
 
     const updateReference = (action, data) => {
         const updatedReference = { ...reference };
@@ -65,9 +83,6 @@ export default function InstanceAdd() {
                     .subTag = data;
             }
         }
-
-        console.log(updatedReference)
-
         setReference(updatedReference);
     };
 
@@ -79,9 +94,12 @@ export default function InstanceAdd() {
 
         setLabels(mainTags);
 
-        let selectedSourceIndex = reference.use_cases.findIndex(uc => uc.use_case === source);
-        setSelectedLabel(reference.use_cases[selectedSourceIndex].tags[0].mainTag);
-        setSubLabels(reference.use_cases[selectedSourceIndex].tags[0].subTag);
+        let selectedUseCaseIndex = reference.use_cases.findIndex(uc => uc.use_case === source);
+        setSelectedLabel(reference.use_cases[selectedUseCaseIndex].tags[0].mainTag);
+        setSubLabels(reference.use_cases[selectedUseCaseIndex].tags[0].subTag);
+
+        let currentRef = reference.use_cases[selectedUseCaseIndex];
+        setCurrentReference(currentRef);
     }
 
     const handleLabelChange = (lab) => {
@@ -137,8 +155,8 @@ export default function InstanceAdd() {
     }
 
     const addSource = async () => {
-        let selectedSourceIndex = reference.use_cases.findIndex(uc => uc.use_case === selectedInstance);
-        let finalReference = reference.use_cases[selectedSourceIndex];
+        let selectedInstanceIndex = reference.use_cases.findIndex(uc => uc.use_case === selectedInstance);
+        let finalReference = reference.use_cases[selectedInstanceIndex];
 
         setBtnDisable(true);
         setBtnLabel("Saving...");
@@ -159,7 +177,7 @@ export default function InstanceAdd() {
             instanceID: sourceRef.id
         });
 
-        if(sourceRef.id && feedbackRef.id) {
+        if (sourceRef.id && feedbackRef.id) {
             setBtnDisable(false);
             setBtnLabel("Save");
 
@@ -208,9 +226,9 @@ export default function InstanceAdd() {
                                     <span className="order-last"><FaChevronDown /></span>
                                 </Listbox.Button>
                                 <Listbox.Options className="space-y-1">
-                                    {reference.use_cases.map((ref, ind) => (
+                                    {reference.use_cases.map((ref, i) => (
                                         <Listbox.Option
-                                            key={ind}
+                                            key={i}
                                             value={ref.use_case}
                                             className="p-2 font-semibold hover:bg-slate-100 rounded-lg select-none cursor-pointer"
                                         >
@@ -223,7 +241,7 @@ export default function InstanceAdd() {
                             <div className="flex flex-col space-y-1">
                                 <div className="p-2 w-full h-full flex flex-row flex-wrap gap-2 border-2 border-dashed border-slate-600 rounded-lg">
                                     {labels.map((la) => (
-                                        <Label name={la} remove={removeLabel} />
+                                        <Label name={la} remove={removeLabel} isBold={true} />
                                     ))}
                                 </div>
                                 <p className="font-semibold text-red-400">{labelError}</p>
@@ -248,9 +266,9 @@ export default function InstanceAdd() {
                                     <span className="order-last"><FaChevronDown /></span>
                                 </Listbox.Button>
                                 <Listbox.Options className="space-y-1">
-                                    {labels.map((la, ind) => (
+                                    {labels.map((la, i) => (
                                         <Listbox.Option
-                                            key={ind}
+                                            key={i}
                                             value={la}
                                             className="p-2 font-semibold hover:bg-slate-100 rounded-lg select-none cursor-pointer"
                                         >
@@ -261,8 +279,8 @@ export default function InstanceAdd() {
                             </Listbox>
                             <div className="flex flex-col space-y-1">
                                 <div className="p-2 w-full h-full flex flex-row flex-wrap gap-2 border-2 border-dashed border-slate-600 rounded-lg">
-                                    {subLabels.map((la, ind) => (
-                                        <Label name={la} remove={removeSubLabel} />
+                                    {subLabels.map((la) => (
+                                        <Label name={la} remove={removeSubLabel} isBold={true} />
                                     ))}
                                 </div>
                                 <p className="font-semibold text-red-400">{subLabelError}</p>
@@ -278,6 +296,19 @@ export default function InstanceAdd() {
                             </div>
                             <div className={btnDisable ? "opacity-50" : "opacity-100"}>
                                 <button onClick={addSource} disabled={btnDisable} className="flex h-5 w-48 p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">{btnLabel}</button>
+                            </div>
+                        </Tab.Panel>
+                        <Tab.Panel as={"div"} className="flex flex-col w-full space-y-4">
+                            <h1 className="text-2xl font-bold">Set Instance Weights</h1>
+                            <div className="flex flex-row gap-3">
+                                <div className="flex flex-col gap-2 w-2/3 p-2 overflow-y-scroll border-2 border-dashed border-black">
+                                        {currentReference.tags ? currentReference.tags.map((tag) => {
+                                            <TagGroup mainTag={tag.mainTag} subTag={tag.subTag} />
+                                        }) : ""}
+                                </div>
+                                <div className="flex flex-col gap-2 w-1/3 p-2 overflow-y-scroll border-2 border-dashed border-black">
+
+                                </div>
                             </div>
                         </Tab.Panel>
                     </Tab.Panels>

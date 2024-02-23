@@ -176,7 +176,7 @@ export default function InstanceConfig() {
             }
         })
 
-        const nameRef = await updateDoc(doc(db, "ClientInstances", instanceID), {
+        await updateDoc(doc(db, "ClientInstances", instanceID), {
             title: instanceName
         }).then(() => {
             setBtnDisable(false);
