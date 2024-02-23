@@ -16,7 +16,7 @@ export default function InstanceAdd() {
     const [instanceName, setInstanceName] = useState("");
 
     const [reference, setReference] = useState(useCases);
-    const [currentReference, setCurrentReference] = useState({});
+    const [currentReference, setCurrentReference] = useState({ tags: [] });
 
     const [selectedInstance, setSelectedInstance] = useState(reference.use_cases[0].use_case);
 
@@ -151,6 +151,12 @@ export default function InstanceAdd() {
             setSubLabelError("");
         } else {
             setSubLabelError("There should at least be 1 tag");
+        }
+    }
+
+    const addToAllSubLabels = (name) => {
+        if (!allSubLabels.includes(name)) {
+            setAllSubLabels(allSubLabels => [...allSubLabels, name]);
         }
     }
 
@@ -298,16 +304,24 @@ export default function InstanceAdd() {
                                 <button onClick={addSource} disabled={btnDisable} className="flex h-5 w-48 p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">{btnLabel}</button>
                             </div>
                         </Tab.Panel>
-                        <Tab.Panel as={"div"} className="flex flex-col w-full space-y-4">
+                        <Tab.Panel as={"div"} className="flex flex-col w-2/3 space-y-4">
                             <h1 className="text-2xl font-bold">Set Instance Weights</h1>
                             <div className="flex flex-row gap-3">
-                                <div className="flex flex-col gap-2 w-2/3 p-2 overflow-y-scroll border-2 border-dashed border-black">
-                                        {currentReference.tags ? currentReference.tags.map((tag) => {
-                                            <TagGroup mainTag={tag.mainTag} subTag={tag.subTag} />
-                                        }) : ""}
+                                <div className="flex flex-col w-1/2 gap-2">
+                                    <h1 className="text-2xl font-bold">Positive</h1>
+                                    <div className="flex flex-col gap-2 p-2 overflow-y-scroll border-2 border-dashed border-black">
+                                        {currentReference.tags.map((tag) => (
+                                            <TagGroup mainTag={tag.mainTag} subTag={tag.subTag} addToList={addToAllSubLabels} />
+                                        ))}
+                                    </div>
                                 </div>
-                                <div className="flex flex-col gap-2 w-1/3 p-2 overflow-y-scroll border-2 border-dashed border-black">
-
+                                <div className="flex flex-col w-1/2 gap-2">
+                                    <h1 className="text-2xl font-bold">Negative</h1>
+                                    <div className="flex flex-col gap-2 p-2 overflow-y-scroll border-2 border-dashed border-black">
+                                        {currentReference.tags.map((tag) => (
+                                            <TagGroup mainTag={tag.mainTag} subTag={tag.subTag} addToList={addToAllSubLabels} />
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </Tab.Panel>
