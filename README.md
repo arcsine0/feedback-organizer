@@ -1,11 +1,14 @@
 # Welcome to my **Feedback Organizer**
 This project is a feedback organizer integrated with Emotion-detection and Zero-class classification models.
 
+# Requirements
+- latest **Node.js** version
+
 # Setup
 After cloning this project, you will be presented with 2 directories representing the entire stack.
 
 # Client 
-The client side is handled by **React**, to set this up, head to the **client** directory and do:
+The client side is handled by **React**, to set this up, head to the `client` directory and do:
 > `npm install`
 
 Once all the dependencies are installed, do a
@@ -14,13 +17,13 @@ Once all the dependencies are installed, do a
 to run the React front-end.
 
 # Server
-The server side, specifically the REST api is handled with **FastAPI Python**. To set the api up, head to the **server** directory, under **model**, do
-> `pip install -r requirements.txt`
+The server code has been migrated to Express JS, to set this up, head to the  `server/js` directory and do:
+> `npm install`
 
-Once all the packages are installed, do a 
-> `uvicorn api:app --reload`
+Once all the dependencies are installed, do a
+> `nodemon start`
 
-to run the api server.
+to run the Express back-end.
 
 # Testing
 Until I implement the sorting logic, you can test the models in the **Playground**. Just select it on the sidebar or navigate to `/playground`.
