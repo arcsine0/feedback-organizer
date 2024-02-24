@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { collection, doc, addDoc, setDoc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 import { Tab } from "@headlessui/react";
@@ -59,7 +59,9 @@ export default function Register() {
             const addAccountRef = await addDoc(collection(db, "ClientAccounts"), accountDetails);
 
             if (addAccountRef.id) {
-                const addInstancesRef = await addDoc(collection(db, "ClientAccounts", addAccountRef.id, "Instances"), {});
+                const addInstancesRef = await addDoc(collection(db, "ClientAccounts", addAccountRef.id, "Instances"), {
+                    instanceID: ""
+                });
 
                 if (addInstancesRef.id) {
                     navigate("/");

@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext } from "react";
-import { useNavigate, Link, Outlet } from "react-router-dom";
+import { useState, useContext } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
-import { collection, getDocs, getDoc, doc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 import GlobalContext from "../globals/GlobalContext";
