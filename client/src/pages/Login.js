@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, Outlet } from "react-router-dom";
 
 import { collection, getDocs, getDoc, doc } from "firebase/firestore";
 import { db } from "../firebase/config";
@@ -64,6 +64,10 @@ export default function Login() {
                     />
                 </div>
                 <button onClick={submitCredentials} className="flex h-5 w-3/4 p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Log In</button>
+                <p>No Account Yet?</p>
+                <Link to={"/register"}>
+                    <a className="text-blue-500 select-none cursor-pointer">Create an Account</a>
+                </Link>
             </div>
         </div>
     )

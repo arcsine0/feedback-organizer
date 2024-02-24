@@ -8,6 +8,7 @@ import Playground from "./pages/Playground";
 import Sources from "./pages/Sources";
 
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 import Instances from "./pages/Instances";
 import InstancePage from "./pages/InstancePage";
@@ -34,6 +35,7 @@ export default function Landing() {
                     {globalState.isLoggedIn ? <Sidebar className="flex-none" uname={globalState.uname} /> : ""}
                     <Routes>
                         <Route path="/" index element={globalState.isLoggedIn ? <Dashboard /> : <Login />} />
+                        <Route path="/register" element={<Register />} />
                         <Route path="/playground" element={<Playground />} />
                         <Route path="/sources" element={<Sources />} />
 
