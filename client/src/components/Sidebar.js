@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { Outlet, Link, useNavigate } from 'react-router-dom'
 import { Menu } from '@headlessui/react';
 
@@ -5,11 +6,20 @@ import { FaChevronDown, FaThLarge, FaChartPie, FaSignInAlt } from 'react-icons/f
 import { MdInput } from "react-icons/md";
 import { GrTest } from "react-icons/gr";
 
+import GlobalContext from "../globals/GlobalContext";
+
 export default function Sidebar({ uname }) {
+    const { globalState, setGlobalState } = useContext(GlobalContext);
+
     const navigate = useNavigate();
 
     const SignOut = () => {
-        localStorage.setItem("uname", undefined);
+        setGlobalState({
+            ...globalState,
+            isLoggedIn: false,
+            id: "",
+            uname: ""
+        });
         navigate("/");
     }
 
