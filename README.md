@@ -25,6 +25,8 @@ Once all the dependencies are installed, do a
 
 to run the Express back-end.
 
+Originally, the server was handled by FastAPI Python. This was now migrated to Express JS to make hosting through Firebase Functions much easier, and workflow much more efficient and consistent. The original code for the Python back-end is inside `server/python` as a back-up, and for documentation.
+
 # Testing
 The models can be tested through the **Playground**. Other than that, the Instances themselves are connected to a Firebase app making them have data persistence. To feed feedbacks to created Instances, go to **Source** and input them there.
 
