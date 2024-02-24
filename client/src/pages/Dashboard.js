@@ -1,6 +1,9 @@
-// import GradesTable from "../components/GradesTable"
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function Dashboard() {
+    
+
     return (
         <div className="flex flex-col w-full h-full p-10 space-y-10">
             <div className="flex flex-col space-y-1">

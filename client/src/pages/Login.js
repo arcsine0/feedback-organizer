@@ -1,12 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { collection, getDocs, getDoc, doc } from "firebase/firestore";
 import { db } from "../firebase/config";
 
+import GlobalContext from "../globals/GlobalContext";
+
 export default function Login() {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
+
+    const { globalState, setGlobalState } = useContext(GlobalContext);
 
     const navigate = useNavigate();
 
@@ -14,10 +18,17 @@ export default function Login() {
         getDocs(collection(db, "ClientAccounts"))
             .then((snapshot) => {
                 snapshot.docs.forEach((doc) => {
-
                     if (doc.data().email === email) {
                         if (doc.data().pass === pass) {
                             localStorage.setItem("uname", doc.data().uname);
+                            localStorage.setItem("id", doc.id);
+
+                            setGlobalState({
+                                ...globalState,
+                                isLoggedIn: true,
+                                id: doc.id,
+                                uname: doc.data().uname
+                            });
 
                             navigate("/");
                         }

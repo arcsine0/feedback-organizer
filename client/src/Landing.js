@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 import Sidebar from "./components/Sidebar";
@@ -14,36 +14,37 @@ import InstancePage from "./pages/InstancePage";
 import InstanceAdd from "./pages/InstanceAdd";
 import InstanceConfig from "./pages/InstanceConfig";
 
+import GlobalContext from "./globals/GlobalContext";
+
 export default function Landing() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [UName, setUName] = useState("");
+    const [globalState, setGlobalState] = useState({
+        isLoggedIn: false,
+        id: "",
+        uname: ""
+    });
 
     useEffect(() => {
-        const uname = localStorage.getItem("uname");
-
-        if (!uname && uname === undefined) {
-            setIsLoggedIn(false);
-        } else {
-            setUName(uname);
-            setIsLoggedIn(true);
-        }
+        console.log(globalState.isLoggedIn);
     }, []);
 
     return (
-        <BrowserRouter>
-            <div className="flex w-screen h-screen z-0">
-                {isLoggedIn ? <Sidebar className="flex-none" uname={UName} /> : ""}
-                <Routes>
-                    <Route path="/" index element={isLoggedIn ? <Dashboard /> : <Login />} />
-                    <Route path="/playground" element={<Playground />} />
-                    <Route path="/sources" element={<Sources />} />
+        <GlobalContext.Provider value={{ globalState, setGlobalState }}>
+            <BrowserRouter>
+                <div className="flex w-screen h-screen z-0">
+                    {globalState.isLoggedIn ? <Sidebar className="flex-none" uname={globalState.uname} /> : ""}
+                    <Routes>
+                        <Route path="/" index element={globalState.isLoggedIn ? <Dashboard /> : <Login />} />
+                        <Route path="/playground" element={<Playground />} />
+                        <Route path="/sources" element={<Sources />} />
 
-                    <Route path="/instances" element={<Instances />} />
-                    <Route path="/instance/add" element={<InstanceAdd />} />
-                    <Route path="/instance/:instanceID" element={<InstancePage />} />
-                    <Route path="/instance/config/:instanceID" element={<InstanceConfig />} />
-                </Routes>
-            </div>
-        </BrowserRouter>
+                        <Route path="/instances" element={<Instances />} />
+                        <Route path="/instance/add" element={<InstanceAdd />} />
+                        <Route path="/instance/:instanceID" element={<InstancePage />} />
+                        <Route path="/instance/config/:instanceID" element={<InstanceConfig />} />
+                    </Routes>
+                </div>
+            </BrowserRouter>
+        </GlobalContext.Provider>
+
     )
 }
