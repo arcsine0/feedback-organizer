@@ -1,27 +1,44 @@
 import { useState, useEffect } from "react";
-import { collection, getDocs, getDoc, doc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
-export default function SignIn() {
-    const [uname, setUname] = useState("");
+import { collection, getDocs, getDoc, doc } from "firebase/firestore";
+import { db } from "../firebase/config";
+
+export default function Login() {
+    const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
 
-    const submitCredentials = () => {
+    const navigate = useNavigate();
 
+    const submitCredentials = () => {
+        getDocs(collection(db, "ClientAccounts"))
+            .then((snapshot) => {
+                snapshot.docs.forEach((doc) => {
+
+                    if (doc.data().email === email) {
+                        if (doc.data().pass === pass) {
+                            localStorage.setItem("uname", doc.data().uname);
+
+                            navigate("/");
+                        }
+                    }
+                });
+            });
     }
 
     return (
-        <div className="flex w-full justify-center items-center">
+        <div className="flex w-full h-full justify-center items-center">
             <div className="flex flex-col w-1/3 h-auto p-20 space-y-4 justify-center items-center shadow-lg rounded-lg">
                 <h1 className="font-bold text-4xl">Log In</h1>
                 <div className="w-3/4">
-                    <label htmlFor="uname" className="block text-sm font-medium leading-6 text-gray-900">Username</label>
+                    <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email</label>
                     <input
                         type="text"
-                        value={uname}
-                        name="uname"
-                        id="uname"
+                        value={email}
+                        name="email"
+                        id="email"
                         className="w-full p-2 border-2 rounded-lg"
-                        onChange={e => setUname(e.target.value)}
+                        onChange={e => setEmail(e.target.value)}
                     />
                 </div>
                 <div className="w-3/4">

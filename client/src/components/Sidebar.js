@@ -1,4 +1,4 @@
-import { Outlet, Link } from 'react-router-dom'
+import { Outlet, Link, useNavigate } from 'react-router-dom'
 import { Menu } from '@headlessui/react';
 
 import { FaChevronDown, FaThLarge, FaChartPie, FaSignInAlt } from 'react-icons/fa';
@@ -7,6 +7,13 @@ import { MdInput } from "react-icons/md";
 import { GrTest } from "react-icons/gr";
 
 export default function Sidebar({uname}) {
+    const navigate = useNavigate();
+
+    const SignOut = () => {
+        localStorage.setItem("uname", undefined);
+        navigate("/");
+    }
+
     return (
         <aside id='default-sidebar' className='w-64 min-wid-full h-screen transition-transform -translate-x-full sm:translate-x-0' aria-label='Sidebar'>
             <div className='h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
@@ -64,23 +71,10 @@ export default function Sidebar({uname}) {
                         </a>
                     </li>
                     <li>
-                        <a className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
-                            <div className='flex order-first items-center'>
-                                <BsMailbox2Flag />
-                                <Link to={'/inbox'}>
-                                    <span className='flex-1 ms-3 whitespace-nowrap'>Inbox</span>
-                                </Link>
-                            </div>
-                            <span className='order-last inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300'>0</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a className='flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
+                        <a className='flex items-center p-2 text-gray-900 rounded-lg cursor-pointer dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
                             <div className='flex order-first items-center'>
                                 <FaSignInAlt />
-                                <Link to={'/signin'}>
-                                    <span className='flex-1 ms-3 whitespace-nowrap'>Sign In</span>
-                                </Link>
+                                <span onClick={SignOut} className='flex-1 ms-3 whitespace-nowrap select-none'>Logout</span>
                             </div>
                         </a>
                     </li>
