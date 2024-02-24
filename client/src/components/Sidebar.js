@@ -32,36 +32,36 @@ export default function Sidebar({ uname }) {
                     </li>
                     <li>
                         <Link to={"/"}>
-                            <a className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
+                            <div className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
                                 <div className='flex order-first items-center'>
                                     <FaChartPie className='order-first' />
                                     <span className='ms-3'>Dashboard</span>
                                 </div>
-                            </a>
+                            </div>
                         </Link>
                     </li>
                     <li>
                         <Link to={"/playground"}>
-                            <a className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
+                            <div className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
                                 <div className='flex order-first items-center'>
                                     <GrTest className='order-first' />
                                     <span className='ms-3'>Playground</span>
                                 </div>
-                            </a>
+                            </div>
                         </Link>
                     </li>
                     <li>
                         <Link to={"/sources"}>
-                            <a className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
+                            <div className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
                                 <div className='flex order-first items-center'>
                                     <MdInput className='order-first' />
                                     <span className='ms-3'>Sources</span>
                                 </div>
-                            </a>
+                            </div>
                         </Link>
                     </li>
                     <li>
-                        <a className='flex'>
+                        <div className='flex'>
                             <Menu as="div" className="flex flex-col space-y-2 w-full h-full">
                                 <Menu.Button className='flex p-2 items-center dark:text-white text-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group'>
                                     <FaThLarge className='order-first' />
@@ -77,16 +77,15 @@ export default function Sidebar({ uname }) {
                                     </Menu.Item>
                                 </Menu.Items>
                             </Menu>
-
-                        </a>
+                        </div>
                     </li>
                     <li>
-                        <a className='flex items-center p-2 text-gray-900 rounded-lg cursor-pointer dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
+                        <div className='flex items-center p-2 text-gray-900 rounded-lg cursor-pointer dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
                             <div className='flex order-first items-center'>
                                 <FaSignInAlt />
                                 <span onClick={SignOut} className='flex-1 ms-3 whitespace-nowrap select-none'>Logout</span>
                             </div>
-                        </a>
+                        </div>
                     </li>
                 </ul>
             </div>
