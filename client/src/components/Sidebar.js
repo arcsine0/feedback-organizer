@@ -2,11 +2,10 @@ import { Outlet, Link, useNavigate } from 'react-router-dom'
 import { Menu } from '@headlessui/react';
 
 import { FaChevronDown, FaThLarge, FaChartPie, FaSignInAlt } from 'react-icons/fa';
-import { BsMailbox2Flag } from 'react-icons/bs';
 import { MdInput } from "react-icons/md";
 import { GrTest } from "react-icons/gr";
 
-export default function Sidebar({uname}) {
+export default function Sidebar({ uname }) {
     const navigate = useNavigate();
 
     const SignOut = () => {
@@ -22,28 +21,34 @@ export default function Sidebar({uname}) {
                         <h1>Welcome, {uname}!</h1>
                     </li>
                     <li>
-                        <a className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
-                            <div className='flex order-first items-center'>
-                                <FaChartPie className='order-first' />
-                                <Link to={'/'}><span className='ms-3'>Dashboard</span></Link>
-                            </div>
-                        </a>
+                        <Link to={"/"}>
+                            <a className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
+                                <div className='flex order-first items-center'>
+                                    <FaChartPie className='order-first' />
+                                    <span className='ms-3'>Dashboard</span>
+                                </div>
+                            </a>
+                        </Link>
                     </li>
                     <li>
-                        <a className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
-                            <div className='flex order-first items-center'>
-                                <GrTest className='order-first' />
-                                <Link to={'/playground'}><span className='ms-3'>Playground</span></Link>
-                            </div>
-                        </a>
+                        <Link to={"/playground"}>
+                            <a className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
+                                <div className='flex order-first items-center'>
+                                    <GrTest className='order-first' />
+                                    <span className='ms-3'>Playground</span>
+                                </div>
+                            </a>
+                        </Link>
                     </li>
                     <li>
-                        <a className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
-                            <div className='flex order-first items-center'>
-                                <MdInput className='order-first' />
-                                <Link to={'/sources'}><span className='ms-3'>Sources</span></Link>
-                            </div>
-                        </a>
+                        <Link to={"/sources"}>
+                            <a className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
+                                <div className='flex order-first items-center'>
+                                    <MdInput className='order-first' />
+                                    <span className='ms-3'>Sources</span>
+                                </div>
+                            </a>
+                        </Link>
                     </li>
                     <li>
                         <a className='flex'>
@@ -60,11 +65,6 @@ export default function Sidebar({uname}) {
                                             <Link to={'/instances'}><span className='ms-3'>All Instances</span></Link>
                                         </a>
                                     </Menu.Item>
-                                    {/* <Menu.Item>
-                                        <a className='p-1 dark:text-white text-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group'>
-                                            <Link to={'/source'}><span className='ms-3'>Temp Source Page</span></Link>
-                                        </a>
-                                    </Menu.Item> */}
                                 </Menu.Items>
                             </Menu>
 
