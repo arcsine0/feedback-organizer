@@ -66,7 +66,7 @@ export default function Login() {
                 <button onClick={submitCredentials} className="flex h-5 w-3/4 p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Log In</button>
                 <p>No Account Yet?</p>
                 <Link to={"/register"}>
-                    <a className="text-blue-500 select-none cursor-pointer">Create an Account</a>
+                    <p className="text-blue-500 select-none cursor-pointer">Create an Account</p>
                 </Link>
             </div>
         </div>
