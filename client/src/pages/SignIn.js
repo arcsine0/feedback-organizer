@@ -1,39 +1,12 @@
-import { useState } from "react"
-import AuthModal from "../components/AuthModal";
+import { useState, useEffect } from "react";
+import { collection, getDocs, getDoc, doc } from "firebase/firestore";
 
 export default function SignIn() {
     const [uname, setUname] = useState("");
     const [pass, setPass] = useState("");
 
-    const [showAuth, setShowAuth] = useState(false);
+    const submitCredentials = () => {
 
-    const creds = {
-        "accounts": [
-            {
-                "uname": "john",
-                "pass": "123456"
-            },
-            {
-                "uname": "mary",
-                "pass": "456"
-            }
-        ]
-    }
-
-    const tryLogin = () => {
-        creds.accounts.forEach(cred => {
-            if (cred.uname === uname) {
-                if (cred.pass === pass) {
-                   setShowAuth(true);
-                } else {
-                    setShowAuth(false);
-                }
-            }
-        });
-    }
-
-    const isShowing = (modalState) => {
-        setShowAuth(modalState);
     }
 
     return (
@@ -62,9 +35,8 @@ export default function SignIn() {
                         onChange={e => setPass(e.target.value)}
                     />
                 </div>
-                <button onClick={tryLogin} className="flex h-5 w-3/4 p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Log In</button>
+                <button onClick={submitCredentials} className="flex h-5 w-3/4 p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Log In</button>
             </div>
-            {showAuth && <AuthModal isShown={(isShowing)} />}
         </div>
     )
 }
