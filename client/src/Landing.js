@@ -23,9 +23,16 @@ export default function Landing() {
         id: "",
         uname: ""
     });
-
+    
     useEffect(() => {
-        console.log(globalState.isLoggedIn);
+        if (localStorage.getItem("isLoggedIn")) {
+            setGlobalState({
+                ...globalState,
+                isLoggedIn: localStorage.getItem("isLoggedIn"),
+                id: localStorage.getItem("id"),
+                uname: localStorage.getItem("uname")
+            })
+        }
     }, []);
 
     return (

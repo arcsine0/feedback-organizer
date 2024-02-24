@@ -30,6 +30,10 @@ export default function Login() {
                                 uname: doc.data().uname
                             });
 
+                            localStorage.setItem("isLoggedIn", true);
+                            localStorage.setItem("id", doc.id);
+                            localStorage.setItem("uname", doc.data().uname);
+
                             navigate("/");
                         }
                     }

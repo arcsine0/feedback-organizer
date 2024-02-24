@@ -20,6 +20,15 @@ export default function Sidebar({ uname }) {
             id: "",
             uname: ""
         });
+
+        try {
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("id");
+            localStorage.removeItem("uname");
+        } catch(error) {
+            console.log(error);
+        }
+
         navigate("/");
     }
 
