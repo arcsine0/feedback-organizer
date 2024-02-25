@@ -5,9 +5,10 @@ export default function TagGroup({ mainTag, subTag, addToList }) {
 
     useEffect(() => {
         let wL = subTag.reduce((acc, sT) => {
-            acc[sT] = 0;
+            acc[sT] = (10 / subTag.length).toFixed(2);
             return acc;
         }, {});
+
         setWeightList(wL);
     }, []);
 
@@ -15,10 +16,21 @@ export default function TagGroup({ mainTag, subTag, addToList }) {
         const tagName = e.target.name;
         const tagWeight = e.target.value;
 
-        setWeightList(prev => ({
-            ...prev,
-            [tagName]: tagWeight
-        }));
+        const newWeightList = {
+            ...weightList,
+            [tagName]: parseFloat(tagWeight).toFixed(2)
+        }
+
+        setWeightList(newWeightList);
+        
+        const finalWeightList = {
+            mainTag: mainTag,
+            weights: {
+                ...newWeightList
+            }
+        }
+
+        addToList(finalWeightList)
     }
 
     return (
@@ -35,8 +47,9 @@ export default function TagGroup({ mainTag, subTag, addToList }) {
                             name={sT}
                             min="0"
                             max="10"
-                            onChange={handleSliderChange}
                             step="0.5"
+                            value={weightList[sT]}
+                            onChange={handleSliderChange}
                             className="w-2/3 h-full bg-slate-600 rounded-lg cursor-pointer"
                         />
                     </div>

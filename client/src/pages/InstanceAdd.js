@@ -167,10 +167,8 @@ export default function InstanceAdd() {
         }
     }
 
-    const addToAllSubLabels = (name) => {
-        if (!allSubLabels.includes(name)) {
-            setAllSubLabels(allSubLabels => [...allSubLabels, name]);
-        }
+    const getTagGroupWeights = (weights) => {
+        console.log(weights)
     }
 
     const addSource = async () => {
@@ -350,7 +348,7 @@ export default function InstanceAdd() {
                                                 <h1 className="text-2xl font-bold">Positive</h1>
                                                 <div className="flex flex-col gap-2 p-2 overflow-y-scroll border-2 border-dashed border-black">
                                                     {currentReference.tags.map((tag) => (
-                                                        <TagGroup mainTag={tag.mainTag} subTag={tag.subTag} addToList={addToAllSubLabels} />
+                                                        <TagGroup mainTag={tag.mainTag} subTag={tag.subTag} addToList={getTagGroupWeights} />
                                                     ))}
                                                 </div>
                                             </div>
