@@ -219,7 +219,7 @@ export default function InstanceAdd() {
     }
 
     return (
-        <div className="flex flex-col w-full h-full p-10 space-y-10">
+        <div className="flex flex-col w-full h-screen p-10 space-y-10 overflow-y-auto">
             <div className="flex flex-col space-y-5">
                 <h1 className="text-3xl font-bold">Name your Instance</h1>
                 <div className="flex flex-row w-full h-full space-x-2 items-center">
@@ -236,7 +236,7 @@ export default function InstanceAdd() {
             </div>
             <div className="flex flex-col w-2/3 h-full space-y-2">
                 <h1 className="text-3xl font-bold">Instance Config</h1>
-                <Tab.Group>
+                <Tab.Group as={"div"} className="h-full">
                     <Tab.List className="flex w-1/3 space-x-10 p-2 items-center">
                         <Tab className="flex justify-center items-center px-5 py-2 hover:border-b-2 border-black">
                             <h1 className="font-semibold">Tags</h1>

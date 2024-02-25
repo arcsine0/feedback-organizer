@@ -206,7 +206,7 @@ export default function InstanceConfig() {
     }
 
     return (
-        <div className="flex flex-col w-full h-full p-10 space-y-10">
+        <div className="flex flex-col w-full h-screen p-10 space-y-10 overflow-y-auto">
             <div className="flex flex-col space-y-5">
                 <h1 className="text-3xl font-bold">Edit Instance Config</h1>
                 <div className="flex flex-row w-full h-full space-x-2 items-center">
