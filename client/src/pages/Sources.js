@@ -1,18 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import { Tab, Listbox } from "@headlessui/react";
 
-import { collection, updateDoc, getDocs, getDoc, addDoc, doc } from "firebase/firestore";
+import { collection, updateDoc, getDocs, getDoc, addDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
 
-import { FaPencilAlt, FaChevronDown } from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa";
 
 import Label from "../components/Label";
+
+import GlobalContext from "../globals/GlobalContext";
 
 export default function Sources() {
     const [instances, setInstances] = useState([]);
     const [selectedInstance, setSelectedInstance] = useState("Select instance");
     const [selectedInstanceName, setSelectedInstanceName] = useState("None");
+
+    const { globalState, setGlobalState } = useContext(GlobalContext);
 
     const [feedback, setFeedback] = useState("");
     const [feedbacks, setFeedbacks] = useState([]);
@@ -23,37 +27,51 @@ export default function Sources() {
     const [btnDisable, setBtnDisable] = useState(false);
 
     useEffect(() => {
-        getDocs(collection(db, "ClientInstances"))
-            .then((snapshot) => {
-                snapshot.docs.forEach((doc) => {
-                    let result = {
-                        id: doc.id,
-                        title: doc.data().title,
-                        tags: []
-                    }
-
-                    getDocs(collection(db, "ClientInstances", doc.id, "Tags"))
-                        .then((sn) => {
-                            sn.docs.forEach((tags) => {
-                                let res = {
-                                    mainTag: tags.data().mainTag,
-                                    subTag: tags.data().subTag
-                                }
-
-                                result.tags.push(res);
-                            })
-                        })
-
-                    if (!instances.find(ins => ins.id === result.id)) {
-                        let newInstance = [...instances, result];
-                        setInstances(newInstance);
-                    }
+        getDocs(collection(db, "ClientAccounts", globalState.id, "Instances"))
+            .then((snps) => {
+                let instanceIDs = [];
+                snps.docs.forEach((dc) => {
+                    instanceIDs.push(dc.data().instanceID)
                 });
 
-                if (instances[0]) {
-                    setSelectedInstance(instances[0].id);
-                }
-            });
+                getDocs(collection(db, "ClientInstances"))
+                    .then((snp) => {
+                        snp.docs.forEach((doc) => {
+                            if (instanceIDs.includes(doc.id)) {
+                                let result = {
+                                    id: doc.id,
+                                    title: doc.data().title,
+                                    tags: []
+                                }
+
+                                getDocs(collection(db, "ClientInstances", doc.id, "Tags"))
+                                    .then((sn) => {
+                                        sn.docs.forEach((tags) => {
+                                            let res = {
+                                                mainTag: tags.data().mainTag,
+                                                subTag: tags.data().subTag
+                                            }
+
+                                            result.tags.push(res);
+                                        })
+                                    })
+                                
+
+                                if (!instances.find(ins => ins.id === result.id)) {
+                                    let newInstance = [...instances, result];
+                                    console.log(newInstance)
+                                    setInstances(newInstance);
+                                }
+                            }
+                        });
+
+                        if (instances[0]) {
+                            setSelectedInstance(instances[0].id);
+                        }
+                    });
+
+            })
+
     }, []);
 
     const handleInstanceChange = (newInstance) => {
@@ -79,10 +97,10 @@ export default function Sources() {
 
     const chunkArray = (array, chunkSize) => {
         return Array.from(
-          { length: Math.ceil(array.length / chunkSize) },
-          (_, index) => array.slice(index * chunkSize, (index + 1) * chunkSize)   
+            { length: Math.ceil(array.length / chunkSize) },
+            (_, index) => array.slice(index * chunkSize, (index + 1) * chunkSize)
         );
-      }
+    }
 
     const addFeedback = () => {
         let processedFeedback = preProcessFeedback(feedback);
@@ -131,15 +149,15 @@ export default function Sources() {
                 if (fd) {
                     try {
                         fetch("http://127.0.0.1:8000/process/batch", reqOptions)
-                        .then(res => {
-                            if (res) {
-                                setBtnDisable(false);
-                                setBtnLabel("Send");
-    
-                                console.log(`Processing Done for Feedback #${i}`);
-                            }
-                        });
-                    } catch(error) {
+                            .then(res => {
+                                if (res) {
+                                    setBtnDisable(false);
+                                    setBtnLabel("Send");
+
+                                    console.log(`Processing Done for Feedback #${i}`);
+                                }
+                            });
+                    } catch (error) {
                         setBtnDisable(false);
                         setBtnLabel("Send");
 

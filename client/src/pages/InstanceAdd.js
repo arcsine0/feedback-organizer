@@ -42,6 +42,15 @@ export default function InstanceAdd() {
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (localStorage.getItem("isLoggedIn")) {
+            setGlobalState({
+                ...globalState,
+                isLoggedIn: localStorage.getItem("isLoggedIn"),
+                id: localStorage.getItem("id"),
+                uname: localStorage.getItem("uname")
+            })
+        }
+
         const mainTags = reference.use_cases[0]
             .tags.map(mT => mT.mainTag);
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { Tab, Listbox } from "@headlessui/react";
@@ -8,6 +8,8 @@ import { collection, updateDoc, getDocs, getDoc, addDoc, doc } from "firebase/fi
 import { db } from "../firebase/config";
 
 import Label from "../components/Label";
+
+import GlobalContext from "../globals/GlobalContext";
 
 export default function InstanceConfig() {
     const [instanceName, setInstanceName] = useState("");
@@ -30,6 +32,8 @@ export default function InstanceConfig() {
 
     const navigate = useNavigate();
     const { instanceID } = useParams();
+
+    const { globalState, setGlobalState } = useContext(GlobalContext);
 
     useEffect(() => {
         getDocs(collection(db, "ClientInstances", instanceID, "Tags"))
