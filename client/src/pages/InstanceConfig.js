@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Tab, Listbox } from "@headlessui/react";
 import { FaPencilAlt, FaChevronDown } from "react-icons/fa";
 
-import { collection, updateDoc, getDocs, getDoc, addDoc, doc } from "firebase/firestore";
+import { collection, updateDoc, getDocs, getDoc, addDoc, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 import Label from "../components/Label";
@@ -155,6 +155,12 @@ export default function InstanceConfig() {
             }
         });
 
+        ogStrings.forEach((ogStr, i) => {
+            if (!updStrings[i]) {
+                withChanges.push(i);
+            }
+        });
+
         return withChanges;
     }
 
@@ -163,8 +169,17 @@ export default function InstanceConfig() {
         setBtnLabel("Saving...");
 
         const withChanges = compareRef(originalReference, reference);
+        console.log(withChanges);
 
         reference.forEach(async (r, i) => {
+            if (i === (reference.length - 1)) {
+                withChanges.forEach(async (wC) => {
+                    if (wC > i) {
+                        await deleteDoc(doc(db, "ClientInstances", instanceID, "Tags", originalReference[wC].id));
+                    }
+                });
+            }
+
             if (withChanges.includes(i)) {
                 console.log(r);
                 if (r.id !== "") {
@@ -186,7 +201,7 @@ export default function InstanceConfig() {
             setBtnDisable(false);
             setBtnLabel("Save");
 
-            navigate(`/instance/${instanceID}`)
+            // navigate(`/instance/${instanceID}`)
         });
     }
 
