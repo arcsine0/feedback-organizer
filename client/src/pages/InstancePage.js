@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Outlet, Link, useParams } from 'react-router-dom'
+import { Outlet, Link, useParams, useNavigate } from 'react-router-dom'
 
 import { getDoc, getDocs, doc, collection } from "firebase/firestore";
 import { db } from "../firebase/config";
@@ -13,6 +13,8 @@ export default function InstancePage() {
     const [feedbacks, setFeedbacks] = useState([]);
 
     const { instanceID } = useParams();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         let fdID = "";
@@ -35,7 +37,7 @@ export default function InstancePage() {
                 setFeedbacks(result);
             });
 
-        const sourceRef = getDocs(collection(db, "ClientInstances"))
+        getDocs(collection(db, "ClientInstances"))
             .then((snapshot) => {
                 snapshot.docs.forEach((doc) => {
                     if (doc.id === instanceID) {
@@ -43,9 +45,11 @@ export default function InstancePage() {
                     }
                 })
             });
-        // console.log(getDoc(doc(db, "ClientInstance", instanceID)).data())
-
     }, []);
+
+    const goToConfig = () => {
+        navigate(`/instance/config/${instanceID}`);
+    }
 
     return (
         <div className="flex flex-col w-full h-full p-10 space-y-10">
@@ -53,9 +57,7 @@ export default function InstancePage() {
                 <h1 className="text-3xl font-bold">{instanceName}</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sem arcu, pellentesque id sapien id, ullamcorper sollicitudin mi. Maecenas in elit iaculis, placerat ex id, molestie neque. Praesent lobortis nunc at rhoncus lacinia. Nam maximus tincidunt nibh, quis commodo libero sagittis in.</p>
             </div>
-            <Link to={`/instance/config/${instanceID}`} >
-                <button className="flex h-5 shrink p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Edit Config</button>
-            </Link>
+            <button onClick={goToConfig} className="flex w-1/6 h-5 shrink p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Edit Config</button>
             <div className="grow flex flex-col space-y-1">
                 <h1 className="shrink text-3xl font-bold">All Feedbacks</h1>
                 <div className="grow flex flex-col space-y-2 overflow-y-auto">

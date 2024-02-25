@@ -193,7 +193,7 @@ export default function InstanceConfig() {
     return (
         <div className="flex flex-col w-full h-full p-10 space-y-10">
             <div className="flex flex-col space-y-5">
-                <h1 className="text-3xl font-bold">Name your Instance</h1>
+                <h1 className="text-3xl font-bold">Edit Instance Config</h1>
                 <div className="flex flex-row w-full h-full space-x-2 items-center">
                     <h1 className="text-2xl font-semibold py-2 px-4 bg-slate-200 rounded-lg">Guest</h1>
                     <h1 className="text-3xl">/</h1>

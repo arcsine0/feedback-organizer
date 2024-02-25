@@ -84,6 +84,11 @@ export default function Sidebar({ uname }) {
                                             <Link to={'/instances'}><span className='ms-3'>All Instances</span></Link>
                                         </div>
                                     </Menu.Item>
+                                    <Menu.Item>
+                                        <div className='p-1 dark:text-white text-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group'>
+                                            <Link to={'/instance/add'}><span className='ms-3'>Create Instance</span></Link>
+                                        </div>
+                                    </Menu.Item>
                                 </Menu.Items>
                             </Menu>
                         </div>
