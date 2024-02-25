@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Tab, Listbox } from "@headlessui/react";
 
-import { collection, updateDoc, getDocs, getDoc, addDoc } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 import { FaChevronDown } from "react-icons/fa";
@@ -135,8 +135,8 @@ export default function Sources() {
     }
 
     const sendFeedback = () => {
-        // setBtnDisable(true);
-        // setBtnLabel("Processing...");
+        setBtnDisable(true);
+        setBtnLabel("Processing...");
 
         if (feedbacks.length >= 1) {
             const feedbackChunks = chunkArray(feedbacks, 5);
@@ -176,7 +176,7 @@ export default function Sources() {
                     setBtnLabel("Send");
                 }
             })
-            // setFeedbacks([]);
+            setFeedbacks([]);
         }
     }
 
