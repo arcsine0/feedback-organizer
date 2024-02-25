@@ -1,16 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from 'react-router-dom'
 
 import { Tab, Listbox } from "@headlessui/react";
 import { FaPencilAlt, FaChevronDown } from "react-icons/fa";
 
-import { collection, addDoc } from "firebase/firestore";
+import { collection, doc, addDoc, updateDoc, getDocs } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 import Label from "../components/Label";
 import TagGroup from "../components/TagGroup";
 
 import useCases from '../defaults/UseCases.json';
+
+import GlobalContext from "../globals/GlobalContext";
 
 export default function InstanceAdd() {
     const [instanceName, setInstanceName] = useState("");
@@ -34,6 +36,8 @@ export default function InstanceAdd() {
     const [subLabelError, setSubLabelError] = useState("");
 
     const [allSubLabels, setAllSubLabels] = useState([]);
+
+    const { globalState, setGlobalState } = useContext(GlobalContext);
 
     const navigate = useNavigate();
 
@@ -167,27 +171,41 @@ export default function InstanceAdd() {
         setBtnDisable(true);
         setBtnLabel("Saving...");
 
-        const sourceRef = await addDoc(collection(db, "ClientInstances"), {
+        const instanceRef = await addDoc(collection(db, "ClientInstances"), {
             title: instanceName,
             useCase: finalReference.use_case
         });
 
-        finalReference.tags.forEach(async (t) => {
-            await addDoc(collection(db, `ClientInstances/${sourceRef.id}/Tags`), {
-                mainTag: t.mainTag,
-                subTag: t.subTag
+        if (instanceRef.id) {
+            getDocs(collection(db, "ClientAccounts", globalState.id, "Instances"))
+                .then((snapshots) => {
+                    snapshots.docs.forEach((dc) => {
+                        if (dc.data().instanceID === "") {
+                            updateDoc(doc(db, "ClientAccounts", globalState.id, "Instances", dc.id), {
+                                instanceID: instanceRef.id
+                            });
+                        } else {
+                            addDoc(collection(db, "ClientAccounts", globalState.id, "Instances"), {
+                                instanceID: instanceRef.id
+                            })
+                        }
+                    });
+                });
+
+            finalReference.tags.forEach(async (t) => {
+                await addDoc(collection(db, `ClientInstances/${instanceRef.id}/Tags`), {
+                    mainTag: t.mainTag,
+                    subTag: t.subTag
+                });
             });
-        });
+    
 
-        const feedbackRef = await addDoc(collection(db, "ClientFeedbacks"), {
-            instanceID: sourceRef.id
-        });
-
-        if (sourceRef.id && feedbackRef.id) {
-            setBtnDisable(false);
-            setBtnLabel("Save");
-
-            navigate(`/instance/${sourceRef.id}`)
+            if (instanceRef.id) {
+                setBtnDisable(false);
+                setBtnLabel("Save");
+    
+                navigate(`/instance/${instanceRef.id}`)
+            }
         }
     }
 

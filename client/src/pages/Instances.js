@@ -1,31 +1,46 @@
 import { Outlet, Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase/config"; 
+import { db } from "../firebase/config";
 
 import SourceCard from "../components/SourceCard";
 
 import { IoIosAddCircleOutline } from "react-icons/io";
 
+import GlobalContext from "../globals/GlobalContext";
+
 export default function Instances() {
     const [instances, setInstances] = useState([]);
 
-    useEffect(() => {
-        const ref = getDocs(collection(db, "ClientInstances"))
-            .then((snapshot) => {
-                let result = [];
+    const { globalState, setGlobalState } = useContext(GlobalContext);
 
-                snapshot.docs.forEach((doc) => {
-                    const src = {
-                        id: doc.id,
-                        title: doc.data().title,
-                        useCase: doc.data().useCase
-                    };
-                    result.push(src);
+    useEffect(() => {
+        getDocs(collection(db, "ClientAccounts", globalState.id, "Instances"))
+            .then((sn) => {
+                let instanceIDs = [];
+                sn.docs.forEach((dc) => {
+                    instanceIDs.push(dc.data().instanceID)
                 });
 
-                setInstances(result);
+                getDocs(collection(db, "ClientInstances"))
+                    .then((snapshot) => {
+                        console.log(instanceIDs)
+                        let result = [];
+
+                        snapshot.docs.forEach((doc) => {
+                            if (instanceIDs.includes(doc.id)) {
+                                const src = {
+                                    id: doc.id,
+                                    title: doc.data().title,
+                                    useCase: doc.data().useCase
+                                };
+                                result.push(src);
+                            }
+                        });
+
+                        setInstances(result);
+                    })
             })
     }, []);
 
@@ -44,11 +59,11 @@ export default function Instances() {
                 <div className="flex flex-row flex-wrap space-x-4">
                     {instances.map((src) => (
                         <Link to={`/instance/${src.id}`}>
-                             <SourceCard title={src.title} />
+                            <SourceCard title={src.title} />
                         </Link>
                     ))}
                 </div>
-            </div> 
+            </div>
             <Outlet />
         </div>
     )
