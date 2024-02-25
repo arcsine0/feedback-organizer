@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Tab, Listbox } from "@headlessui/react";
 
@@ -26,8 +27,15 @@ export default function Sources() {
     const [btnLabel, setBtnLabel] = useState("Send");
     const [btnDisable, setBtnDisable] = useState(false);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
-        getDocs(collection(db, "ClientAccounts", globalState.id, "Instances"))
+        const accountID = globalState.id ? globalState.id : (localStorage.getItem("id") ? localStorage.getItem("id") : null);
+        if (accountID === null) {
+            navigate("/");
+        }
+
+        getDocs(collection(db, "ClientAccounts", accountID, "Instances"))
             .then((snps) => {
                 let instanceIDs = [];
                 snps.docs.forEach((dc) => {

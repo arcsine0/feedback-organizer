@@ -1,4 +1,4 @@
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 
 import { collection, getDocs } from "firebase/firestore";
@@ -15,8 +15,15 @@ export default function Instances() {
 
     const { globalState, setGlobalState } = useContext(GlobalContext);
 
+    const navigate = useNavigate();
+
     useEffect(() => {
-        getDocs(collection(db, "ClientAccounts", globalState.id, "Instances"))
+        const accountID = globalState.id ? globalState.id : (localStorage.getItem("id") ? localStorage.getItem("id") : null);
+        if (accountID === null) {
+            navigate("/");
+        }
+
+        getDocs(collection(db, "ClientAccounts", accountID, "Instances"))
             .then((sn) => {
                 let instanceIDs = [];
                 sn.docs.forEach((dc) => {
@@ -25,7 +32,6 @@ export default function Instances() {
 
                 getDocs(collection(db, "ClientInstances"))
                     .then((snapshot) => {
-                        console.log(instanceIDs)
                         let result = [];
 
                         snapshot.docs.forEach((doc) => {
