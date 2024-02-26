@@ -37,7 +37,7 @@ export default function Sidebar({ uname }) {
             <div className='h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
                 <ul className='space-y-2 font-medium'>
                     <li>
-                        <h1 className='text-white'>Welcome, {uname}!</h1>
+                        <h1 className='dark:text-white'>Welcome, {uname}!</h1>
                     </li>
                     <li>
                         <Link to={"/"}>
