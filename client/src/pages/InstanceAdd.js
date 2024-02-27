@@ -56,7 +56,10 @@ export default function InstanceAdd() {
 
         const subTags = reference.use_cases[0]
             .tags.find(ta => ta.mainTag === "Functionality")
-            .subTag.map(sT => sT.name);
+            .subTag.map(sT => ({
+                name: sT.name,
+                weight: sT.weight
+            }));
 
         let selectedInstanceIndex = reference.use_cases.findIndex(uc => uc.use_case === selectedInstance);
         let currentRef = reference.use_cases[selectedInstanceIndex];
@@ -147,8 +150,8 @@ export default function InstanceAdd() {
     }
 
     const addSubLabel = () => {
-        if (!subLabels.includes(subLabel) && subLabel !== "") {
-            let newSubLabels = [...subLabels, subLabel]
+        if (!subLabels.map(sL => sL.name).includes(subLabel) && subLabel !== "") {
+            let newSubLabels = [...subLabels, { name: subLabel, weight: 0 }]
             setSubLabels(newSubLabels);
             setSubLabelError("");
             updateReference("sub", newSubLabels);
@@ -312,8 +315,8 @@ export default function InstanceAdd() {
                             </Listbox>
                             <div className="flex flex-col space-y-1">
                                 <div className="p-2 w-full h-full flex flex-row flex-wrap gap-2 border-2 border-dashed border-slate-600 rounded-lg">
-                                    {subLabels.map((la, i) => (
-                                        <Label key={i} name={la} remove={removeSubLabel} isBold={true} />
+                                    {subLabels.map((sL, i) => (
+                                        <Label key={i} name={sL.name} remove={removeSubLabel} isBold={true} />
                                     ))}
                                 </div>
                                 <p className="font-semibold text-red-400">{subLabelError}</p>
