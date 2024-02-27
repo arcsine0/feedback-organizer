@@ -33,18 +33,21 @@ app.post('/process/batch', async (req, res) => {
 
     // Use Promise.all to wait for all promises to resolve
     await Promise.all(req.body.content.map(async (cont) => {
-        let sentiment = await sentiment_model(cont.content);
-        let mainTag = await topic_model(cont.content, mainTags, false);
+        const sentiment = await sentiment_model(cont.content);
+        const mainTag = await topic_model(cont.content, mainTags, false);
 
-        let subTags = req.body.tags.find(tag => tag.mainTag === mainTag.labels[0]).subTag;
-        let subTag = await topic_model(cont.content, subTags, false);
+        const subTags = req.body.tags.find(tag => tag.mainTag === mainTag.labels[0]).subTag.map(sT => sT.name);
+        const subTag = await topic_model(cont.content, subTags, false);
+
+        const score = req.body.tags.find(tag => tag.mainTag === mainTag.labels[0]).subTag.find(sT => sT.name === subTag.labels[0]).weight
 
         const compiled = {
             content: cont.content,
             date: cont.date,
             sentiment: sentiment[0].label,
             mainTag: mainTag.labels[0],
-            subTag: subTag.labels[0]
+            subTag: subTag.labels[0],
+            score: score
         }
 
         preds.push(compiled);

@@ -67,7 +67,6 @@ export default function Sources() {
 
                                 if (!instances.find(ins => ins.id === result.id)) {
                                     let newInstance = [...instances, result];
-                                    console.log(newInstance)
                                     setInstances(newInstance);
                                 }
                             }

@@ -53,8 +53,6 @@ export default function InstanceConfig() {
                     setInstanceName(instance.data().title);
                 });
 
-                console.log(ref);
-
                 setOriginalReference(JSON.parse(JSON.stringify(ref)));
                 setReference(ref);
 
@@ -194,7 +192,6 @@ export default function InstanceConfig() {
             }
 
             if (withChanges.includes(i)) {
-                console.log(r);
                 if (r.id !== "") {
                     await updateDoc(doc(db, "ClientInstances", instanceID, "Tags", r.id), {
                         subTag: r.subTag
