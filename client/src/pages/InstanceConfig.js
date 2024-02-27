@@ -169,7 +169,6 @@ export default function InstanceConfig() {
         setBtnLabel("Saving...");
 
         const withChanges = compareRef(originalReference, reference);
-        console.log(withChanges);
 
         reference.forEach(async (r, i) => {
             if (i === (reference.length - 1)) {
@@ -201,8 +200,13 @@ export default function InstanceConfig() {
             setBtnDisable(false);
             setBtnLabel("Save");
 
-            // navigate(`/instance/${instanceID}`)
+            navigate(`/instance/${instanceID}`)
         });
+    }
+
+    const deleteInstance = async () => {
+        const deleteRef = await deleteDoc(doc(db, "ClientInstances", instanceID));
+        navigate("/instances");
     }
 
     return (
@@ -292,12 +296,17 @@ export default function InstanceConfig() {
                                 />
                                 <button onClick={addSubLabel} className="flex h-5 shrink p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Set</button>
                             </div>
-                            <div className={btnDisable ? "opacity-50" : "opacity-100"}>
-                                <button onClick={saveConfig} disabled={btnDisable} className="flex h-5 w-48 p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">{btnLabel}</button>
-                            </div>
                         </Tab.Panel>
                     </Tab.Panels>
                 </Tab.Group>
+                <div className={btnDisable ? "opacity-50" : "opacity-100"}>
+                    <button onClick={saveConfig} disabled={btnDisable} className="flex h-5 w-48 p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">{btnLabel}</button>
+                </div>
+
+            </div>
+            <div className="flex flex-col w-2/3 p-2 gap-3 justify-center items-start border-4 border-red-600 border-dashed bg-red-100">
+                <h1 className="text-3xl font-bold">Danger Zone</h1>
+                <button onClick={deleteInstance} disabled={btnDisable} className="flex h-5 w-48 p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-red-500 to-red-700">Delete Instance</button>
             </div>
         </div>
     )
