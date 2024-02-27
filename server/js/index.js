@@ -47,7 +47,7 @@ app.post('/process/batch', async (req, res) => {
             sentiment: sentiment[0].label,
             mainTag: mainTag.labels[0],
             subTag: subTag.labels[0],
-            score: score
+            score: parseFloat(score).toFixed(2)
         }
 
         preds.push(compiled);
