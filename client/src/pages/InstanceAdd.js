@@ -170,55 +170,55 @@ export default function InstanceAdd() {
         }
     }
 
-    const getTagGroupWeights = (weights) => {        
-        console.log(weights)
+    const getTagGroupWeights = (weights) => {
+        const addedWeights = { ...currentReference }
+        const modifiedTagGroupIndex = addedWeights.tags.findIndex(tag => tag.mainTag === weights.mainTag);
+        addedWeights.tags[modifiedTagGroupIndex] = weights
+
+        setCurrentReference(addedWeights);
+
     }
 
     const addSource = async () => {
-        let selectedInstanceIndex = reference.use_cases.findIndex(uc => uc.use_case === selectedInstance);
-        let finalReference = reference.use_cases[selectedInstanceIndex];
+        setBtnDisable(true);
+        setBtnLabel("Saving...");
 
-        console.log(currentReference)
+        const instanceRef = await addDoc(collection(db, "ClientInstances"), {
+            title: instanceName,
+            useCase: currentReference.use_case
+        });
 
-        // setBtnDisable(true);
-        // setBtnLabel("Saving...");
+        if (instanceRef.id) {
+            getDocs(collection(db, "ClientAccounts", globalState.id, "Instances"))
+                .then((snapshots) => {
+                    snapshots.docs.forEach((dc) => {
+                        if (dc.data().instanceID === "") {
+                            updateDoc(doc(db, "ClientAccounts", globalState.id, "Instances", dc.id), {
+                                instanceID: instanceRef.id
+                            });
+                        } else {
+                            addDoc(collection(db, "ClientAccounts", globalState.id, "Instances"), {
+                                instanceID: instanceRef.id
+                            })
+                        }
+                    });
+                });
 
-        // const instanceRef = await addDoc(collection(db, "ClientInstances"), {
-        //     title: instanceName,
-        //     useCase: finalReference.use_case
-        // });
-
-        // if (instanceRef.id) {
-        //     getDocs(collection(db, "ClientAccounts", globalState.id, "Instances"))
-        //         .then((snapshots) => {
-        //             snapshots.docs.forEach((dc) => {
-        //                 if (dc.data().instanceID === "") {
-        //                     updateDoc(doc(db, "ClientAccounts", globalState.id, "Instances", dc.id), {
-        //                         instanceID: instanceRef.id
-        //                     });
-        //                 } else {
-        //                     addDoc(collection(db, "ClientAccounts", globalState.id, "Instances"), {
-        //                         instanceID: instanceRef.id
-        //                     })
-        //                 }
-        //             });
-        //         });
-
-        //     finalReference.tags.forEach(async (t) => {
-        //         await addDoc(collection(db, `ClientInstances/${instanceRef.id}/Tags`), {
-        //             mainTag: t.mainTag,
-        //             subTag: t.subTag
-        //         });
-        //     });
+            currentReference.tags.forEach(async (t) => {
+                await addDoc(collection(db, `ClientInstances/${instanceRef.id}/Tags`), {
+                    mainTag: t.mainTag,
+                    subTag: t.subTag
+                });
+            });
 
 
-        //     if (instanceRef.id) {
-        //         setBtnDisable(false);
-        //         setBtnLabel("Save");
+            if (instanceRef.id) {
+                setBtnDisable(false);
+                setBtnLabel("Save");
 
-        //         navigate(`/instance/${instanceRef.id}`)
-        //     }
-        // }
+                navigate(`/instance/${instanceRef.id}`)
+            }
+        }
     }
 
     return (
