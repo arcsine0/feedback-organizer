@@ -63,8 +63,8 @@ export default function Instances() {
                 </div>
                 <p></p>
                 <div className="flex flex-row flex-wrap space-x-4">
-                    {instances.map((src) => (
-                        <Link to={`/instance/${src.id}`}>
+                    {instances.map((src, i) => (
+                        <Link key={i} to={`/instance/${src.id}`}>
                             <SourceCard title={src.title} />
                         </Link>
                     ))}

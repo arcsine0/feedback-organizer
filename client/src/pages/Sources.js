@@ -238,8 +238,8 @@ export default function Sources() {
                                     </div>
                                 </div>
                                 <div className="flex flex-col flex-wrap p-3 overflow-y-scroll space-y-3 border-2 border-dashed border-black rounded-md">
-                                    {feedbacks.map((fd) => (
-                                        <Label name={fd.content} remove={removeFeedback} isBold={false} />
+                                    {feedbacks.map((fd, i) => (
+                                        <Label key={i} name={fd.content} remove={removeFeedback} isBold={false} />
                                     ))}
                                 </div>
                                 <div className={btnDisable ? "opacity-50" : "opacity-100"}>

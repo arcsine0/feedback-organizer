@@ -238,8 +238,8 @@ export default function InstanceConfig() {
                             <h1 className="text-2xl font-bold">Set Tags</h1>
                             <div className="flex flex-col space-y-1">
                                 <div className="p-2 w-full h-full flex flex-row flex-wrap gap-2 border-2 border-dashed border-slate-600 rounded-lg">
-                                    {labels.map((la) => (
-                                        <Label name={la} remove={removeLabel} isBold={true} />
+                                    {labels.map((la, i) => (
+                                        <Label key={i} name={la} remove={removeLabel} isBold={true} />
                                     ))}
                                 </div>
                                 <p className="font-semibold text-red-400">{labelError}</p>
@@ -277,8 +277,8 @@ export default function InstanceConfig() {
                             </Listbox>
                             <div className="flex flex-col space-y-1">
                                 <div className="p-2 w-full h-full flex flex-row flex-wrap gap-2 border-2 border-dashed border-slate-600 rounded-lg">
-                                    {subLabels.map((la, ind) => (
-                                        <Label name={la} remove={removeSubLabel} isBold={true} />
+                                    {subLabels.map((la, i) => (
+                                        <Label key={i} name={la} remove={removeSubLabel} isBold={true} />
                                     ))}
                                 </div>
                                 <p className="font-semibold text-red-400">{subLabelError}</p>

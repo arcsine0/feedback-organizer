@@ -37,8 +37,8 @@ export default function TagGroup({ mainTag, subTag, addToList }) {
         <div className="flex flex-col p-2 gap-2 justify-center rounded-lg shadow-md">
             <h1 className="text-2xl font-bold">{mainTag}</h1>
             <div className="flex flex-col p-2 gap-2">
-                {subTag.map((sT) => (
-                    <div className="flex flex-row gap-2 items-center">
+                {subTag.map((sT, i) => (
+                    <div key={i} className="flex flex-row gap-2 items-center">
                         <div className="flex p-2 w-1/3 justify-center items-center bg-slate-200 rounded-lg shadow-md">
                             <h1 className="text-sm text-black font-bold select-none truncate">{sT}</h1>
                         </div>

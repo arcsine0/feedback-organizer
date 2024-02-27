@@ -271,8 +271,8 @@ export default function InstanceAdd() {
                             <h1 className="text-2xl font-bold">Set Tags</h1>
                             <div className="flex flex-col space-y-1">
                                 <div className="p-2 w-full h-full flex flex-row flex-wrap gap-2 border-2 border-dashed border-slate-600 rounded-lg">
-                                    {labels.map((la) => (
-                                        <Label name={la} remove={removeLabel} isBold={true} />
+                                    {labels.map((la, i) => (
+                                        <Label key={i} name={la} remove={removeLabel} isBold={true} />
                                     ))}
                                 </div>
                                 <p className="font-semibold text-red-400">{labelError}</p>
@@ -310,8 +310,8 @@ export default function InstanceAdd() {
                             </Listbox>
                             <div className="flex flex-col space-y-1">
                                 <div className="p-2 w-full h-full flex flex-row flex-wrap gap-2 border-2 border-dashed border-slate-600 rounded-lg">
-                                    {subLabels.map((la) => (
-                                        <Label name={la} remove={removeSubLabel} isBold={true} />
+                                    {subLabels.map((la, i) => (
+                                        <Label key={i} name={la} remove={removeSubLabel} isBold={true} />
                                     ))}
                                 </div>
                                 <p className="font-semibold text-red-400">{subLabelError}</p>
@@ -347,8 +347,8 @@ export default function InstanceAdd() {
                                             <div className="flex flex-col w-full gap-2">
                                                 <h1 className="text-2xl font-bold">Positive</h1>
                                                 <div className="flex flex-col gap-2 p-2 overflow-y-scroll border-2 border-dashed border-black">
-                                                    {currentReference.tags.map((tag) => (
-                                                        <TagGroup mainTag={tag.mainTag} subTag={tag.subTag} addToList={getTagGroupWeights} />
+                                                    {currentReference.tags.map((tag, i) => (
+                                                        <TagGroup key={i} mainTag={tag.mainTag} subTag={tag.subTag} addToList={getTagGroupWeights} />
                                                     ))}
                                                 </div>
                                             </div>
