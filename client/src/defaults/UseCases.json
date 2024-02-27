@@ -7,32 +7,32 @@
                 {
                     "mainTag": "UI/UX Design",
                     "subTag": [
-                        "Layout Issues",
-                        "Color Scheme Consistency",
-                        "Font Size Readability",
-                        "Interactive Element Responsiveness",
-                        "Visual Hierarchy"
+                        {"name": "Layout Issues", "weight": 0},
+                        {"name": "Color Scheme Consistency", "weight": 0},
+                        {"name": "Font Size Readability", "weight": 0},
+                        {"name": "Interactive Element Responsiveness", "weight": 0},
+                        {"name": "Visual Hierarchy", "weight": 0}
                     ]
                 },
                 {
                     "mainTag": "Functionality",
                     "subTag": [
-                        "Feature Availability",
-                        "User Interaction Responsiveness",
-                        "Performance Optimization",
-                        "Bugs and Errors",
-                        "User Onboarding Experience",
-                        "Data Synchronization"
+                        {"name": "Feature Availability", "weight": 0},
+                        {"name": "User Interaction Responsiveness", "weight": 0},
+                        {"name": "Performance Optimization", "weight": 0},
+                        {"name": "Bugs and Errors", "weight": 0},
+                        {"name": "User Onboarding Experience", "weight": 0},
+                        {"name": "Data Synchronization", "weight": 0}
                     ]
                 },
                 {
                     "mainTag": "User Feedback",
                     "subTag": [
-                        "Ratings",
-                        "Reviews",
-                        "Feature Suggestions",
-                        "User Surveys",
-                        "User Engagement"
+                        {"name": "Ratings", "weight": 0},
+                        {"name": "Reviews", "weight": 0},
+                        {"name": "Feature Suggestions", "weight": 0},
+                        {"name": "User Surveys", "weight": 0},
+                        {"name": "User Engagement", "weight": 0}
                     ]
                 }
             ]
@@ -44,32 +44,32 @@
                 {
                     "mainTag": "UI/UX Design",
                     "subTag": [
-                        "Layout Issues",
-                        "Color Scheme Consistency",
-                        "Font Size Readability",
-                        "Interactive Element Responsiveness",
-                        "Visual Hierarchy"
+                        {"name": "Layout Issues", "weight": 0},
+                        {"name": "Color Scheme Consistency", "weight": 0},
+                        {"name": "Font Size Readability", "weight": 0},
+                        {"name": "Interactive Element Responsiveness", "weight": 0},
+                        {"name": "Visual Hierarchy", "weight": 0}
                     ]
                 },
                 {
                     "mainTag": "Functionality",
                     "subTag": [
-                        "Feature Availability",
-                        "User Interaction Responsiveness",
-                        "Performance Optimization",
-                        "Bugs and Errors",
-                        "User Onboarding Experience",
-                        "Data Synchronization"
+                        {"name": "Feature Availability", "weight": 0},
+                        {"name": "User Interaction Responsiveness", "weight": 0},
+                        {"name": "Performance Optimization", "weight": 0},
+                        {"name": "Bugs and Errors", "weight": 0},
+                        {"name": "User Onboarding Experience", "weight": 0},
+                        {"name": "Data Synchronization", "weight": 0}
                     ]
                 },
                 {
                     "mainTag": "User Feedback",
                     "subTag": [
-                        "Ratings",
-                        "Reviews",
-                        "Feature Suggestions",
-                        "User Surveys",
-                        "User Engagement"
+                        {"name": "Ratings", "weight": 0},
+                        {"name": "Reviews", "weight": 0},
+                        {"name": "Feature Suggestions", "weight": 0},
+                        {"name": "User Surveys", "weight": 0},
+                        {"name": "User Engagement", "weight": 0}
                     ]
                 }
             ]
@@ -81,28 +81,28 @@
                 {
                     "mainTag": "Content Quality",
                     "subTag": [
-                        "Grammar Issues",
-                        "Spelling Errors",
-                        "Punctuation",
-                        "Writing Clarity"
+                        {"name": "Grammar Issues", "weight": 0},
+                        {"name": "Spelling Errors", "weight": 0},
+                        {"name": "Punctuation", "weight": 0},
+                        {"name": "Writing Clarity", "weight": 0}
                     ]
                 },
                 {
                     "mainTag": "Engagement",
                     "subTag": [
-                        "Likes",
-                        "Shares",
-                        "Comments",
-                        "Discussion Quality"
+                        {"name": "Likes", "weight": 0},
+                        {"name": "Shares", "weight": 0},
+                        {"name": "Comments", "weight": 0},
+                        {"name": "Discussion Quality", "weight": 0}
                     ]
                 },
                 {
                     "mainTag": "User Experience",
                     "subTag": [
-                        "Navigation",
-                        "Accessibility",
-                        "Load Time",
-                        "Mobile Responsiveness"
+                        {"name": "Navigation", "weight": 0},
+                        {"name": "Accessibility", "weight": 0},
+                        {"name": "Load Time", "weight": 0},
+                        {"name": "Mobile Responsiveness", "weight": 0}
                     ]
                 }
             ]
@@ -114,55 +114,55 @@
                 {
                     "mainTag": "Order Management",
                     "subTag": [
-                        "Order Placement",
-                        "Shipping",
-                        "Returns",
-                        "Tracking Issues"
+                        {"name": "Order Placement", "weight": 0},
+                        {"name": "Shipping", "weight": 0},
+                        {"name": "Returns", "weight": 0},
+                        {"name": "Tracking Issues", "weight": 0}
                     ]
                 },
                 {
                     "mainTag": "Product Inquiry",
                     "subTag": [
-                        "Availability",
-                        "Specifications",
-                        "Reviews",
-                        "Product Suggestions"
+                        {"name": "Availability", "weight": 0},
+                        {"name": "Specifications", "weight": 0},
+                        {"name": "Reviews", "weight": 0},
+                        {"name": "Product Suggestions", "weight": 0}
                     ]
                 },
                 {
                     "mainTag": "Customer Feedback",
                     "subTag": [
-                        "Satisfaction",
-                        "Complaints",
-                        "Suggestions",
-                        "Customer Service"
+                        {"name": "Satisfaction", "weight": 0},
+                        {"name": "Complaints", "weight": 0},
+                        {"name": "Suggestions", "weight": 0},
+                        {"name": "Customer Service", "weight": 0}
                     ]
                 },
                 {
                     "mainTag": "Technical Support",
                     "subTag": [
-                        "Website Navigation",
-                        "Checkout Problems",
-                        "Product Support",
-                        "Technical Documentation"
+                        {"name": "Website Navigation", "weight": 0},
+                        {"name": "Checkout Problems", "weight": 0},
+                        {"name": "Product Support", "weight": 0},
+                        {"name": "Technical Documentation", "weight": 0}
                     ]
                 },
                 {
                     "mainTag": "Promotions",
                     "subTag": [
-                        "Discount Codes",
-                        "Special Offers",
-                        "Promotional Events",
-                        "Marketing Effectiveness"
+                        {"name": "Discount Codes", "weight": 0},
+                        {"name": "Special Offers", "weight": 0},
+                        {"name": "Promotional Events", "weight": 0},
+                        {"name": "Marketing Effectiveness", "weight": 0}
                     ]
                 },
                 {
                     "mainTag": "Security",
                     "subTag": [
-                        "Account Security",
-                        "Fraud Concerns",
-                        "Privacy Issues",
-                        "Data Protection"
+                        {"name": "Account Security", "weight": 0},
+                        {"name": "Fraud Concerns", "weight": 0},
+                        {"name": "Privacy Issues", "weight": 0},
+                        {"name": "Data Protection", "weight": 0}
                     ]
                 }
             ]
@@ -174,28 +174,28 @@
                 {
                     "mainTag": "Recruitment",
                     "subTag": [
-                        "Job Applications",
-                        "Interviews",
-                        "Candidate Experience",
-                        "Recruitment Process"
+                        {"name": "Job Applications", "weight": 0},
+                        {"name": "Interviews", "weight": 0},
+                        {"name": "Candidate Experience", "weight": 0},
+                        {"name": "Recruitment Process", "weight": 0}
                     ]
                 },
                 {
                     "mainTag": "Employee Engagement",
                     "subTag": [
-                        "Surveys",
-                        "Feedback",
-                        "Team Building",
-                        "Employee Recognition"
+                        {"name": "Surveys", "weight": 0},
+                        {"name": "Feedback", "weight": 0},
+                        {"name": "Team Building", "weight": 0},
+                        {"name": "Employee Recognition", "weight": 0}
                     ]
                 },
                 {
                     "mainTag": "Performance Evaluation",
                     "subTag": [
-                        "Appraisals",
-                        "Goals",
-                        "Feedback",
-                        "Professional Development"
+                        {"name": "Appraisals", "weight": 0},
+                        {"name": "Goals", "weight": 0},
+                        {"name": "Feedback", "weight": 0},
+                        {"name": "Professional Development", "weight": 0}
                     ]
                 }
             ]

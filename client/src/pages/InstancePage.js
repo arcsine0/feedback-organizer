@@ -22,7 +22,6 @@ export default function InstancePage() {
             .then((snapshot) => {
                 let result = [];
                 snapshot.docs.forEach((doc) => {
-                    console.log(doc.data())
                     let fd = {
                         content: doc.data().content,
                         date: doc.data().date,

@@ -56,7 +56,7 @@ export default function InstanceAdd() {
 
         const subTags = reference.use_cases[0]
             .tags.find(ta => ta.mainTag === "Functionality")
-            .subTag;
+            .subTag.map(sT => sT.name);
 
         let selectedInstanceIndex = reference.use_cases.findIndex(uc => uc.use_case === selectedInstance);
         let currentRef = reference.use_cases[selectedInstanceIndex];
@@ -167,7 +167,7 @@ export default function InstanceAdd() {
         }
     }
 
-    const getTagGroupWeights = (weights) => {
+    const getTagGroupWeights = (weights) => {        
         console.log(weights)
     }
 
@@ -175,45 +175,47 @@ export default function InstanceAdd() {
         let selectedInstanceIndex = reference.use_cases.findIndex(uc => uc.use_case === selectedInstance);
         let finalReference = reference.use_cases[selectedInstanceIndex];
 
-        setBtnDisable(true);
-        setBtnLabel("Saving...");
+        console.log(currentReference)
 
-        const instanceRef = await addDoc(collection(db, "ClientInstances"), {
-            title: instanceName,
-            useCase: finalReference.use_case
-        });
+        // setBtnDisable(true);
+        // setBtnLabel("Saving...");
 
-        if (instanceRef.id) {
-            getDocs(collection(db, "ClientAccounts", globalState.id, "Instances"))
-                .then((snapshots) => {
-                    snapshots.docs.forEach((dc) => {
-                        if (dc.data().instanceID === "") {
-                            updateDoc(doc(db, "ClientAccounts", globalState.id, "Instances", dc.id), {
-                                instanceID: instanceRef.id
-                            });
-                        } else {
-                            addDoc(collection(db, "ClientAccounts", globalState.id, "Instances"), {
-                                instanceID: instanceRef.id
-                            })
-                        }
-                    });
-                });
+        // const instanceRef = await addDoc(collection(db, "ClientInstances"), {
+        //     title: instanceName,
+        //     useCase: finalReference.use_case
+        // });
 
-            finalReference.tags.forEach(async (t) => {
-                await addDoc(collection(db, `ClientInstances/${instanceRef.id}/Tags`), {
-                    mainTag: t.mainTag,
-                    subTag: t.subTag
-                });
-            });
-    
+        // if (instanceRef.id) {
+        //     getDocs(collection(db, "ClientAccounts", globalState.id, "Instances"))
+        //         .then((snapshots) => {
+        //             snapshots.docs.forEach((dc) => {
+        //                 if (dc.data().instanceID === "") {
+        //                     updateDoc(doc(db, "ClientAccounts", globalState.id, "Instances", dc.id), {
+        //                         instanceID: instanceRef.id
+        //                     });
+        //                 } else {
+        //                     addDoc(collection(db, "ClientAccounts", globalState.id, "Instances"), {
+        //                         instanceID: instanceRef.id
+        //                     })
+        //                 }
+        //             });
+        //         });
 
-            if (instanceRef.id) {
-                setBtnDisable(false);
-                setBtnLabel("Save");
-    
-                navigate(`/instance/${instanceRef.id}`)
-            }
-        }
+        //     finalReference.tags.forEach(async (t) => {
+        //         await addDoc(collection(db, `ClientInstances/${instanceRef.id}/Tags`), {
+        //             mainTag: t.mainTag,
+        //             subTag: t.subTag
+        //         });
+        //     });
+
+
+        //     if (instanceRef.id) {
+        //         setBtnDisable(false);
+        //         setBtnLabel("Save");
+
+        //         navigate(`/instance/${instanceRef.id}`)
+        //     }
+        // }
     }
 
     return (
@@ -325,9 +327,6 @@ export default function InstanceAdd() {
                                 />
                                 <button onClick={addSubLabel} className="flex h-5 shrink p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Set</button>
                             </div>
-                            <div className={btnDisable ? "opacity-50" : "opacity-100"}>
-                                <button onClick={addSource} disabled={btnDisable} className="flex h-5 w-48 p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">{btnLabel}</button>
-                            </div>
                         </Tab.Panel>
                         <Tab.Panel as={"div"} className="flex flex-col w-2/3 space-y-4">
                             <h1 className="text-2xl font-bold">Set Instance Weights</h1>
@@ -359,6 +358,9 @@ export default function InstanceAdd() {
                         </Tab.Panel>
                     </Tab.Panels>
                 </Tab.Group>
+                <div className={btnDisable ? "opacity-50" : "opacity-100"}>
+                    <button onClick={addSource} disabled={btnDisable} className="flex h-5 w-48 p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">{btnLabel}</button>
+                </div>
             </div>
         </div>
     )

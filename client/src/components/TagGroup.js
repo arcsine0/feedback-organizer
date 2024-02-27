@@ -5,7 +5,7 @@ export default function TagGroup({ mainTag, subTag, addToList }) {
 
     useEffect(() => {
         let wL = subTag.reduce((acc, sT) => {
-            acc[sT] = (10 / subTag.length).toFixed(2);
+            acc[sT.name] = (10 / subTag.length).toFixed(2);
             return acc;
         }, {});
 
@@ -22,12 +22,15 @@ export default function TagGroup({ mainTag, subTag, addToList }) {
         }
 
         setWeightList(newWeightList);
+
+        const subTags = Object.entries(weightList).map(([name, weight]) => ({
+            name,
+            weight,
+          }));
         
         const finalWeightList = {
             mainTag: mainTag,
-            weights: {
-                ...newWeightList
-            }
+            subTag: subTags
         }
 
         addToList(finalWeightList)
@@ -40,15 +43,15 @@ export default function TagGroup({ mainTag, subTag, addToList }) {
                 {subTag.map((sT, i) => (
                     <div key={i} className="flex flex-row gap-2 items-center">
                         <div className="flex p-2 w-1/3 justify-center items-center bg-slate-200 rounded-lg shadow-md">
-                            <h1 className="text-sm text-black font-bold select-none truncate">{sT}</h1>
+                            <h1 className="text-sm text-black font-bold select-none truncate">{sT.name}</h1>
                         </div>
                         <input
                             type="range"
-                            name={sT}
+                            name={sT.name}
                             min="0"
                             max="10"
                             step="0.5"
-                            value={weightList[sT]}
+                            value={weightList[sT.name]}
                             onChange={handleSliderChange}
                             className="w-2/3 h-full bg-slate-600 rounded-lg cursor-pointer"
                         />
