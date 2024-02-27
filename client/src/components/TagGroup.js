@@ -1,14 +1,22 @@
 import { useState, useEffect } from "react";
 
-export default function TagGroup({ mainTag, subTag, addToList }) {
+export default function TagGroup({ mainTag, subTag, addToList, isNew }) {
     const [weightList, setWeightList] = useState({});
 
     useEffect(() => {
-        let wL = subTag.reduce((acc, sT) => {
-            acc[sT.name] = (10 / subTag.length).toFixed(2);
-            return acc;
-        }, {});
-
+        let wL;
+        if (isNew) {
+            wL = subTag.reduce((acc, sT) => {
+                acc[sT.name] = (10 / subTag.length).toFixed(2);
+                return acc;
+            }, {});
+        } else {
+            wL = subTag.reduce((acc, sT) => {
+                acc[sT.name] = sT.weight;
+                return acc;
+            }, {});
+        }
+        
         setWeightList(wL);
     }, []);
 
@@ -23,7 +31,7 @@ export default function TagGroup({ mainTag, subTag, addToList }) {
 
         setWeightList(newWeightList);
 
-        const subTags = Object.entries(weightList).map(([name, weight]) => ({
+        const subTags = Object.entries(newWeightList).map(([name, weight]) => ({
             name,
             weight,
           }));

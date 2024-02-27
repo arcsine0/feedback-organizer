@@ -8,6 +8,7 @@ import { collection, updateDoc, getDocs, getDoc, addDoc, deleteDoc, doc } from "
 import { db } from "../firebase/config";
 
 import Label from "../components/Label";
+import TagGroup from "../components/TagGroup";
 
 import GlobalContext from "../globals/GlobalContext";
 
@@ -15,7 +16,7 @@ export default function InstanceConfig() {
     const [instanceName, setInstanceName] = useState("");
 
     const [originalReference, setOriginalReference] = useState({});
-    const [reference, setReference] = useState({});
+    const [reference, setReference] = useState([]);
 
     const [label, setLabel] = useState("");
     const [labels, setLabels] = useState([]);
@@ -51,6 +52,8 @@ export default function InstanceConfig() {
                     const instance = await getDoc(doc(db, "ClientInstances", instanceID));
                     setInstanceName(instance.data().title);
                 });
+
+                console.log(ref);
 
                 setOriginalReference(JSON.parse(JSON.stringify(ref)));
                 setReference(ref);
@@ -114,8 +117,8 @@ export default function InstanceConfig() {
     }
 
     const addSubLabel = () => {
-        if (!subLabels.includes(subLabel) && subLabel !== "") {
-            let newSubLabels = [...subLabels, subLabel]
+        if (!subLabels.map(sL => sL.name).includes(subLabel) && subLabel !== "") {
+            let newSubLabels = [...subLabels, { name: subLabel, weight: 0 }]
             setSubLabels(newSubLabels);
             setSubLabelError("");
             updateReference("sub", newSubLabels);
@@ -124,7 +127,7 @@ export default function InstanceConfig() {
 
     const removeSubLabel = (name) => {
         if (subLabels.length > 1) {
-            let newSubLabels = subLabels.filter(la => la !== name)
+            let newSubLabels = subLabels.filter(sL => sL.name !== name)
             setSubLabels(newSubLabels);
             updateReference("sub", newSubLabels);
 
@@ -132,6 +135,17 @@ export default function InstanceConfig() {
         } else {
             setSubLabelError("There should at least be 1 tag");
         }
+    }
+
+    const getTagGroupWeights = (weights) => {
+        const addedWeights = [ ...reference ]
+        const modifiedTagGroupIndex = addedWeights.findIndex(tag => tag.mainTag === weights.mainTag);
+        addedWeights[modifiedTagGroupIndex] = {
+            ...addedWeights[modifiedTagGroupIndex],
+            subTag: weights.subTag
+        } 
+
+        setReference(addedWeights);
     }
 
     const compareRef = (og, upd) => {
@@ -282,7 +296,7 @@ export default function InstanceConfig() {
                             <div className="flex flex-col space-y-1">
                                 <div className="p-2 w-full h-full flex flex-row flex-wrap gap-2 border-2 border-dashed border-slate-600 rounded-lg">
                                     {subLabels.map((la, i) => (
-                                        <Label key={i} name={la} remove={removeSubLabel} isBold={true} />
+                                        <Label key={i} name={la.name} remove={removeSubLabel} isBold={true} />
                                     ))}
                                 </div>
                                 <p className="font-semibold text-red-400">{subLabelError}</p>
@@ -297,12 +311,40 @@ export default function InstanceConfig() {
                                 <button onClick={addSubLabel} className="flex h-5 shrink p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Set</button>
                             </div>
                         </Tab.Panel>
+                        <Tab.Panel as={"div"} className="flex flex-col w-2/3 space-y-4">
+                            <h1 className="text-2xl font-bold">Set Instance Weights</h1>
+                            <Tab.Group>
+                                <Tab.List className="flex w-1/3 space-x-10 p-2 items-center">
+                                    <Tab className="flex justify-center items-center px-5 py-2 hover:border-b-2 border-black">
+                                        <h1 className="font-semibold">Positive</h1>
+                                    </Tab>
+                                    <h1>|</h1>
+                                    <Tab className="flex justify-center items-center px-5 py-2 hover:border-b-2 border-black">
+                                        <h1 className="font-semibold">Negative</h1>
+                                    </Tab>
+                                </Tab.List>
+                                <Tab.Panels className="mt-6">
+                                    <Tab.Panel as={"div"} className="flex flex-col w-full space-y-4">
+                                        <div className="flex flex-row gap-3">
+                                            <div className="flex flex-col w-full gap-2">
+                                                <h1 className="text-2xl font-bold">Positive</h1>
+                                                <div className="flex flex-col gap-2 p-2 overflow-y-scroll border-2 border-dashed border-black">
+                                                    {reference.map((tag) => (
+                                                        <TagGroup key={tag.id} mainTag={tag.mainTag} subTag={tag.subTag} addToList={getTagGroupWeights} isNew={false} />
+                                                    ))}
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Tab.Panel>
+                                </Tab.Panels>
+                            </Tab.Group>
+                        </Tab.Panel>
                     </Tab.Panels>
                 </Tab.Group>
-                <div className={btnDisable ? "opacity-50" : "opacity-100"}>
-                    <button onClick={saveConfig} disabled={btnDisable} className="flex h-5 w-48 p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">{btnLabel}</button>
-                </div>
-
+            </div>
+            <div className={btnDisable ? "opacity-50" : "opacity-100"}>
+                <button onClick={saveConfig} disabled={btnDisable} className="flex h-5 w-48 p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">{btnLabel}</button>
             </div>
             <div className="flex flex-col w-2/3 p-2 gap-3 justify-center items-start border-4 border-red-600 border-dashed bg-red-100">
                 <h1 className="text-3xl font-bold">Danger Zone</h1>

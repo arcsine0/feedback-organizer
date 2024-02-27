@@ -123,7 +123,7 @@ export default function InstanceAdd() {
         const subTags = reference.use_cases
             .find(uc => uc.use_case === selectedInstance)
             .tags.find(ta => ta.mainTag === lab)
-            .subTag;
+            .subTag.map;
 
         setSubLabels(subTags);
     }
@@ -174,6 +174,8 @@ export default function InstanceAdd() {
         const addedWeights = { ...currentReference }
         const modifiedTagGroupIndex = addedWeights.tags.findIndex(tag => tag.mainTag === weights.mainTag);
         addedWeights.tags[modifiedTagGroupIndex] = weights
+
+        console.log(addedWeights)
 
         setCurrentReference(addedWeights);
 
@@ -350,7 +352,7 @@ export default function InstanceAdd() {
                                                 <h1 className="text-2xl font-bold">Positive</h1>
                                                 <div className="flex flex-col gap-2 p-2 overflow-y-scroll border-2 border-dashed border-black">
                                                     {currentReference.tags.map((tag, i) => (
-                                                        <TagGroup key={i} mainTag={tag.mainTag} subTag={tag.subTag} addToList={getTagGroupWeights} />
+                                                        <TagGroup key={i} mainTag={tag.mainTag} subTag={tag.subTag} addToList={getTagGroupWeights} isNew={true} />
                                                     ))}
                                                 </div>
                                             </div>
