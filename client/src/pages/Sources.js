@@ -57,7 +57,8 @@ export default function Sources() {
                                         sn.docs.forEach((tags) => {
                                             let res = {
                                                 mainTag: tags.data().mainTag,
-                                                subTag: tags.data().subTag
+                                                subTag: tags.data().subTag,
+                                                multiplier: tags.data().multiplier
                                             }
 
                                             result.tags.push(res);

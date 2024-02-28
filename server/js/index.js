@@ -30,8 +30,7 @@ app.post('/process/batch', async (req, res) => {
     let preds = [];
 
     let mainTags = req.body.tags.map(tag => tag.mainTag);
-
-    // Use Promise.all to wait for all promises to resolve
+    
     await Promise.all(req.body.content.map(async (cont) => {
         const sentiment = await sentiment_model(cont.content);
         const mainTag = await topic_model(cont.content, mainTags, false);
@@ -39,7 +38,8 @@ app.post('/process/batch', async (req, res) => {
         const subTags = req.body.tags.find(tag => tag.mainTag === mainTag.labels[0]).subTag.map(sT => sT.name);
         const subTag = await topic_model(cont.content, subTags, false);
 
-        const score = req.body.tags.find(tag => tag.mainTag === mainTag.labels[0]).subTag.find(sT => sT.name === subTag.labels[0]).weight
+        const multiplier = req.body.tags.find(tag => tag.mainTag === mainTag.labels[0]).multiplier;
+        const score = req.body.tags.find(tag => tag.mainTag === mainTag.labels[0]).subTag.find(sT => sT.name === subTag.labels[0]).weight * multiplier;
 
         const compiled = {
             content: cont.content,
