@@ -35,7 +35,7 @@ export default function InstanceAdd() {
     const [labelError, setLabelError] = useState("");
     const [subLabelError, setSubLabelError] = useState("");
 
-    const [allSubLabels, setAllSubLabels] = useState([]);
+    const [labelOrder, setLabelOrder] = useState([]);
 
     const { globalState, setGlobalState } = useContext(GlobalContext);
 
@@ -66,6 +66,8 @@ export default function InstanceAdd() {
 
         setSelectedInstance(reference.use_cases[0].use_case);
         setLabels(mainTags);
+        setLabelOrder(mainTags);
+
         setSelectedLabel(reference.use_cases[0].tags[0].mainTag);
         setSubLabels(subTags);
 
@@ -93,6 +95,8 @@ export default function InstanceAdd() {
                         ? subLabels
                         : currentUseCase.tags[i]?.subTag || []
                 }));
+
+                setLabelOrder(labels);
             } else {
                 updatedReference.use_cases[selectedUseCaseIndex]
                     .tags.find(ta => ta.mainTag === selectedLabel)
@@ -335,31 +339,15 @@ export default function InstanceAdd() {
                         </Tab.Panel>
                         <Tab.Panel as={"div"} className="flex flex-col w-2/3 space-y-4">
                             <h1 className="text-2xl font-bold">Set Instance Weights</h1>
-                            <Tab.Group>
-                                <Tab.List className="flex w-1/3 space-x-10 p-2 items-center">
-                                    <Tab className="flex justify-center items-center px-5 py-2 hover:border-b-2 border-black">
-                                        <h1 className="font-semibold">Positive</h1>
-                                    </Tab>
-                                    <h1>|</h1>
-                                    <Tab className="flex justify-center items-center px-5 py-2 hover:border-b-2 border-black">
-                                        <h1 className="font-semibold">Negative</h1>
-                                    </Tab>
-                                </Tab.List>
-                                <Tab.Panels className="mt-6">
-                                    <Tab.Panel as={"div"} className="flex flex-col w-full space-y-4">
-                                        <div className="flex flex-row gap-3">
-                                            <div className="flex flex-col w-full gap-2">
-                                                <h1 className="text-2xl font-bold">Positive</h1>
-                                                <div className="flex flex-col gap-2 p-2 overflow-y-scroll border-2 border-dashed border-black">
-                                                    {currentReference.tags.map((tag, i) => (
-                                                        <TagGroup key={i} mainTag={tag.mainTag} subTag={tag.subTag} addToList={getTagGroupWeights} isNew={true} />
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Tab.Panel>
-                                </Tab.Panels>
-                            </Tab.Group>
+                            <div className="flex flex-row gap-3">
+                                <div className="flex flex-col w-full gap-2">
+                                    <div className="flex flex-col gap-2 p-2 overflow-y-scroll border-2 border-dashed border-black">
+                                        {currentReference.tags.map((tag, i) => (
+                                            <TagGroup key={i} order={labelOrder.findIndex(la => la === tag.mainTag) + 1} mainTag={tag.mainTag} subTag={tag.subTag} addToList={getTagGroupWeights} isNew={true} />
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
                         </Tab.Panel>
                     </Tab.Panels>
                 </Tab.Group>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export default function TagGroup({ mainTag, subTag, addToList, isNew }) {
+export default function TagGroup({ order, mainTag, subTag, addToList, isNew }) {
     const [weightList, setWeightList] = useState({});
 
     useEffect(() => {
@@ -46,7 +46,11 @@ export default function TagGroup({ mainTag, subTag, addToList, isNew }) {
 
     return (
         <div className="flex flex-col p-2 gap-2 justify-center rounded-lg shadow-md">
-            <h1 className="text-2xl font-bold">{mainTag}</h1>
+            <div className="flex flex-row px-2 mt-2 items-center">
+                <h1 className="order-first text-2xl font-bold">{mainTag}</h1>
+                <span className="grow"></span>
+                <div className="order-last flex size-fit py-1 px-2 font-bold bg-slate-200 rounded-md">{order}</div>
+            </div>
             <div className="flex flex-col p-2 gap-2">
                 {subTag.map((sT, i) => (
                     <div key={i} className="flex flex-row gap-2 items-center">
