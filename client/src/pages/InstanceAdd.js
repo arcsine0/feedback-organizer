@@ -144,6 +144,16 @@ export default function InstanceAdd() {
         setSubLabels(subTags);
     }
 
+    const handleOrderChange = (tag) => {
+        if (labelOrder.length === labels.length) {
+            setLabelOrder([]);
+        } else {
+            if (!labelOrder.includes(tag)) {
+                setLabelOrder(prev => [...prev, tag]);
+            }
+        }
+    }
+
     const addLabel = () => {
         if (!labels.includes(label) && label !== "") {
             let newLabels = [...labels, label]
@@ -196,16 +206,6 @@ export default function InstanceAdd() {
         }
 
         setCurrentReference(addedWeights);
-    }
-
-    const handleOrderChange = (tag) => {
-        if (labelOrder.length === labels.length) {
-            setLabelOrder([]);
-        } else {
-            if (!labelOrder.includes(tag)) {
-                setLabelOrder(prev => [...prev, tag]);
-            }
-        }
     }
 
     const addSource = async () => {
