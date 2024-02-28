@@ -30,6 +30,9 @@ export default function InstanceConfig() {
 
     const [labelError, setLabelError] = useState("");
     const [subLabelError, setSubLabelError] = useState("");
+    const [weightOrderError, setWeightOrderError] = useState("");
+
+    const [labelOrder, setLabelOrder] = useState([]);
 
     const navigate = useNavigate();
     const { instanceID } = useParams();
@@ -44,7 +47,8 @@ export default function InstanceConfig() {
                     let tags = {
                         id: dc.id,
                         mainTag: dc.data().mainTag,
-                        subTag: [...dc.data().subTag]
+                        subTag: [...dc.data().subTag],
+                        multiplier: dc.data().multiplier
                     }
 
                     ref.push(tags);
@@ -61,6 +65,8 @@ export default function InstanceConfig() {
                     .subTag;
 
                 setLabels(mainTags);
+                setLabelOrder(mainTags);
+
                 setSelectedLabel(ref[0].mainTag);
                 setSubLabels(subTags);
             });
@@ -91,6 +97,16 @@ export default function InstanceConfig() {
             .subTag;
 
         setSubLabels(subTags);
+    }
+
+    const handleOrderChange = (tag) => {
+        if (labelOrder.length === labels.length) {
+            setLabelOrder([]);
+        } else {
+            if (!labelOrder.includes(tag)) {
+                setLabelOrder(prev => [...prev, tag]);
+            }
+        }
     }
 
     const addLabel = () => {
@@ -136,12 +152,12 @@ export default function InstanceConfig() {
     }
 
     const getTagGroupWeights = (weights) => {
-        const addedWeights = [ ...reference ]
+        const addedWeights = [...reference]
         const modifiedTagGroupIndex = addedWeights.findIndex(tag => tag.mainTag === weights.mainTag);
         addedWeights[modifiedTagGroupIndex] = {
             ...addedWeights[modifiedTagGroupIndex],
             subTag: weights.subTag
-        } 
+        }
 
         setReference(addedWeights);
     }
@@ -182,37 +198,41 @@ export default function InstanceConfig() {
 
         const withChanges = compareRef(originalReference, reference);
 
-        reference.forEach(async (r, i) => {
-            if (i === (reference.length - 1)) {
-                withChanges.forEach(async (wC) => {
-                    if (wC > i) {
-                        await deleteDoc(doc(db, "ClientInstances", instanceID, "Tags", originalReference[wC].id));
-                    }
-                });
-            }
+        const allLabelOrderCheck = reference.find(tag => tag.multiplier === 0);
 
-            if (withChanges.includes(i)) {
-                if (r.id !== "") {
-                    await updateDoc(doc(db, "ClientInstances", instanceID, "Tags", r.id), {
-                        subTag: r.subTag
-                    });
-                } else {
-                    await addDoc(collection(db, "ClientInstances", instanceID, "Tags"), {
-                        mainTag: r.mainTag,
-                        subTag: r.subTag
+        if (!allLabelOrderCheck) {
+            reference.forEach(async (r, i) => {
+                if (i === (reference.length - 1)) {
+                    withChanges.forEach(async (wC) => {
+                        if (wC > i) {
+                            await deleteDoc(doc(db, "ClientInstances", instanceID, "Tags", originalReference[wC].id));
+                        }
                     });
                 }
-            }
-        })
 
-        await updateDoc(doc(db, "ClientInstances", instanceID), {
-            title: instanceName
-        }).then(() => {
-            setBtnDisable(false);
-            setBtnLabel("Save");
+                if (withChanges.includes(i)) {
+                    if (r.id !== "") {
+                        await updateDoc(doc(db, "ClientInstances", instanceID, "Tags", r.id), {
+                            subTag: r.subTag
+                        });
+                    } else {
+                        await addDoc(collection(db, "ClientInstances", instanceID, "Tags"), {
+                            mainTag: r.mainTag,
+                            subTag: r.subTag
+                        });
+                    }
+                }
+            })
 
-            navigate(`/instance/${instanceID}`)
-        });
+            await updateDoc(doc(db, "ClientInstances", instanceID), {
+                title: instanceName
+            }).then(() => {
+                setBtnDisable(false);
+                setBtnLabel("Save");
+
+                navigate(`/instance/${instanceID}`)
+            });
+        }
     }
 
     const deleteInstance = async () => {
@@ -310,32 +330,16 @@ export default function InstanceConfig() {
                         </Tab.Panel>
                         <Tab.Panel as={"div"} className="flex flex-col w-2/3 space-y-4">
                             <h1 className="text-2xl font-bold">Set Instance Weights</h1>
-                            <Tab.Group>
-                                <Tab.List className="flex w-1/3 space-x-10 p-2 items-center">
-                                    <Tab className="flex justify-center items-center px-5 py-2 hover:border-b-2 border-black">
-                                        <h1 className="font-semibold">Positive</h1>
-                                    </Tab>
-                                    <h1>|</h1>
-                                    <Tab className="flex justify-center items-center px-5 py-2 hover:border-b-2 border-black">
-                                        <h1 className="font-semibold">Negative</h1>
-                                    </Tab>
-                                </Tab.List>
-                                <Tab.Panels className="mt-6">
-                                    <Tab.Panel as={"div"} className="flex flex-col w-full space-y-4">
-                                        <div className="flex flex-row gap-3">
-                                            <div className="flex flex-col w-full gap-2">
-                                                <h1 className="text-2xl font-bold">Positive</h1>
-                                                <div className="flex flex-col gap-2 p-2 overflow-y-scroll border-2 border-dashed border-black">
-                                                    {reference.map((tag) => (
-                                                        <TagGroup key={tag.id} mainTag={tag.mainTag} subTag={tag.subTag} addToList={getTagGroupWeights} isNew={false} />
-                                                    ))}
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Tab.Panel>
-                                </Tab.Panels>
-                            </Tab.Group>
+                            <div className="flex flex-row gap-3">
+                                <div className="flex flex-col w-full gap-2">
+                                    <div className="flex flex-col gap-2 p-2 overflow-y-scroll border-2 border-dashed border-black">
+                                        {reference.map((tag) => (
+                                            <TagGroup key={tag.id} order={labelOrder.findIndex(la => la === tag.mainTag) + 1} handleOrder={handleOrderChange} mainTag={tag.mainTag} subTag={tag.subTag} addToList={getTagGroupWeights} isNew={false} />
+                                        ))}
+                                    </div>
+                                    <p className="font-semibold text-red-400">{weightOrderError}</p>
+                                </div>
+                            </div>
                         </Tab.Panel>
                     </Tab.Panels>
                 </Tab.Group>
