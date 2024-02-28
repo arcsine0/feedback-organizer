@@ -189,7 +189,11 @@ export default function InstanceAdd() {
     const getTagGroupWeights = (weights) => {
         const addedWeights = { ...currentReference }
         const modifiedTagGroupIndex = addedWeights.tags.findIndex(tag => tag.mainTag === weights.mainTag);
-        addedWeights.tags[modifiedTagGroupIndex] = weights
+        addedWeights.tags[modifiedTagGroupIndex] = {
+            ...addedWeights.tags[modifiedTagGroupIndex],
+            mainTag: weights.mainTag,
+            subTag: weights.subTag
+        }
 
         setCurrentReference(addedWeights);
     }
@@ -205,58 +209,54 @@ export default function InstanceAdd() {
     }
 
     const addSource = async () => {
-        // setBtnDisable(true);
-        // setBtnLabel("Saving...");
+        setBtnDisable(true);
+        setBtnLabel("Saving...");
 
         const allLabelOrderCheck = currentReference.tags.find(tag => tag.multiplier === 0);
 
         if (!allLabelOrderCheck) {
             setWeightOrderError("");
 
-            currentReference.tags.forEach(tag => {
-                console.log(tag.mainTag, tag.multiplier);
-            })
+            const instanceRef = await addDoc(collection(db, "ClientInstances"), {
+                title: instanceName,
+                useCase: currentReference.use_case
+            });
 
-            // const instanceRef = await addDoc(collection(db, "ClientInstances"), {
-            //     title: instanceName,
-            //     useCase: currentReference.use_case
-            // });
+            if (instanceRef.id) {
+                getDocs(collection(db, "ClientAccounts", globalState.id, "Instances"))
+                    .then((snapshots) => {
+                        snapshots.docs.forEach((dc) => {
+                            if (dc.data().instanceID === "") {
+                                updateDoc(doc(db, "ClientAccounts", globalState.id, "Instances", dc.id), {
+                                    instanceID: instanceRef.id
+                                });
+                            } else {
+                                addDoc(collection(db, "ClientAccounts", globalState.id, "Instances"), {
+                                    instanceID: instanceRef.id
+                                })
+                            }
+                        });
+                    });
 
-            // if (instanceRef.id) {
-            //     getDocs(collection(db, "ClientAccounts", globalState.id, "Instances"))
-            //         .then((snapshots) => {
-            //             snapshots.docs.forEach((dc) => {
-            //                 if (dc.data().instanceID === "") {
-            //                     updateDoc(doc(db, "ClientAccounts", globalState.id, "Instances", dc.id), {
-            //                         instanceID: instanceRef.id
-            //                     });
-            //                 } else {
-            //                     addDoc(collection(db, "ClientAccounts", globalState.id, "Instances"), {
-            //                         instanceID: instanceRef.id
-            //                     })
-            //                 }
-            //             });
-            //         });
-
-            //     currentReference.tags.forEach(async (t) => {
-            //         await addDoc(collection(db, `ClientInstances/${instanceRef.id}/Tags`), {
-            //             mainTag: t.mainTag,
-            //             subTag: t.subTag,
-            //             multiplier: t.multiplier
-            //         });
-            //     });
+                currentReference.tags.forEach(async (tag) => {
+                    await addDoc(collection(db, `ClientInstances/${instanceRef.id}/Tags`), {
+                        mainTag: tag.mainTag,
+                        subTag: tag.subTag,
+                        multiplier: tag.multiplier
+                    });
+                });
 
 
-            //     if (instanceRef.id) {
-            //         setBtnDisable(false);
-            //         setBtnLabel("Save");
+                if (instanceRef.id) {
+                    setBtnDisable(false);
+                    setBtnLabel("Save");
 
-            //         navigate(`/instance/${instanceRef.id}`)
-            //     }
-            // }
+                    navigate(`/instance/${instanceRef.id}`)
+                }
+            }
         } else {
-            // setBtnDisable(false);
-            // setBtnLabel("Save");
+            setBtnDisable(false);
+            setBtnLabel("Save");
 
             setWeightOrderError("All Weight Order should be set");
         }

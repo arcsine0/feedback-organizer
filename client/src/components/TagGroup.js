@@ -18,6 +18,18 @@ export default function TagGroup({ order, handleOrder, mainTag, subTag, addToLis
         }
         
         setWeightList(wL);
+
+        const subTags = Object.entries(wL).map(([name, weight]) => ({
+            name,
+            weight,
+          }));
+        
+        const finalWeightList = {
+            mainTag: mainTag,
+            subTag: subTags
+        };
+
+        addToList(finalWeightList);
     }, []);
 
     const handleSliderChange = (e) => {
@@ -27,7 +39,7 @@ export default function TagGroup({ order, handleOrder, mainTag, subTag, addToLis
         const newWeightList = {
             ...weightList,
             [tagName]: parseFloat(tagWeight).toFixed(2)
-        }
+        };
 
         setWeightList(newWeightList);
 
@@ -39,9 +51,9 @@ export default function TagGroup({ order, handleOrder, mainTag, subTag, addToLis
         const finalWeightList = {
             mainTag: mainTag,
             subTag: subTags
-        }
+        };
 
-        addToList(finalWeightList)
+        addToList(finalWeightList);
     }
 
     return (
