@@ -127,7 +127,7 @@ export default function InstanceAdd() {
         const subTags = reference.use_cases
             .find(uc => uc.use_case === selectedInstance)
             .tags.find(ta => ta.mainTag === lab)
-            .subTag.map;
+            .subTag;
 
         setSubLabels(subTags);
     }
