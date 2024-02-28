@@ -34,6 +34,7 @@ export default function InstanceAdd() {
 
     const [labelError, setLabelError] = useState("");
     const [subLabelError, setSubLabelError] = useState("");
+    const [weightOrderError, setWeightOrderError] = useState("");
 
     const [labelOrder, setLabelOrder] = useState([]);
 
@@ -82,7 +83,14 @@ export default function InstanceAdd() {
     }, [selectedInstance, reference]);
 
     useEffect(() => {
-        
+        const updatedReference = { ...currentReference };
+
+        updatedReference.tags.forEach((tag, i) => {
+            updatedReference.tags[i] = {
+                ...updatedReference.tags[i],
+                multiplier: (labelOrder.length - labelOrder.findIndex(la => la === tag.mainTag)) * 5
+            }
+        });
     }, [labelOrder])
 
     const updateReference = (action, data) => {
@@ -183,10 +191,7 @@ export default function InstanceAdd() {
         const modifiedTagGroupIndex = addedWeights.tags.findIndex(tag => tag.mainTag === weights.mainTag);
         addedWeights.tags[modifiedTagGroupIndex] = weights
 
-        console.log(addedWeights)
-
         setCurrentReference(addedWeights);
-
     }
 
     const handleOrderChange = (tag) => {
@@ -200,44 +205,60 @@ export default function InstanceAdd() {
     }
 
     const addSource = async () => {
-        setBtnDisable(true);
-        setBtnLabel("Saving...");
+        // setBtnDisable(true);
+        // setBtnLabel("Saving...");
 
-        const instanceRef = await addDoc(collection(db, "ClientInstances"), {
-            title: instanceName,
-            useCase: currentReference.use_case
-        });
+        const allLabelOrderCheck = currentReference.tags.find(tag => tag.multiplier === 0);
 
-        if (instanceRef.id) {
-            getDocs(collection(db, "ClientAccounts", globalState.id, "Instances"))
-                .then((snapshots) => {
-                    snapshots.docs.forEach((dc) => {
-                        if (dc.data().instanceID === "") {
-                            updateDoc(doc(db, "ClientAccounts", globalState.id, "Instances", dc.id), {
-                                instanceID: instanceRef.id
-                            });
-                        } else {
-                            addDoc(collection(db, "ClientAccounts", globalState.id, "Instances"), {
-                                instanceID: instanceRef.id
-                            })
-                        }
-                    });
-                });
+        if (!allLabelOrderCheck) {
+            setWeightOrderError("");
 
-            currentReference.tags.forEach(async (t) => {
-                await addDoc(collection(db, `ClientInstances/${instanceRef.id}/Tags`), {
-                    mainTag: t.mainTag,
-                    subTag: t.subTag
-                });
-            });
+            currentReference.tags.forEach(tag => {
+                console.log(tag.mainTag, tag.multiplier);
+            })
+
+            // const instanceRef = await addDoc(collection(db, "ClientInstances"), {
+            //     title: instanceName,
+            //     useCase: currentReference.use_case
+            // });
+
+            // if (instanceRef.id) {
+            //     getDocs(collection(db, "ClientAccounts", globalState.id, "Instances"))
+            //         .then((snapshots) => {
+            //             snapshots.docs.forEach((dc) => {
+            //                 if (dc.data().instanceID === "") {
+            //                     updateDoc(doc(db, "ClientAccounts", globalState.id, "Instances", dc.id), {
+            //                         instanceID: instanceRef.id
+            //                     });
+            //                 } else {
+            //                     addDoc(collection(db, "ClientAccounts", globalState.id, "Instances"), {
+            //                         instanceID: instanceRef.id
+            //                     })
+            //                 }
+            //             });
+            //         });
+
+            //     currentReference.tags.forEach(async (t) => {
+            //         await addDoc(collection(db, `ClientInstances/${instanceRef.id}/Tags`), {
+            //             mainTag: t.mainTag,
+            //             subTag: t.subTag,
+            //             multiplier: t.multiplier
+            //         });
+            //     });
 
 
-            if (instanceRef.id) {
-                setBtnDisable(false);
-                setBtnLabel("Save");
+            //     if (instanceRef.id) {
+            //         setBtnDisable(false);
+            //         setBtnLabel("Save");
 
-                navigate(`/instance/${instanceRef.id}`)
-            }
+            //         navigate(`/instance/${instanceRef.id}`)
+            //     }
+            // }
+        } else {
+            // setBtnDisable(false);
+            // setBtnLabel("Save");
+
+            setWeightOrderError("All Weight Order should be set");
         }
     }
 
@@ -360,6 +381,7 @@ export default function InstanceAdd() {
                                             <TagGroup key={i} order={labelOrder.findIndex(la => la === tag.mainTag) + 1} handleOrder={handleOrderChange} mainTag={tag.mainTag} subTag={tag.subTag} addToList={getTagGroupWeights} isNew={true} />
                                         ))}
                                     </div>
+                                    <p className="font-semibold text-red-400">{weightOrderError}</p>
                                 </div>
                             </div>
                         </Tab.Panel>
