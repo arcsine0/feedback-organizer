@@ -185,6 +185,16 @@ export default function InstanceAdd() {
 
     }
 
+    const handleOrderChange = (tag) => {
+        if (labelOrder.length === labels.length) {
+            setLabelOrder([]);
+        } else {
+            if (!labelOrder.includes(tag)) {
+                setLabelOrder(prev => [...prev, tag]);
+            }
+        }
+    }
+
     const addSource = async () => {
         setBtnDisable(true);
         setBtnLabel("Saving...");
@@ -343,7 +353,7 @@ export default function InstanceAdd() {
                                 <div className="flex flex-col w-full gap-2">
                                     <div className="flex flex-col gap-2 p-2 overflow-y-scroll border-2 border-dashed border-black">
                                         {currentReference.tags.map((tag, i) => (
-                                            <TagGroup key={i} order={labelOrder.findIndex(la => la === tag.mainTag) + 1} mainTag={tag.mainTag} subTag={tag.subTag} addToList={getTagGroupWeights} isNew={true} />
+                                            <TagGroup key={i} order={labelOrder.findIndex(la => la === tag.mainTag) + 1} handleOrder={handleOrderChange} mainTag={tag.mainTag} subTag={tag.subTag} addToList={getTagGroupWeights} isNew={true} />
                                         ))}
                                     </div>
                                 </div>
