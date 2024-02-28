@@ -12,6 +12,7 @@ The client side is handled by **React**, to set this up, head to the `client` di
 ```js
 npm install dotenv
 ```
+This installs all the dependencies + dotenv which we need to apply our environment variables to the app.
 
 Considering that, for testing purposes, we're going to use my Firebase Firestore config for the app, we need to add a environment config file.
 Create a file named `.env` then enter the following:
@@ -36,6 +37,7 @@ The server code has been migrated to Express JS, to set this up, head to the  `s
 ```js
 npm install nodemon
 ```
+This installs all the dependencies + nodemon which we need so that our server will automatically restart when changes happen to the server code.
 
 Once all the dependencies are installed, do a
 ```js
