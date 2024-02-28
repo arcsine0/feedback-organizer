@@ -79,7 +79,11 @@ export default function InstanceAdd() {
         let currentRef = reference.use_cases[selectedInstanceIndex];
 
         setCurrentReference(currentRef);
-    }, [selectedInstance, reference])
+    }, [selectedInstance, reference]);
+
+    useEffect(() => {
+        
+    }, [labelOrder])
 
     const updateReference = (action, data) => {
         const updatedReference = { ...reference };

@@ -12,7 +12,8 @@
                         {"name": "Font Size Readability", "weight": 0},
                         {"name": "Interactive Element Responsiveness", "weight": 0},
                         {"name": "Visual Hierarchy", "weight": 0}
-                    ]
+                    ],
+                    "multiplier": 1
                 },
                 {
                     "mainTag": "Functionality",
@@ -23,7 +24,8 @@
                         {"name": "Bugs and Errors", "weight": 0},
                         {"name": "User Onboarding Experience", "weight": 0},
                         {"name": "Data Synchronization", "weight": 0}
-                    ]
+                    ],
+                    "multiplier": 1
                 },
                 {
                     "mainTag": "User Feedback",
@@ -33,7 +35,8 @@
                         {"name": "Feature Suggestions", "weight": 0},
                         {"name": "User Surveys", "weight": 0},
                         {"name": "User Engagement", "weight": 0}
-                    ]
+                    ],
+                    "multiplier": 1
                 }
             ]
         },
@@ -49,7 +52,8 @@
                         {"name": "Font Size Readability", "weight": 0},
                         {"name": "Interactive Element Responsiveness", "weight": 0},
                         {"name": "Visual Hierarchy", "weight": 0}
-                    ]
+                    ],
+                    "multiplier": 1
                 },
                 {
                     "mainTag": "Functionality",
@@ -60,7 +64,8 @@
                         {"name": "Bugs and Errors", "weight": 0},
                         {"name": "User Onboarding Experience", "weight": 0},
                         {"name": "Data Synchronization", "weight": 0}
-                    ]
+                    ],
+                    "multiplier": 1
                 },
                 {
                     "mainTag": "User Feedback",
@@ -70,7 +75,8 @@
                         {"name": "Feature Suggestions", "weight": 0},
                         {"name": "User Surveys", "weight": 0},
                         {"name": "User Engagement", "weight": 0}
-                    ]
+                    ],
+                    "multiplier": 1
                 }
             ]
         },
@@ -85,7 +91,8 @@
                         {"name": "Spelling Errors", "weight": 0},
                         {"name": "Punctuation", "weight": 0},
                         {"name": "Writing Clarity", "weight": 0}
-                    ]
+                    ],
+                    "multiplier": 1
                 },
                 {
                     "mainTag": "Engagement",
@@ -94,7 +101,8 @@
                         {"name": "Shares", "weight": 0},
                         {"name": "Comments", "weight": 0},
                         {"name": "Discussion Quality", "weight": 0}
-                    ]
+                    ],
+                    "multiplier": 1
                 },
                 {
                     "mainTag": "User Experience",
@@ -103,7 +111,8 @@
                         {"name": "Accessibility", "weight": 0},
                         {"name": "Load Time", "weight": 0},
                         {"name": "Mobile Responsiveness", "weight": 0}
-                    ]
+                    ],
+                    "multiplier": 1
                 }
             ]
         },
@@ -118,7 +127,8 @@
                         {"name": "Shipping", "weight": 0},
                         {"name": "Returns", "weight": 0},
                         {"name": "Tracking Issues", "weight": 0}
-                    ]
+                    ],
+                    "multiplier": 1
                 },
                 {
                     "mainTag": "Product Inquiry",
@@ -127,7 +137,8 @@
                         {"name": "Specifications", "weight": 0},
                         {"name": "Reviews", "weight": 0},
                         {"name": "Product Suggestions", "weight": 0}
-                    ]
+                    ],
+                    "multiplier": 1
                 },
                 {
                     "mainTag": "Customer Feedback",
@@ -136,7 +147,8 @@
                         {"name": "Complaints", "weight": 0},
                         {"name": "Suggestions", "weight": 0},
                         {"name": "Customer Service", "weight": 0}
-                    ]
+                    ],
+                    "multiplier": 1
                 },
                 {
                     "mainTag": "Technical Support",
@@ -145,7 +157,8 @@
                         {"name": "Checkout Problems", "weight": 0},
                         {"name": "Product Support", "weight": 0},
                         {"name": "Technical Documentation", "weight": 0}
-                    ]
+                    ],
+                    "multiplier": 1
                 },
                 {
                     "mainTag": "Promotions",
@@ -154,7 +167,8 @@
                         {"name": "Special Offers", "weight": 0},
                         {"name": "Promotional Events", "weight": 0},
                         {"name": "Marketing Effectiveness", "weight": 0}
-                    ]
+                    ],
+                    "multiplier": 1
                 },
                 {
                     "mainTag": "Security",
@@ -163,7 +177,8 @@
                         {"name": "Fraud Concerns", "weight": 0},
                         {"name": "Privacy Issues", "weight": 0},
                         {"name": "Data Protection", "weight": 0}
-                    ]
+                    ],
+                    "multiplier": 1
                 }
             ]
         },
@@ -178,7 +193,8 @@
                         {"name": "Interviews", "weight": 0},
                         {"name": "Candidate Experience", "weight": 0},
                         {"name": "Recruitment Process", "weight": 0}
-                    ]
+                    ],
+                    "multiplier": 1
                 },
                 {
                     "mainTag": "Employee Engagement",
@@ -187,7 +203,8 @@
                         {"name": "Feedback", "weight": 0},
                         {"name": "Team Building", "weight": 0},
                         {"name": "Employee Recognition", "weight": 0}
-                    ]
+                    ],
+                    "multiplier": 1
                 },
                 {
                     "mainTag": "Performance Evaluation",
@@ -196,7 +213,8 @@
                         {"name": "Goals", "weight": 0},
                         {"name": "Feedback", "weight": 0},
                         {"name": "Professional Development", "weight": 0}
-                    ]
+                    ],
+                    "multiplier": 1
                 }
             ]
         }
