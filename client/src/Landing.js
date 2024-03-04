@@ -43,7 +43,7 @@ export default function Landing() {
                     <Routes>
                         <Route path="/" index element={globalState.isLoggedIn ? <Dashboard /> : <Login />} />
                         <Route path="/register" element={<Register />} />
-                        <Route path="/playground" element={<Playground />} />
+                        {/* <Route path="/playground" element={<Playground />} /> */}
                         <Route path="/sources" element={<Sources />} />
 
                         <Route path="/instances" element={<Instances />} />
