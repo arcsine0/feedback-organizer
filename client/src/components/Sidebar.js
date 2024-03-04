@@ -49,7 +49,7 @@ export default function Sidebar({ uname }) {
                             </div>
                         </Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <Link to={"/playground"}>
                             <div className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
                                 <div className='flex order-first items-center'>
@@ -58,7 +58,7 @@ export default function Sidebar({ uname }) {
                                 </div>
                             </div>
                         </Link>
-                    </li>
+                    </li> */}
                     <li>
                         <Link to={"/sources"}>
                             <div className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
