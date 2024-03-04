@@ -38,7 +38,7 @@ export default function Landing() {
     return (
         <GlobalContext.Provider value={{ globalState, setGlobalState }}>
             <BrowserRouter>
-                <div className="flex w-screen h-screen z-0">
+                <div className="flex w-s    creen h-screen z-0">
                     {globalState.isLoggedIn ? <Sidebar className="flex-none" uname={globalState.uname} /> : ""}
                     <Routes>
                         <Route path="/" index element={globalState.isLoggedIn ? <Dashboard /> : <Login />} />
