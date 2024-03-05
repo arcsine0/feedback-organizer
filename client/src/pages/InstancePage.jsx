@@ -62,7 +62,7 @@ export default function InstancePage() {
                 <h1 className="shrink text-3xl font-bold">All Feedbacks</h1>
                 <div className="grow flex flex-col space-y-2 overflow-y-auto">
                     {feedbacks.map((fd, i) => (
-                        <FeedbackCard key={i} count={i + 1} title={`Feedback ${i + 1}`} content={fd.content} date={fd.date} sentiment={fd.sentiment} tag={fd.mainTag} subTag={fd.subTag} score={fd.score} />
+                        <FeedbackCard key={i} count={i + 1} title={`Feedback ${i + 1}`} data={fd} />
                     ))}
                 </div>
             </div>
