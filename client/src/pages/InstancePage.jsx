@@ -28,6 +28,7 @@ export default function InstancePage() {
 
     const [feedbackID, setFeedbackID] = useState("")
     const [feedbacks, setFeedbacks] = useState([]);
+    const [sortedFeedbacks, setSortedFeedbacks] = useState([]);
 
     const { instanceID } = useParams();
 
@@ -52,6 +53,7 @@ export default function InstancePage() {
                 })
 
                 setFeedbacks(result);
+                setSortedFeedbacks(result);
             });
 
         getDocs(collection(db, "ClientInstances"))
@@ -65,7 +67,38 @@ export default function InstancePage() {
     }, []);
 
     useEffect(() => {
-        console.log(selectedSort.name, selectedSentiment.name)
+        let temp = [...feedbacks];
+
+        switch (selectedSentiment.name) {
+            case "Any": break;
+            case "Positive":
+                temp = temp.filter(fd => fd.sentiment === "POSITIVE");
+                break;
+            case "Negative":
+                temp = temp.filter(fd => fd.sentiment === "NEGATIVE");
+                break;
+            default: break;
+        }
+
+        switch (selectedSort.name) {
+            case "Importance":
+                temp = temp.sort((a, b) => {
+                    if (a.score < b.score) {
+                        return 1;
+                    }
+                    if (a.score > b.score) {
+                        return -1;
+                    }
+                    return 0;
+                })
+                break;
+            case "Date":
+
+                break;
+            default: break;
+        }
+
+        setSortedFeedbacks(temp);
     }, [selectedSort, selectedSentiment])
 
     const handleSortChange = (val) => {
@@ -144,7 +177,7 @@ export default function InstancePage() {
                     </div>
                 </div>
                 <div className="grow flex flex-col space-y-2 overflow-y-auto">
-                    {feedbacks.map((fd, i) => (
+                    {sortedFeedbacks.map((fd, i) => (
                         <FeedbackCard key={i} count={i + 1} title={`Feedback ${i + 1}`} data={fd} />
                     ))}
                 </div>
