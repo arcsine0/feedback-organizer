@@ -35,7 +35,7 @@ export default function Sidebar({ uname }) {
     return (
         <aside id='default-sidebar' className='w-64 min-wid-full h-screen transition-transform -translate-x-full sm:translate-x-0' aria-label='Sidebar'>
             <div className='h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800'>
-                <ul className='space-y-2 font-medium'>
+                <ul className='flex flex-col space-y-2 font-medium'>
                     <li>
                         <h1 className='dark:text-white'>Welcome, {uname}!</h1>
                     </li>
@@ -45,26 +45,6 @@ export default function Sidebar({ uname }) {
                                 <div className='flex order-first items-center'>
                                     <FaChartPie className='order-first' />
                                     <span className='ms-3'>Dashboard</span>
-                                </div>
-                            </div>
-                        </Link>
-                    </li>
-                    {/* <li>
-                        <Link to={"/playground"}>
-                            <div className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
-                                <div className='flex order-first items-center'>
-                                    <GrTest className='order-first' />
-                                    <span className='ms-3'>Playground</span>
-                                </div>
-                            </div>
-                        </Link>
-                    </li> */}
-                    <li>
-                        <Link to={"/sources"}>
-                            <div className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
-                                <div className='flex order-first items-center'>
-                                    <MdInput className='order-first' />
-                                    <span className='ms-3'>Sources</span>
                                 </div>
                             </div>
                         </Link>
@@ -94,18 +74,23 @@ export default function Sidebar({ uname }) {
                         </div>
                     </li>
                     <li>
-                        <div className='flex items-center p-2 text-gray-900 rounded-lg cursor-pointer dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
+                        <Link to={"/sources"}>
+                            <div className='flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
+                                <div className='flex order-first items-center'>
+                                    <MdInput className='order-first' />
+                                    <span className='ms-3'>Sources</span>
+                                </div>
+                            </div>
+                        </Link>
+                    </li>
+                    <li>
+                        <div className='order-last flex items-center p-2 text-gray-900 rounded-lg cursor-pointer dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
                             <div className='flex order-first items-center'>
                                 <FaSignInAlt />
                                 <span onClick={SignOut} className='flex-1 ms-3 whitespace-nowrap select-none'>Logout</span>
                             </div>
                         </div>
                     </li>
-                </ul>
-            </div>
-            <div id='courses_dropdown' className='hidden'>
-                <ul>
-                    <li>All Courses</li>
                 </ul>
             </div>
             <Outlet />
