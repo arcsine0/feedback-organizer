@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Sidebar from "./components/Sidebar";
 
 import Dashboard from "./pages/Dashboard";
-import Playground from "./pages/Playground";
 import Sources from "./pages/Sources";
 
 import Login from "./pages/Login";
@@ -43,7 +42,6 @@ export default function Landing() {
                     <Routes>
                         <Route path="/" index element={globalState.isLoggedIn ? <Dashboard /> : <Login />} />
                         <Route path="/register" element={<Register />} />
-                        {/* <Route path="/playground" element={<Playground />} /> */}
                         <Route path="/sources" element={<Sources />} />
 
                         <Route path="/instances" element={<Instances />} />
