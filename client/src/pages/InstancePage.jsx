@@ -42,13 +42,10 @@ export default function InstancePage() {
             .then((snapshot) => {
                 let result = [];
                 snapshot.docs.forEach((doc) => {
-                    let fd = {
-                        content: doc.data().content,
-                        date: doc.data().date,
-                        sentiment: doc.data().sentiment,
-                        mainTag: doc.data().mainTag,
-                        subTag: doc.data().subTag,
-                        score: doc.data().score
+                    const fd = {
+                        instanceID: instanceID,
+                        feedbackID: doc.id,
+                        ...doc.data()
                     }
 
                     result.push(fd);
@@ -182,7 +179,7 @@ export default function InstancePage() {
                 </div>
                 <div className="grow flex flex-col space-y-2 overflow-y-auto">
                     {sortedFeedbacks.map((fd, i) => (
-                        <FeedbackCard key={i} count={i + 1} title={`Feedback ${i + 1}`} data={fd} />
+                        <FeedbackCard key={i} title={`Feedback ${i + 1}`} data={fd} />
                     ))}
                 </div>
             </div>

@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { Disclosure } from "@headlessui/react"
-
-import { Listbox } from "@headlessui/react";
+import { Disclosure, Listbox } from "@headlessui/react";
 
 import { FaChevronDown } from "react-icons/fa";
+
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase/config";
 
 const statusOptions = [
     { id: 1, name: "Open" },
@@ -27,16 +28,28 @@ const timeDiff = (date) => {
     }
 }
 
-export default function FeedbackCard({ count, title, data }) {
-    const [selectedStatus, setSelectedStatus] = useState(statusOptions[0]);
-    const [note, setNote] = useState("");
+export default function FeedbackCard({ title, data }) {
+    const [selectedStatus, setSelectedStatus] = useState(statusOptions.find(st => st.name === data.status));
+    const [note, setNote] = useState(data.note);
+
+    const [btnLabel, setBtnLabel] = useState("Save");
+    const [btnDisable, setBtnDisable] = useState(false);
 
     const handleStatusChange = (status) => {
         setSelectedStatus(statusOptions.find(st => st.name === status));
     };
 
-    const saveStatus = () => {
-        console.log(selectedStatus.name, note);
+    const saveStatus = async () => {
+        setBtnLabel("Saving...");
+        setBtnDisable(true);
+
+        await updateDoc(doc(db, "ClientInstances", data.instanceID, "Feedbacks", data.feedbackID), {
+            status: selectedStatus.name,
+            note: note
+        }).then(() => {
+            setBtnLabel("Save");
+            setBtnDisable(false);
+        });
     }
 
     return (
@@ -111,7 +124,7 @@ export default function FeedbackCard({ count, title, data }) {
                                 placeholder="Write your thoughts here..."
                             />
                             <div className="flex justify-end">
-                                <button onClick={saveStatus} className="flex w-1/5 h-5 shrink p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Save</button>
+                                <button onClick={saveStatus} disabled={btnDisable} className="flex w-1/5 h-5 shrink p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">{btnLabel}</button>
                             </div>
                         </div>
                     </Disclosure.Panel>
