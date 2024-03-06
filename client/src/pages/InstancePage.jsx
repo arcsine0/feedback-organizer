@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from 'react-router-dom'
 
+import { compareDesc } from "date-fns";
+
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../firebase/config";
 
@@ -93,7 +95,9 @@ export default function InstancePage() {
                 })
                 break;
             case "Date":
-
+                temp = temp.sort((a, b) => {
+                    return compareDesc(a.date, b.date)
+                })
                 break;
             default: break;
         }
