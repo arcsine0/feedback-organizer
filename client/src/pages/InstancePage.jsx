@@ -24,6 +24,7 @@ const sentimentOptions = [
 
 export default function InstancePage() {
     const [instanceName, setInstanceName] = useState("Title");
+    const [instanceDesc, setInstanceDesc] = useState("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sem arcu, pellentesque id sapien id, ullamcorper sollicitudin mi. Maecenas in elit iaculis, placerat ex id, molestie neque. Praesent lobortis nunc at rhoncus lacinia. Nam maximus tincidunt nibh, quis commodo libero sagittis in.");
 
     const [selectedSort, setSelectedSort] = useState(sortByOptions[0]);
     const [selectedSentiment, setSelectedSentiment] = useState(sentimentOptions[0]);
@@ -60,6 +61,7 @@ export default function InstancePage() {
                 snapshot.docs.forEach((doc) => {
                     if (doc.id === instanceID) {
                         setInstanceName(doc.data().title);
+                        setInstanceDesc(doc.data().desc);
                     }
                 })
             });
@@ -118,7 +120,7 @@ export default function InstancePage() {
         <div className="flex flex-col w-full h-full p-10 space-y-10">
             <div className="shrink flex flex-col space-y-2">
                 <h1 className="text-3xl font-bold">{instanceName}</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sem arcu, pellentesque id sapien id, ullamcorper sollicitudin mi. Maecenas in elit iaculis, placerat ex id, molestie neque. Praesent lobortis nunc at rhoncus lacinia. Nam maximus tincidunt nibh, quis commodo libero sagittis in.</p>
+                <p>{instanceDesc}</p>
             </div>
             <button onClick={goToConfig} className="flex w-1/6 h-5 shrink p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">Edit Config</button>
             <div className="grow flex flex-col space-y-2">

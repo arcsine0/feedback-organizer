@@ -14,6 +14,7 @@ import GlobalContext from "../globals/GlobalContext";
 
 export default function InstanceConfig() {
     const [instanceName, setInstanceName] = useState("");
+    const [instanceDesc, setInstanceDesc] = useState("");
 
     const [originalReference, setOriginalReference] = useState({});
     const [reference, setReference] = useState([]);
@@ -55,6 +56,7 @@ export default function InstanceConfig() {
 
                     const instance = await getDoc(doc(db, "ClientInstances", instanceID));
                     setInstanceName(instance.data().title);
+                    setInstanceDesc(instance.data().desc);
                 });
 
                 setOriginalReference(JSON.parse(JSON.stringify(ref)));
@@ -254,6 +256,18 @@ export default function InstanceConfig() {
                         onChange={(e) => setInstanceName(e.target.value)}
                     />
                     <FaPencilAlt />
+                </div>
+            </div>
+            <div className="flex flex-col space-y-5">
+                <h1 className="text-3xl font-bold">Instance Description</h1>
+                <div className="flex flex-row w-full h-full space-x-2 items-center">
+                    <textarea
+                        className="w-1/3 p-2 text-lg border-2 border-dashed rounded-md text-pretty"
+                        rows={4}
+                        value={instanceDesc}
+                        onChange={(e) => setInstanceDesc(e.target.value)}
+                        placeholder="Enter the instance description..."
+                    />
                 </div>
             </div>
             <div className="flex flex-col w-2/3 h-full space-y-2">

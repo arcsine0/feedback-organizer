@@ -16,6 +16,7 @@ import GlobalContext from "../globals/GlobalContext";
 
 export default function InstanceAdd() {
     const [instanceName, setInstanceName] = useState("");
+    const [instanceDesc, setInstanceDesc] = useState("");
 
     const [reference, setReference] = useState(useCases);
     const [currentReference, setCurrentReference] = useState({ tags: [] });
@@ -219,6 +220,7 @@ export default function InstanceAdd() {
 
             const instanceRef = await addDoc(collection(db, "ClientInstances"), {
                 title: instanceName,
+                desc: instanceDesc,
                 useCase: currentReference.use_case
             });
 
@@ -265,7 +267,7 @@ export default function InstanceAdd() {
     return (
         <div className="flex flex-col w-full h-screen p-10 space-y-10 overflow-y-auto">
             <div className="flex flex-col space-y-5">
-                <h1 className="text-3xl font-bold">Name your Instance</h1>
+                <h1 className="text-3xl font-bold">Instance Name</h1>
                 <div className="flex flex-row w-full h-full space-x-2 items-center">
                     <h1 className="text-2xl font-semibold py-2 px-4 bg-slate-200 rounded-lg">{globalState.uname}</h1>
                     <h1 className="text-3xl">/</h1>
@@ -276,6 +278,18 @@ export default function InstanceAdd() {
                         onChange={(e) => setInstanceName(e.target.value)}
                     />
                     <FaPencilAlt />
+                </div>
+            </div>
+            <div className="flex flex-col space-y-5">
+                <h1 className="text-3xl font-bold">Instance Description</h1>
+                <div className="flex flex-row w-full h-full space-x-2 items-center">
+                    <textarea
+                        className="w-1/3 p-2 text-lg border-2 border-dashed rounded-md text-pretty"
+                        rows={4}
+                        value={instanceDesc}
+                        onChange={(e) => setInstanceDesc(e.target.value)}
+                        placeholder="Enter the instance description..."
+                    />
                 </div>
             </div>
             <div className="flex flex-col w-2/3 h-full space-y-2">
