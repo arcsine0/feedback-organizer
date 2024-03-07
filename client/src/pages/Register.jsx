@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { collection, addDoc } from "firebase/firestore";
-import { db } from "../firebase/config";
+import isEmail from "validator/lib/isEmail";
+
+import { doc, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { db, auth } from "../firebase/config";
 
 import { Tab } from "@headlessui/react";
 import { MdNavigateNext } from "react-icons/md";
@@ -40,8 +43,10 @@ export default function Register() {
         switch (index) {
             case 1:
                 if (accountDetails.email.trim !== "") {
-                    setProfileDisabled(false);
-                    setSelectedTab(index);
+                    if (isEmail(accountDetails.email)) {
+                        setProfileDisabled(false);
+                        setSelectedTab(index);
+                    }
                 }
                 break;
             case 2:
@@ -55,19 +60,31 @@ export default function Register() {
     }
 
     const submitCredentials = async () => {
-        if (accountDetails.pass === pass) {
-            const addAccountRef = await addDoc(collection(db, "ClientAccounts"), accountDetails);
+        const regex = /^(?=.*[a-zA-Z0-9])(?=.*[_\-#])[a-zA-Z0-9_\-#]+$/;
 
-            if (addAccountRef.id) {
-                const addInstancesRef = await addDoc(collection(db, "ClientAccounts", addAccountRef.id, "Instances"), {
-                    instanceID: ""
-                });
+        if (accountDetails.pass.length >= 6) {
+            if (regex.test(accountDetails.pass)) {
+                if (accountDetails.pass === pass) {
+                    try {
+                        createUserWithEmailAndPassword(auth, accountDetails.email, accountDetails.pass)
+                            .then(async (cred) => {
+                                const user = cred.user;
+                                await setDoc(doc(db, "ClientAccounts", user.uid), {
+                                    firstName: accountDetails.firstName,
+                                    lastName: accountDetails.lastName,
+                                    uname: accountDetails.uname
+                                });
 
-                if (addInstancesRef.id) {
-                    navigate("/");
-                }
-            }
-        }
+                                navigate("/");
+                            })
+                    } catch (error) {
+                        console.error(error);
+                    }
+
+                } else { console.log("Confirm Password should match Password"); }
+            } else { console.log("Password should contain symbols [_, -, #]"); }
+        } else { console.log("Password should be at least 6 characters long"); }
+
     }
 
     return (

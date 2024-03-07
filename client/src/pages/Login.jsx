@@ -1,8 +1,11 @@
 import { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase/config";
+import isEmail from "validator/lib/isEmail";
+
+import { doc, getDoc } from "firebase/firestore";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { db, auth } from "../firebase/config";
 
 import GlobalContext from "../globals/GlobalContext";
 
@@ -14,31 +17,38 @@ export default function Login() {
 
     const navigate = useNavigate();
 
-    const submitCredentials = () => {
-        getDocs(collection(db, "ClientAccounts"))
-            .then((snapshot) => {
-                snapshot.docs.forEach((doc) => {
-                    if (doc.data().email === email) {
-                        if (doc.data().pass === pass) {
-                            localStorage.setItem("uname", doc.data().uname);
-                            localStorage.setItem("id", doc.id);
+    const submitCredentials = async () => {
+        if (isEmail(email)) {
+            if (pass.length > 0) {
+                try {
+                    await signInWithEmailAndPassword(auth, email, pass)
+                        .then(async (cred) => {
+                            const user = cred.user;
+                            localStorage.setItem("id", user.uid);
 
-                            setGlobalState({
-                                ...globalState,
-                                isLoggedIn: true,
-                                id: doc.id,
-                                uname: doc.data().uname
-                            });
+                            await getDoc(doc(db, "ClientAccounts", user.uid))
+                                .then((sn) => {
+                                    localStorage.setItem("uname", sn.data().uname);
 
-                            localStorage.setItem("isLoggedIn", true);
-                            localStorage.setItem("id", doc.id);
-                            localStorage.setItem("uname", doc.data().uname);
+                                    setGlobalState({
+                                        ...globalState,
+                                        isLoggedIn: true,
+                                        id: user.uid,
+                                        uname: sn.data().uname
+                                    });
 
-                            navigate("/");
-                        }
+                                    localStorage.setItem("isLoggedIn", true);
+
+                                    navigate("/");
+                                });
+                        });
+                } catch (error) {
+                    if (error === "Firebase: Error (auth/invalid-credential).") {
+                        console.log("Invalid Credentials");
                     }
-                });
-            });
+                }
+            } else { console.log("Password Empty"); }
+        } else { console.log("Email Invalid"); }
     }
 
     return (
