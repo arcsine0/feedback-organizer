@@ -39,7 +39,7 @@ export default function Sources() {
             .then((snps) => {
                 let instanceIDs = [];
                 snps.docs.forEach((dc) => {
-                    instanceIDs.push(dc.data().instanceID)
+                    instanceIDs.push(dc.id);
                 });
 
                 getDocs(collection(db, "ClientInstances"))
