@@ -1,5 +1,9 @@
 import { useContext } from 'react';
 import { Outlet, Link, useNavigate } from 'react-router-dom'
+
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase/config';
+
 import { Menu } from '@headlessui/react';
 
 import { FaChevronDown, FaThLarge, FaChartPie, FaSignInAlt } from 'react-icons/fa';
@@ -13,23 +17,27 @@ export default function Sidebar({ uname }) {
 
     const navigate = useNavigate();
 
-    const SignOut = () => {
-        setGlobalState({
-            ...globalState,
-            isLoggedIn: false,
-            id: "",
-            uname: ""
-        });
+    const logOut = () => {
+        signOut(auth).then(() => {
+            setGlobalState({
+                ...globalState,
+                isLoggedIn: false,
+                id: "",
+                uname: ""
+            });
 
-        try {
-            localStorage.removeItem("isLoggedIn");
-            localStorage.removeItem("id");
-            localStorage.removeItem("uname");
-        } catch(error) {
+            try {
+                localStorage.removeItem("isLoggedIn");
+                localStorage.removeItem("id");
+                localStorage.removeItem("uname");
+            } catch (error) {
+                console.log(error);
+            }
+
+            navigate("/");
+        }).catch((error) => {
             console.log(error);
-        }
-
-        navigate("/");
+        });
     }
 
     return (
@@ -87,7 +95,7 @@ export default function Sidebar({ uname }) {
                         <div className='order-last flex items-center p-2 text-gray-900 rounded-lg cursor-pointer dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group'>
                             <div className='flex order-first items-center'>
                                 <FaSignInAlt />
-                                <span onClick={SignOut} className='flex-1 ms-3 whitespace-nowrap select-none'>Logout</span>
+                                <span onClick={logOut} className='flex-1 ms-3 whitespace-nowrap select-none'>Logout</span>
                             </div>
                         </div>
                     </li>
