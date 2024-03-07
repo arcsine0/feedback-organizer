@@ -38,7 +38,6 @@ export default function InstancePage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        let fdID = "";
         getDocs(collection(db, "ClientInstances", instanceID, "Feedbacks"))
             .then((snapshot) => {
                 let result = [];

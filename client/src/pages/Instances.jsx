@@ -27,7 +27,7 @@ export default function Instances() {
             .then((sn) => {
                 let instanceIDs = [];
                 sn.docs.forEach((dc) => {
-                    instanceIDs.push(dc.data().instanceID)
+                    instanceIDs.push(dc.id);
                 });
 
                 getDocs(collection(db, "ClientInstances"))
