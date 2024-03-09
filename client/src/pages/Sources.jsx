@@ -44,34 +44,34 @@ export default function Sources() {
 
                 getDocs(collection(db, "ClientInstances"))
                     .then((snp) => {
+                        let tempInstances = [];
                         snp.docs.forEach((doc) => {
                             if (instanceIDs.includes(doc.id)) {
-                                let result = {
-                                    id: doc.id,
-                                    title: doc.data().title,
-                                    tags: []
-                                }
+                                if (!instances.find(ins => ins.id === doc.id)) {
+                                    let result = {
+                                        id: doc.id,
+                                        title: doc.data().title,
+                                        tags: []
+                                    }
 
-                                getDocs(collection(db, "ClientInstances", doc.id, "Tags"))
-                                    .then((sn) => {
-                                        sn.docs.forEach((tags) => {
-                                            let res = {
-                                                mainTag: tags.data().mainTag,
-                                                subTag: tags.data().subTag,
-                                                multiplier: tags.data().multiplier
-                                            }
+                                    getDocs(collection(db, "ClientInstances", doc.id, "Tags"))
+                                        .then((sn) => {
+                                            sn.docs.forEach((tags) => {
+                                                const res = {
+                                                    mainTag: tags.data().mainTag,
+                                                    subTag: tags.data().subTag,
+                                                    multiplier: tags.data().multiplier
+                                                }
 
-                                            result.tags.push(res);
+                                                result.tags.push(res);
+                                            })
                                         })
-                                    })
-                                
-
-                                if (!instances.find(ins => ins.id === result.id)) {
-                                    let newInstance = [...instances, result];
-                                    setInstances(newInstance);
+                                    
+                                    tempInstances.push(result)
                                 }
                             }
                         });
+                        setInstances(tempInstances);
 
                         if (instances[0]) {
                             setSelectedInstance(instances[0].id);

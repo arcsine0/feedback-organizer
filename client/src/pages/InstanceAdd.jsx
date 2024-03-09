@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { Tab, Listbox } from "@headlessui/react";
 import { FaPencilAlt, FaChevronDown } from "react-icons/fa";
 
-import { collection, doc, addDoc, updateDoc, getDocs } from "firebase/firestore";
+import { collection, doc, addDoc, updateDoc, getDocs, setDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 import Label from "../components/Label";
@@ -225,20 +225,7 @@ export default function InstanceAdd() {
             });
 
             if (instanceRef.id) {
-                getDocs(collection(db, "ClientAccounts", globalState.id, "Instances"))
-                    .then((snapshots) => {
-                        snapshots.docs.forEach((dc) => {
-                            if (dc.data().instanceID === "") {
-                                updateDoc(doc(db, "ClientAccounts", globalState.id, "Instances", dc.id), {
-                                    instanceID: instanceRef.id
-                                });
-                            } else {
-                                addDoc(collection(db, "ClientAccounts", globalState.id, "Instances"), {
-                                    instanceID: instanceRef.id
-                                })
-                            }
-                        });
-                    });
+                setDoc(doc(db, "ClientAccounts", globalState.id, "Instances", instanceRef.id), {});
 
                 currentReference.tags.forEach(async (tag) => {
                     await addDoc(collection(db, `ClientInstances/${instanceRef.id}/Tags`), {
@@ -249,12 +236,10 @@ export default function InstanceAdd() {
                 });
 
 
-                if (instanceRef.id) {
-                    setBtnDisable(false);
-                    setBtnLabel("Save");
+                setBtnDisable(false);
+                setBtnLabel("Save");
 
-                    navigate(`/instance/${instanceRef.id}`)
-                }
+                navigate(`/instance/${instanceRef.id}`)
             }
         } else {
             setBtnDisable(false);
