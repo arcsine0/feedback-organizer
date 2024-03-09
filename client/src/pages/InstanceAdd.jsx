@@ -84,6 +84,10 @@ export default function InstanceAdd() {
     }, [selectedInstance, reference]);
 
     useEffect(() => {
+        console.log(currentReference)
+    }, [ currentReference ])
+
+    useEffect(() => {
         const updatedReference = { ...currentReference };
 
         updatedReference.tags.forEach((tag, i) => {
@@ -198,8 +202,10 @@ export default function InstanceAdd() {
     }
 
     const getTagGroupWeights = (weights) => {
+        console.log(weights)
         const addedWeights = { ...currentReference }
         const modifiedTagGroupIndex = addedWeights.tags.findIndex(tag => tag.mainTag === weights.mainTag);
+
         addedWeights.tags[modifiedTagGroupIndex] = {
             ...addedWeights.tags[modifiedTagGroupIndex],
             mainTag: weights.mainTag,

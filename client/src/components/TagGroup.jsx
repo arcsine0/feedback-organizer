@@ -32,6 +32,18 @@ export default function TagGroup({ order, handleOrder, mainTag, subTag, addToLis
         addToList(finalWeightList);
     }, []);
 
+    useEffect(() => {
+        const subTags = Object.entries(weightList).map(([name, weight]) => ({
+            name,
+            weight,
+          }));
+        
+        const finalWeightList = {
+            mainTag: mainTag,
+            subTag: subTags
+        };
+    }, [ weightList ])
+
     const handleSliderChange = (e) => {
         const tagName = e.target.name;
         const tagWeight = e.target.value;
