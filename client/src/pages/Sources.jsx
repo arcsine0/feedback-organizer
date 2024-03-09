@@ -150,7 +150,9 @@ export default function Sources() {
                     body: JSON.stringify({
                         id: selectedInstance,
                         content: fd,
-                        tags: tagsList
+                        tags: tagsList,
+                        status: "Open",
+                        note: ""
                     })
                 }
 
