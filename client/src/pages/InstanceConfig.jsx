@@ -146,6 +146,7 @@ export default function InstanceConfig() {
             let newSubLabels = [...subLabels, { name: subLabel, weight: 0 }]
             setSubLabels(newSubLabels);
             setSubLabelError("");
+
             updateReference("sub", newSubLabels);
         }
     }
@@ -279,7 +280,7 @@ export default function InstanceConfig() {
                     />
                 </div>
             </div>
-            <div className="flex flex-col w-2/3 h-full space-y-2">
+            <div className="flex flex-col w-2/3 space-y-2">
                 <h1 className="text-3xl font-bold">Instance Config</h1>
                 <Tab.Group>
                     <Tab.List className="flex w-1/3 space-x-10 p-2 items-center">

@@ -241,7 +241,6 @@ export default function InstanceAdd() {
                     });
                 });
 
-
                 setBtnDisable(false);
                 setBtnLabel("Save");
 
@@ -285,7 +284,7 @@ export default function InstanceAdd() {
             </div>
             <div className="flex flex-col w-2/3 h-full space-y-2">
                 <h1 className="text-3xl font-bold">Instance Config</h1>
-                <Tab.Group as={"div"} className="h-full">
+                <Tab.Group as={"div"} className="">
                     <Tab.List className="flex w-1/3 space-x-10 p-2 items-center">
                         <Tab className="flex justify-center items-center px-5 py-2 hover:border-b-2 border-black">
                             <h1 className="font-semibold">Tags</h1>
