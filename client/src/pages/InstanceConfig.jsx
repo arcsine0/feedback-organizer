@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Tab, Listbox } from "@headlessui/react";
 import { FaPencilAlt, FaChevronDown } from "react-icons/fa";
 
-import { collection, updateDoc, getDocs, getDoc, addDoc, deleteDoc, doc } from "firebase/firestore";
+import { collection, updateDoc, getDocs, getDoc, addDoc, setDoc, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 import Label from "../components/Label";
@@ -73,6 +73,15 @@ export default function InstanceConfig() {
                 setSubLabels(subTags);
             });
     }, []);
+
+    useEffect(() => {
+        reference.forEach((tag, i) => {
+            reference[i] = {
+                ...reference[i],
+                multiplier: (labelOrder.length - labelOrder.findIndex(la => la === tag.mainTag)) * 5
+            }
+        });
+    }, [labelOrder])
 
     const updateReference = (action, data) => {
         let updatedReference = [...reference];
@@ -161,6 +170,7 @@ export default function InstanceConfig() {
             subTag: weights.subTag
         }
 
+        console.log(weights);
         setReference(addedWeights);
     }
 
@@ -198,36 +208,35 @@ export default function InstanceConfig() {
         setBtnDisable(true);
         setBtnLabel("Saving...");
 
-        const withChanges = compareRef(originalReference, reference);
-
         const allLabelOrderCheck = reference.find(tag => tag.multiplier === 0);
+
+        const existingTagsID = originalReference.map(ref => ref.id);
+        const updatedTagsID = reference.map(ref => ref.id);
 
         if (!allLabelOrderCheck) {
             reference.forEach(async (r, i) => {
-                if (i === (reference.length - 1)) {
-                    withChanges.forEach(async (wC) => {
-                        if (wC > i) {
-                            await deleteDoc(doc(db, "ClientInstances", instanceID, "Tags", originalReference[wC].id));
-                        }
-                    });
-                }
-
-                if (withChanges.includes(i)) {
-                    if (r.id !== "") {
-                        await updateDoc(doc(db, "ClientInstances", instanceID, "Tags", r.id), {
-                            subTag: r.subTag
-                        });
+                if (existingTagsID.includes(r.id)) {
+                    await setDoc(doc(db, "ClientInstances", instanceID, "Tags", r.id), {
+                        mainTag: r.mainTag,
+                        subTag: r.subTag,
+                        multiplier: r.multiplier
+                    })
+                } else {
+                    if (existingTagsID > updatedTagsID) {
+                        await deleteDoc(doc(db, "ClientInstances", instanceID, "Tags", r.id));
                     } else {
                         await addDoc(collection(db, "ClientInstances", instanceID, "Tags"), {
                             mainTag: r.mainTag,
-                            subTag: r.subTag
+                            subTag: r.subTag,
+                            multiplier: r.multiplier
                         });
                     }
                 }
-            })
+            });
 
             await updateDoc(doc(db, "ClientInstances", instanceID), {
-                title: instanceName
+                title: instanceName,
+                desc: instanceDesc
             }).then(() => {
                 setBtnDisable(false);
                 setBtnLabel("Save");
