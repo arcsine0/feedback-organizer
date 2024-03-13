@@ -92,7 +92,7 @@ export default function InstanceConfig() {
                 mainTag: mT,
                 subTag: selectedLabel === mT
                     ? subLabels
-                    : updatedReference[i]?.subTag || []
+                    : updatedReference.find(ta => ta.mainTag === mT)?.subTag || []
             }));
         } else {
             updatedReference.find(ref => ref.mainTag === selectedLabel)

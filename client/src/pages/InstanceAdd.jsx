@@ -108,16 +108,12 @@ export default function InstanceAdd() {
         if (selectedUseCaseIndex !== -1) {
             let currentUseCase = updatedReference.use_cases[selectedUseCaseIndex];
             if (action === "main") {
-                // currentUseCase.tags = data.map((mT, i) => ({
-                //     mainTag: mT,
-                //     subTag: selectedLabel === mT
-                //         ? subLabels
-                //         : currentUseCase.tags[i]?.subTag || []
-                // }));
-                data.forEach((mT, i) => {
-                    console.log(mT);
-                    console.log(selectedLabel === mT ? subLabels : currentUseCase.tags[i]?.subTag || [])
-                })
+                currentUseCase.tags = data.map((mT, i) => ({
+                    mainTag: mT,
+                    subTag: selectedLabel === mT
+                        ? subLabels
+                        : currentUseCase.tags.find(ta => ta.mainTag === mT)?.subTag || []
+                }));
 
                 setLabelOrder(labels);
             } else {
