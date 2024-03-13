@@ -106,6 +106,7 @@ export default function InstanceAdd() {
         if (selectedUseCaseIndex !== -1) {
             let currentUseCase = updatedReference.use_cases[selectedUseCaseIndex];
             if (action === "main") {
+                console.log(subLabels)
                 currentUseCase.tags = data.map((mT, i) => ({
                     mainTag: mT,
                     subTag: selectedLabel === mT
@@ -115,6 +116,7 @@ export default function InstanceAdd() {
 
                 setLabelOrder(labels);
             } else {
+
                 updatedReference.use_cases[selectedUseCaseIndex]
                     .tags.find(ta => ta.mainTag === selectedLabel)
                     .subTag = data;
@@ -191,7 +193,7 @@ export default function InstanceAdd() {
 
     const removeSubLabel = (name) => {
         if (subLabels.length > 1) {
-            let newSubLabels = subLabels.filter(la => la !== name)
+            let newSubLabels = subLabels.filter(la => la.name !== name)
             setSubLabels(newSubLabels);
             updateReference("sub", newSubLabels);
 
