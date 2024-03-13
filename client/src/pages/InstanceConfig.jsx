@@ -94,6 +94,8 @@ export default function InstanceConfig() {
                     ? subLabels
                     : updatedReference.find(ta => ta.mainTag === mT)?.subTag || []
             }));
+
+            setLabelOrder([]);
         } else {
             updatedReference.find(ref => ref.mainTag === selectedLabel)
                 .subTag = data;

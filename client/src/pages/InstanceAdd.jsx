@@ -85,10 +85,6 @@ export default function InstanceAdd() {
         setCurrentReference(currentRef);
     }, [selectedInstance, reference]);
 
-    // useEffect(() => {
-    //     console.log(currentReference)
-    // }, [ currentReference ])
-
     useEffect(() => {
         const updatedReference = { ...currentReference };
 
@@ -115,9 +111,8 @@ export default function InstanceAdd() {
                         : currentUseCase.tags.find(ta => ta.mainTag === mT)?.subTag || []
                 }));
 
-                setLabelOrder(labels);
+                setLabelOrder([]);
             } else {
-
                 updatedReference.use_cases[selectedUseCaseIndex]
                     .tags.find(ta => ta.mainTag === selectedLabel)
                     .subTag = data;
@@ -219,6 +214,7 @@ export default function InstanceAdd() {
     }
 
     const addSource = async () => {
+        // console.log(currentReference)
         setBtnDisable(true);
         setBtnLabel("Saving...");
 
