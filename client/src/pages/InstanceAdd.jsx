@@ -73,6 +73,8 @@ export default function InstanceAdd() {
         setSelectedLabel(reference.use_cases[0].tags[0].mainTag);
         setSubLabels(subTags);
 
+        handleLabelChange(reference.use_cases[0].tags[0].mainTag);
+
         setCurrentReference(currentRef);
     }, []);
 
@@ -83,9 +85,9 @@ export default function InstanceAdd() {
         setCurrentReference(currentRef);
     }, [selectedInstance, reference]);
 
-    useEffect(() => {
-        console.log(currentReference)
-    }, [ currentReference ])
+    // useEffect(() => {
+    //     console.log(currentReference)
+    // }, [ currentReference ])
 
     useEffect(() => {
         const updatedReference = { ...currentReference };
@@ -106,13 +108,16 @@ export default function InstanceAdd() {
         if (selectedUseCaseIndex !== -1) {
             let currentUseCase = updatedReference.use_cases[selectedUseCaseIndex];
             if (action === "main") {
-                console.log(subLabels)
-                currentUseCase.tags = data.map((mT, i) => ({
-                    mainTag: mT,
-                    subTag: selectedLabel === mT
-                        ? subLabels
-                        : currentUseCase.tags[i]?.subTag || []
-                }));
+                // currentUseCase.tags = data.map((mT, i) => ({
+                //     mainTag: mT,
+                //     subTag: selectedLabel === mT
+                //         ? subLabels
+                //         : currentUseCase.tags[i]?.subTag || []
+                // }));
+                data.forEach((mT, i) => {
+                    console.log(mT);
+                    console.log(selectedLabel === mT ? subLabels : currentUseCase.tags[i]?.subTag || [])
+                })
 
                 setLabelOrder(labels);
             } else {
