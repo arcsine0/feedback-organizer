@@ -29,7 +29,6 @@ export default function InstancePage() {
     const [selectedSort, setSelectedSort] = useState(sortByOptions[0]);
     const [selectedSentiment, setSelectedSentiment] = useState(sentimentOptions[0]);
 
-    const [feedbackID, setFeedbackID] = useState("")
     const [feedbacks, setFeedbacks] = useState([]);
     const [sortedFeedbacks, setSortedFeedbacks] = useState([]);
 
@@ -82,11 +81,12 @@ export default function InstancePage() {
 
         switch (selectedSort.name) {
             case "Importance":
+                temp.forEach((fd) => {console.log(typeof(fd.score))})
                 temp = temp.sort((a, b) => {
-                    if (a.score < b.score) {
+                    if (parseFloat(a.score) < parseFloat(b.score)) {
                         return 1;
                     }
-                    if (a.score > b.score) {
+                    if (parseFloat(a.score) > parseFloat(b.score)) {
                         return -1;
                     }
                     return 0;
