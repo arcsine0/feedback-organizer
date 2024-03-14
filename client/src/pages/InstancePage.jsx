@@ -178,7 +178,7 @@ export default function InstancePage() {
                         </div>
                     </div>
                 </div>
-                <div className="grow flex flex-col space-y-2 overflow-y-auto">
+                <div className="grow flex flex-col space-y-2 overflow-y-scroll">
                     {sortedFeedbacks.map((fd, i) => (
                         <FeedbackCard key={i} title={`Feedback ${i + 1}`} data={fd} />
                     ))}
