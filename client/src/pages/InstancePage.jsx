@@ -66,6 +66,7 @@ export default function InstancePage() {
     }, []);
 
     useEffect(() => {
+        setSortedFeedbacks([]);
         let temp = [...feedbacks];
 
         switch (selectedSentiment.name) {
