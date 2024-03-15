@@ -51,4 +51,4 @@ def process(req: https_fn.Request) -> https_fn.Response:
     #     'note': 
     # }    
     print(data)
-    return https_fn.Response("Hello world!")
+    return https_fn.Response(data)

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Tab, Listbox } from "@headlessui/react";
 
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
 
 import { FaChevronDown } from "react-icons/fa";
@@ -66,7 +66,7 @@ export default function Sources() {
                                                 result.tags.push(res);
                                             })
                                         })
-                                    
+
                                     tempInstances.push(result)
                                 }
                             }
@@ -134,52 +134,127 @@ export default function Sources() {
         }
     }
 
-    const sendFeedback = () => {
+    const getSentiment = async (data) => {
+        const reqOptions = {
+            method: "POST",
+            headers: { Authorization: "Bearer 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" },
+            body: JSON.stringify(data)
+        }
+
+        try {
+            const response = await fetch("https://api-inference.huggingface.co/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english", reqOptions);
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const getTag = async (data) => {
+        const reqOptions = {
+            method: "POST",
+            headers: { Authorization: "Bearer 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" },
+            body: JSON.stringify(data)
+        }
+
+        try {
+            const response = await fetch("https://api-inference.huggingface.co/models/MoritzLaurer/mDeBERTa-v3-base-xnli-multilingual-nli-2mil7", reqOptions);
+            const result = await response.json();
+            return result;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const sendFeedback = async () => {
         setBtnDisable(true);
         setBtnLabel("Processing...");
 
-        if (feedbacks.length >= 1) {
-            const feedbackChunks = chunkArray(feedbacks, 5);
+        const tagsList = instances.find(ins => ins.id === selectedInstance).tags;
+        const mainTags = tagsList.map(ta => ta.mainTag);
 
-            const tagsList = instances.find(ins => ins.id === selectedInstance).tags
+        feedbacks.forEach(async (fd) => {
+            let processedFeedback = {
+                content: fd.content,
+                date: fd.date,
+                sentiment: "",
+                mainTag: "",
+                subTag: "",
+                score: 0,
+            }
 
-            feedbackChunks.forEach((fd, i) => {
-                const reqOptions = {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        id: selectedInstance,
-                        content: fd,
-                        tags: tagsList,
-                        status: "Open",
-                        note: ""
-                    })
-                }
+            await getSentiment({ "text": fd.content }).then((res) => {
+                processedFeedback.sentiment = res[0].label;
+            });
 
-                if (fd) {
-                    try {
-                        fetch("http://127.0.0.1:8000/process/batch", reqOptions)
-                            .then(res => {
-                                if (res) {
-                                    setBtnDisable(false);
-                                    setBtnLabel("Send");
+            await getTag({ "inputs": fd.content, "parameters": { "candidate_labels": mainTags, "multi_label": false } }).then((res) => {
+                processedFeedback.mainTag = res.labels[0];
+            });
 
-                                    console.log(`Processing Done for Feedback #${i}`);
-                                }
-                            });
-                    } catch (error) {
-                        setBtnDisable(false);
-                        setBtnLabel("Send");
+            const predictedMainTag = tagsList.find(ta => ta.mainTag === processedFeedback.mainTag);
 
-                        console.log(error);
-                    }
-                } else {
-                    setBtnDisable(false);
-                    setBtnLabel("Send");
-                }
-            })
-            setFeedbacks([]);
-        }
+            const subTags = predictedMainTag.subTag.map(sT => sT.name);
+            await getTag({ "inputs": fd.content, "parameters": { "candidate_labels": subTags, "multi_label": false } }).then((res) => {
+                processedFeedback.subTag = res.labels[0];
+            });
+
+            const multiplier = predictedMainTag.multiplier;
+            const score = predictedMainTag.subTag.find(sT => sT.name === processedFeedback.subTag).weight * multiplier;
+
+            processedFeedback.score = parseFloat(score.toFixed(2));
+
+            await addDoc(collection(db, "ClientInstances", selectedInstance, "Feedbacks"), {
+                ...processedFeedback,
+                status: "Open",
+                note: ""
+            });
+
+            setBtnDisable(false);
+            setBtnLabel("Send");
+        })
+
+        // if (feedbacks.length >= 1) {
+        //     const feedbackChunks = chunkArray(feedbacks, 5);
+
+        //     const tagsList = instances.find(ins => ins.id === selectedInstance).tags
+
+        //     feedbackChunks.forEach((fd, i) => {
+        //         const reqOptions = {
+        //             method: "POST",
+        //             headers: { "Content-Type": "application/json" },
+        //             body: JSON.stringify({
+        //                 id: selectedInstance,
+        //                 content: fd,
+        //                 tags: tagsList,
+        //                 status: "Open",
+        //                 note: ""
+        //             })
+        //         }
+
+        //         if (fd) {
+        //             try {
+        //                 // fetch("http://127.0.0.1:8000/process/batch", reqOptions)
+        //                 //     .then(res => {
+        //                 //         if (res) {
+        //                 //             setBtnDisable(false);
+        //                 //             setBtnLabel("Send");
+
+        //                 //             console.log(`Processing Done for Feedback #${i}`);
+        //                 //         }
+        //                 //     });
+        //             } catch (error) {
+        //                 setBtnDisable(false);
+        //                 setBtnLabel("Send");
+
+        //                 console.log(error);
+        //             }
+        //         } else {
+        //             setBtnDisable(false);
+        //             setBtnLabel("Send");
+        //         }
+        //     })
+        //     setFeedbacks([]);
+        // }
     }
 
     return (
