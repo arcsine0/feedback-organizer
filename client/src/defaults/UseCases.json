@@ -18,10 +18,9 @@
                     "mainTag": "Functionality",
                     "subTag": [
                         {"name": "Feature Availability", "weight": 0},
-                        {"name": "User Interaction Responsiveness", "weight": 0},
-                        {"name": "Performance Optimization", "weight": 0},
+                        {"name": "Responsiveness", "weight": 0},
+                        {"name": "Performance", "weight": 0},
                         {"name": "Bugs and Errors", "weight": 0},
-                        {"name": "User Onboarding Experience", "weight": 0},
                         {"name": "Data Synchronization", "weight": 0}
                     ],
                     "multiplier": 1
@@ -55,10 +54,9 @@
                     "mainTag": "Functionality",
                     "subTag": [
                         {"name": "Feature Availability", "weight": 0},
-                        {"name": "User Interaction Responsiveness", "weight": 0},
-                        {"name": "Performance Optimization", "weight": 0},
+                        {"name": "Responsiveness", "weight": 0},
+                        {"name": "Performance", "weight": 0},
                         {"name": "Bugs and Errors", "weight": 0},
-                        {"name": "User Onboarding Experience", "weight": 0},
                         {"name": "Data Synchronization", "weight": 0}
                     ],
                     "multiplier": 1
