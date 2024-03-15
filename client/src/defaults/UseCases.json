@@ -31,9 +31,7 @@
                     "subTag": [
                         {"name": "Ratings", "weight": 0},
                         {"name": "Reviews", "weight": 0},
-                        {"name": "Feature Suggestions", "weight": 0},
-                        {"name": "User Surveys", "weight": 0},
-                        {"name": "User Engagement", "weight": 0}
+                        {"name": "Feature Suggestions", "weight": 0}
                     ],
                     "multiplier": 1
                 }
@@ -70,9 +68,7 @@
                     "subTag": [
                         {"name": "Ratings", "weight": 0},
                         {"name": "Reviews", "weight": 0},
-                        {"name": "Feature Suggestions", "weight": 0},
-                        {"name": "User Surveys", "weight": 0},
-                        {"name": "User Engagement", "weight": 0}
+                        {"name": "Feature Suggestions", "weight": 0}
                     ],
                     "multiplier": 1
                 }
