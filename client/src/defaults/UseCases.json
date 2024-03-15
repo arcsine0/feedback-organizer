@@ -5,12 +5,11 @@
             "use_case": "Mobile App",
             "tags": [
                 {
-                    "mainTag": "UI/UX Design",
+                    "mainTag": "Design",
                     "subTag": [
                         {"name": "Layout Issues", "weight": 0},
                         {"name": "Color Scheme Consistency", "weight": 0},
                         {"name": "Font Size Readability", "weight": 0},
-                        {"name": "Interactive Element Responsiveness", "weight": 0},
                         {"name": "Visual Hierarchy", "weight": 0}
                     ],
                     "multiplier": 1
@@ -45,12 +44,11 @@
             "use_case": "Web App",
             "tags": [
                 {
-                    "mainTag": "UI/UX Design",
+                    "mainTag": "Design",
                     "subTag": [
                         {"name": "Layout Issues", "weight": 0},
                         {"name": "Color Scheme Consistency", "weight": 0},
                         {"name": "Font Size Readability", "weight": 0},
-                        {"name": "Interactive Element Responsiveness", "weight": 0},
                         {"name": "Visual Hierarchy", "weight": 0}
                     ],
                     "multiplier": 1
@@ -82,7 +80,7 @@
         },
         {
             "id": 2,
-            "use_case": "Content Comments",
+            "use_case": "Content Creation",
             "tags": [
                 {
                     "mainTag": "Content Quality",
