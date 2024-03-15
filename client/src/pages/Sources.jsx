@@ -212,49 +212,6 @@ export default function Sources() {
             setBtnDisable(false);
             setBtnLabel("Send");
         })
-
-        // if (feedbacks.length >= 1) {
-        //     const feedbackChunks = chunkArray(feedbacks, 5);
-
-        //     const tagsList = instances.find(ins => ins.id === selectedInstance).tags
-
-        //     feedbackChunks.forEach((fd, i) => {
-        //         const reqOptions = {
-        //             method: "POST",
-        //             headers: { "Content-Type": "application/json" },
-        //             body: JSON.stringify({
-        //                 id: selectedInstance,
-        //                 content: fd,
-        //                 tags: tagsList,
-        //                 status: "Open",
-        //                 note: ""
-        //             })
-        //         }
-
-        //         if (fd) {
-        //             try {
-        //                 // fetch("http://127.0.0.1:8000/process/batch", reqOptions)
-        //                 //     .then(res => {
-        //                 //         if (res) {
-        //                 //             setBtnDisable(false);
-        //                 //             setBtnLabel("Send");
-
-        //                 //             console.log(`Processing Done for Feedback #${i}`);
-        //                 //         }
-        //                 //     });
-        //             } catch (error) {
-        //                 setBtnDisable(false);
-        //                 setBtnLabel("Send");
-
-        //                 console.log(error);
-        //             }
-        //         } else {
-        //             setBtnDisable(false);
-        //             setBtnLabel("Send");
-        //         }
-        //     })
-        //     setFeedbacks([]);
-        // }
     }
 
     return (
