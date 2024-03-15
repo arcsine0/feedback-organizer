@@ -174,6 +174,8 @@ export default function Sources() {
         const mainTags = tagsList.map(ta => ta.mainTag);
 
         feedbacks.forEach(async (fd) => {
+            setFeedbackError("");
+
             let processedFeedback = {
                 content: fd.content,
                 date: fd.date,
@@ -183,32 +185,41 @@ export default function Sources() {
                 score: 0,
             }
 
-            await getSentiment({ "text": fd.content }).then((res) => {
-                processedFeedback.sentiment = res[0].label;
-            });
+            try {
+                await getSentiment({ "text": fd.content }).then((res) => {
+                    processedFeedback.sentiment = res[0].label;
+                });
+    
+                await getTag({ "inputs": fd.content, "parameters": { "candidate_labels": mainTags, "multi_label": false } }).then((res) => {
+                    processedFeedback.mainTag = res.labels[0];
+                });
+    
+                const predictedMainTag = tagsList.find(ta => ta.mainTag === processedFeedback.mainTag);
+    
+                const subTags = predictedMainTag.subTag.map(sT => sT.name);
+                await getTag({ "inputs": fd.content, "parameters": { "candidate_labels": subTags, "multi_label": false } }).then((res) => {
+                    processedFeedback.subTag = res.labels[0];
+                });
+    
+                const multiplier = predictedMainTag.multiplier;
+                const score = predictedMainTag.subTag.find(sT => sT.name === processedFeedback.subTag).weight * multiplier;
+                
+                console.log(processedFeedback.mainTag, processedFeedback.subTag)
+                console.log(multiplier, predictedMainTag.subTag.find(sT => sT.name === processedFeedback.subTag).weight)
 
-            await getTag({ "inputs": fd.content, "parameters": { "candidate_labels": mainTags, "multi_label": false } }).then((res) => {
-                processedFeedback.mainTag = res.labels[0];
-            });
+                processedFeedback.score = parseFloat(score.toFixed(2));
+    
+                await addDoc(collection(db, "ClientInstances", selectedInstance, "Feedbacks"), {
+                    ...processedFeedback,
+                    status: "Open",
+                    note: ""
+                });
+            } catch (error) {
+                setFeedbackError("Processing Error, please retry");
+                console.log("error: ", error);
+            }
 
-            const predictedMainTag = tagsList.find(ta => ta.mainTag === processedFeedback.mainTag);
-
-            const subTags = predictedMainTag.subTag.map(sT => sT.name);
-            await getTag({ "inputs": fd.content, "parameters": { "candidate_labels": subTags, "multi_label": false } }).then((res) => {
-                processedFeedback.subTag = res.labels[0];
-            });
-
-            const multiplier = predictedMainTag.multiplier;
-            const score = predictedMainTag.subTag.find(sT => sT.name === processedFeedback.subTag).weight * multiplier;
-
-            processedFeedback.score = parseFloat(score.toFixed(2));
-
-            await addDoc(collection(db, "ClientInstances", selectedInstance, "Feedbacks"), {
-                ...processedFeedback,
-                status: "Open",
-                note: ""
-            });
-
+            setFeedbacks([]);
             setBtnDisable(false);
             setBtnLabel("Send");
         })
@@ -276,6 +287,9 @@ export default function Sources() {
                                         <Label key={i} name={fd.content} remove={removeFeedback} isBold={false} />
                                     ))}
                                 </div>
+                                {feedbackError !== "" ?
+                                    <p className="text-md text-red-500">{feedbackError}</p>
+                                : <></>}
                                 <div className={btnDisable ? "opacity-50" : "opacity-100"}>
                                     <button onClick={sendFeedback} disabled={btnDisable} className="flex h-5 w-48 p-5 justify-center items-center shadow-md rounded-md text-white font-semibold bg-gradient-to-r from-sky-500 to-indigo-500">{btnLabel}</button>
                                 </div>
