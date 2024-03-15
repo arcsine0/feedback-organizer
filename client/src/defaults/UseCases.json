@@ -20,17 +20,16 @@
                         {"name": "Feature Availability", "weight": 0},
                         {"name": "Responsiveness", "weight": 0},
                         {"name": "Performance", "weight": 0},
-                        {"name": "Bugs and Errors", "weight": 0},
+                        {"name": "Bugs or Glitches", "weight": 0},
                         {"name": "Data Synchronization", "weight": 0}
                     ],
                     "multiplier": 1
                 },
                 {
-                    "mainTag": "User Feedback",
+                    "mainTag": "Customer Service",
                     "subTag": [
-                        {"name": "Ratings", "weight": 0},
                         {"name": "Reviews", "weight": 0},
-                        {"name": "Feature Suggestions", "weight": 0}
+                        {"name": "Suggestions", "weight": 0}
                     ],
                     "multiplier": 1
                 }
@@ -56,17 +55,16 @@
                         {"name": "Feature Availability", "weight": 0},
                         {"name": "Responsiveness", "weight": 0},
                         {"name": "Performance", "weight": 0},
-                        {"name": "Bugs and Errors", "weight": 0},
+                        {"name": "Bugs or Glitches", "weight": 0},
                         {"name": "Data Synchronization", "weight": 0}
                     ],
                     "multiplier": 1
                 },
                 {
-                    "mainTag": "User Feedback",
+                    "mainTag": "Customer Service",
                     "subTag": [
-                        {"name": "Ratings", "weight": 0},
                         {"name": "Reviews", "weight": 0},
-                        {"name": "Feature Suggestions", "weight": 0}
+                        {"name": "Suggestions", "weight": 0}
                     ],
                     "multiplier": 1
                 }
